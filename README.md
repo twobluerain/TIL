@@ -1,1 +1,5 @@
-# 대문짝하게 건다
+# today is lazy
+## tomorrow is late
+# but
+### toward improving life
+#### today I learnedgg
