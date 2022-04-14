@@ -192,3 +192,5 @@ $ git switch -c water (water 만들면서 이동하기)
 마스터에서 머지 브랜치
 
 TIL 작성
+
+220414
