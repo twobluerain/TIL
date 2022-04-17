@@ -1,4 +1,4 @@
-today im lazy 
+today im lazy
 tomorrow im late 
 but 
 toward improving life 
