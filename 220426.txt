@@ -1,813 +1,3 @@
-1교시
-
-CREATE TABLE sungjuk( 
-    sungjukno INT         NOT NULL  auto_increment  primary key, 
-    name      VARCHAR(10) NOT NULL, 
-    kuk       TINYINT     NOT NULL, 
-    eng       TINYINT     NOT NULL, 
-    tot       SMALLINT    DEFAULT 0, 
-    avg       FLOAT       DEFAULT 0.0 
-);
-
- ⓐ 1(sungjukno), 김길동(name), 87(kuk), 94(eng) 인 레코드 추가 
-     2(sungjukno), 가길동(name), 90(kuk), 15(eng) 인 레코드 추가 
- ⓑ 총점(tot)을 구합니다. 
- ⓒ 평균(avg)을 구합니다. 
- ⓓ sungjukno as 번호, name as 이름, tot as 총점, avg as 평균 컬럼만 출력합니다. 
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-create database javadb;
-use javadb;
- 
- 
-create table sungjuk(
-    sungjykno int not null primary key auto_increment,
-    name         varchar(10)     not null,
-    kuk            tinyint         not null,
-    eng            tinyint         not null,
-    tot            smallint         default 0,
-    avg            float             default 0.0
-);
- 
-insert into sungjuk(name, kuk, eng)
-values('김길동',87,87);
-select * from sungjuk;
- 
-insert into sungjuk(name, kuk, eng)
- values ('가길동',90,15);
- select * from sungjuk;
- 
- update sungjuk
- set tot =  kuk + eng;
- 
- update sungjuk
- set avg = (kuk + eng) / 2;
- 
-select * from sungjuk;
- 
-alter table sungjuk change sungjykno sungjukno char;
- 
-select * from sungjuk;
- 
-select sungjukno '번호', name '이름', tot '총점', avg '평균' from sungjuk;
-cs
- 
-
- 
-
-2교시
-
-5. delete
-
-
-
-- 테이블의 행 데이터를 삭제해야 하는 경우 사용한다.
-- 회원탈퇴 후에는 해당 회원의 정보를 삭제하자.
-
-DELETE FROM 테이불명 WHERE 조건
-
-- city_popul 테이블에서 'New' 로 시작하는 도시중 상위 5건만 삭제한다.
-
-
-select count(*) from city_popul    
-    where city_name like 'New%';
- 
-delete from city_popul
-where city_name like 'New%'
-    limit 5;    
- 
-select count(*) from city_popul    
-    where city_name like 'New%';
-
-- city_popul 테이블에서 'New' 로 시작하는 도시를 삭제한다.
-
-
-delete from city_popul
-where city_name like 'New%';
- 
-select count(*) from city_popul    
-    where city_name like 'New%';
- 
-- where 조건없이 DELETE를 하면 모든행을 다 지워버리게 된다. 주의가 필요하다.
-
-- 구조만 남기고 데이터를 빠르게 지울때 Truncate 문을 사용한다. DELETE 보다 속도가 빠르다.
-- DROP은 테이블 자체도 삭제되지만 TRUNCATE와 DELETE는 빈 테이블을 남긴다.
-
-
-create table big_table1 (select * from world.city, sakila.country);
-create table big_table2 (select * from world.city, sakila.country);
-create table big_table3 (select * from world.city, sakila.country);
- 
-select count(*) from big_table1;
- 
-delete from big_table1; -- 2.054초
-drop table big_table2; -- 0.016
-truncate  big_table3; -- 0.031
-실습
-
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-create database memo;
-use memo;
- 
-create table memo(
-memono int not null primary key auto_increment,
-wname varchar(20) not null,
-title varchar(200) not null,
-content varchar(1000) not null,
-passwd varchar(10) not null,
-viewcnt int,
-wdate date 
-);
- 
-insert into memo(wname, title, content, passwd, viewcnt, wdate)
-values ('홍길동길동길동길동길동', '마이시퀄마이시퀄마이시퀄마이시퀄마이시퀄마이시퀄', '인서트업데이트딜리트인서트업데이트딜리트인서트업데이트딜리트인서트업데이트딜리트인서트업데이트딜리트인서트업데이트딜리트', '비밀번호비밀번호', 3, 220425);
- 
-insert into memo(wname, title, content, passwd, viewcnt, wdate)
-values ('왕눈이', '타이틀은제목', '컨텐트는내용','비밀번호는일이삼사','5',220424);
- 
-insert into memo(wname, title, content, passwd, viewcnt, wdate)
-values ('아로미', '제목', '내용','일이삼사','112',220423);
- 
-update memo
-set wname = '홍길동'
-where memono = 1;
- 
-delete from memo
-where memono = 3;
- 
-select * from memo
-where viewcnt between 4 and 6;
- 
-select * from memo;
- 
- 
- 
-
- 
-
- 
-
- 
-
-3교시
-
-1. 정수형
-- 소숫점이 없는 숫자, 즉 인원 수, 가격, 수량 등에 많이 사용한다.
-- 정수형의 크기와와 범위는 다음과 같다.
-
-
-- 값의 범위가 0부터 시작하는 UNSIGNED 예약어를 사용할 수 있다.
-
-2. 문자형
-- 문자형 글자를 저장한다. 입력할 최대 글자의 개수를 지정해야 한다.
-- 대표적인 문자형은 CHAR(개수) - 1~255 byte, VARCHAR(개수) - 1~16383 byte 이다.
-
-(1) CHAR
-- 고정길이 문자형 , 자릿수가 고정되어 있다. 속도 빠름
-- CHAR(10)인 경우 '가나다' 3글자만 저장해도 10자리를 모두 확보한 후에 앞에 3자리 
-  사용하고 7자리 낭비된다.
--'가나다'를 검색하려면 '가나다       ' 로 검색해 조회된다.
-
-(나) VARCHAR
-- 가변길이 문자형, 자릿수에서 실제 데이터 크기만 사용하고 나머진 재사용한다. 속도가 느림
-- VARCHAR(10)인 경우 '가나다' 3글자만 저장하고 나머지 7자리는 재사용 한다.
-- '가나다' 검색하려면 '가나다'로 검색해 조회된다.
-
-3. 대량의 데이터 형식
-- 큰데이터를 저장하기 위한 데이터 형식이다.
-- TEXT 65535자까지, LONGTEXT는 42억자까지 저장된다.
-- BLOB는 Binary Long Object의 약자로 글자가 아닌 이미지, 동영상 등의 이진(Binary)
-  데이터를 저장한다.
-
-
-4. 실수형
-
-
-5. 날짜형
-
-
-[02] 데이터 형 변환
-- 문자형을 정수형으로, 정수형을 문자형으로 바꾸것을 형변환이라 한다.
-- 형변환은 함수를 사용해사 바꾸는 명시적 변환과 별도 지시없이 자연스럽게 변환
-  되는 암시적 변환이 있다.
-
-(1) 명식적으로 CAST(), CONVERT()를 사용한다.
-
-
-
-select cast(avg(price) AS signed) '평균가격' from buy;
- 
-
--- 또는
-select convert(avg(price), signed) '평균가격' from buy;
-
-- 다양한 구분자를 날짜형으로 변경할 수 있다.
-  모두 2022-12-12로 출력된다.
-
-
-select cast('2022$12$12' as DATE);
-select cast('2022/12/12' as DATE);
-select cast('2022%12%12' as DATE);
-select cast('2022@12@12' as DATE);
-
-
-- SQL결과를 원하는 형태로 표현할 때도 사용할 수 있다.
-- CONCAT()는 문자를 이어주는 역할을 한다.
-- 가격(price)과 수량(amount)을 곱한 실제 구매액을 표시하는 SQL을 다음과 같이
-  작성할 수 있다.
-
-
-select num, concat(cast(price as char), 'X', cast(amount as char), '=' )
-'가격X수량', price*amount '구매액' 
- from buy;
- 
-
-(2) 암시적 변환
-- 숫자와 문자를 연산할 때, Concat() 사용하면 숫자가 문자로 변하고,
-  더하기만 사용하면 문자가 숫자로 변한다.
-select '100' + '200'; -- 300
-select concat('100','200'); -- 100200
- 
-select concat(100, '200'); -- 100200
-select 100 + '200'; -- 300
- 
-
- 
-
-4교시
-
-JOIN
-
-- 조인이란 두 개의 테이블을 서로 묶어서 하나의 결과를 만들어 내는 것을 말한다.
-- 회원 테이블과 구매 테이블은 조인을 해야하는 경우이다. 회원의 주소에 그 회원이 
-  구매한 물건을 배송해야 하기 때문이다. 
-
-
-1. 내부 조인
-- 가장 많이 사용하는 조인 방법이다.
-- 두 테이블은 조인을 위해서 테이블이 일대다(one to many) 관계로 연결되어야 한다.
-- 회원테이블의 회원이 구매 테이블의 구매 정보로 연결된다. 한 회원은 여러개의 제품을 
-  구매할 수 있다 
-
-
-
-- INNER JOIN은 그냥 JOIN이라고 써도 INNER JOIN으로 인식한다.
-
-
-
-use market_db;
-select buy.mem_id, member.mem_name, buy.prod_name, member.addr,
-concat(phone1,phone2) '연락처'
- from  buy
- inner join member
- on buy.mem_id = member.mem_id
- where buy.mem_id = 'GRL';
-
-
-- 별칭을 사용해서 좀더 간결하게 표현할 수 있다.
- 
-select b.mem_id, m.mem_name, b.prod_name, m.addr,
-concat(phone1,phone2) '연락처'
- from  buy b
- inner join member m
- on b.mem_id = m.mem_id
- where b.mem_id = 'GRL';
- 
-
-
-select b.mem_id, m.mem_name, b.prod_name, m.addr
- from  buy b
- inner join member m
- on b.mem_id = m.mem_id
- order by m.mem_id;
- 
-2. 외부 조인
-- 내부조인은 on절의 데이터가 같은 행만 추출된다.
-- 외부조인은 on절의 데이터가 한쪽에만 있어도 결과가 나온다.
-- 전체회원의 구매 기록(구매기록이 없는 회원의 정보도 함께) 을 외부 조인으로 
-  출력한다.
-
-
-
-
-select m.mem_id, m.mem_name, b.prod_name, m.addr
- from  member m
- left outer join buy b
- on m.mem_id = b.mem_id
- order by m.mem_id;
-
-- left outer join 문의 의미는 '왼쪽 테이블(member)의 내용은 모두 출력되어야 한다' 이다.
-- right outer join 문은 테이블의 위치만 바꾸어 주면된다.
-
-- 외부 조인에서 where 문 사용하기
-
-
-select m.mem_id, m.mem_name, b.prod_name, m.addr
- from  member m
- left outer join buy b
- on m.mem_id = b.mem_id
- where b.prod_name is null
- order by m.mem_id;
-
-부 조인과 오른쪽 외부 조인이 합쳐진 것이다. 자주 사용되지 않는다
-
-select m.mem_id, m.mem_name, b.prod_name, m.addr
- from  member m
- left outer join buy b
- on m.mem_id = b.mem_id
- where b.prod_name is null
- order by m.mem_id;
- 
-- full outer join은 왼쪽 외부 조인과 오른쪽 외부 조인이 합쳐진 것이다. 자주 사용되지 않는다
-
- 
-
- 
-
-3. 기타 조인
-
-(1) 상호조인(cross join)
-- 두 테이블의 모든행을 조인 시키는 기능이다.
-- 상호 조인 결과의 전체 행의 개수는 두 테이블의 각 행의 개수를 곱한 개수이다.
-- 상호 조인을 카티션 곱(cartesian product)라고도 부른다.
-
-
-(2) 상호조인(cross join) 특징
- - ON구문 사용할 수 없다.
- - 결과 내용에 의미가 없다. 랜덤으로 조인하기 때문이다.
- - 상호 조인의 주 용도는 테스트하기 위해 대용량의 데이터를 생성할 때이다.
-
-(3) 자체 조인(self join)
-- 자신과 조인한다는 의미이다.
-- 1개의 테이블을 사용한다.
-- 회사의 조직관계에서 직속 상관의 정보를 알고 싶을때 사용한다.
-
-
-- 직원중 경리부장의 직속상관인 관리이사의 사내 연력처를 알고 싶다면 emp열과
-  manager열을 조인해야 한다.
-
-
-
-- emp table 생성하여 self join확인
-
-
-USE market_db;
-CREATE TABLE emp_table (emp CHAR(4), manager CHAR(4), phone VARCHAR(8));
- 
-INSERT INTO emp_table VALUES('대표', NULL, '0000');
-INSERT INTO emp_table VALUES('영업이사', '대표', '1111');
-INSERT INTO emp_table VALUES('관리이사', '대표', '2222');
-INSERT INTO emp_table VALUES('정보이사', '대표', '3333');
-INSERT INTO emp_table VALUES('영업과장', '영업이사', '1111-1');
-INSERT INTO emp_table VALUES('경리부장', '관리이사', '2222-1');
-INSERT INTO emp_table VALUES('인사부장', '관리이사', '2222-2');
-INSERT INTO emp_table VALUES('개발팀장', '정보이사', '3333-1');
-INSERT INTO emp_table VALUES('개발주임', '정보이사', '3333-1-1');
- 
-SELECT A.emp "직원" , B.emp "직속상관", B.phone "직속상관연락처"
-   FROM emp_table A
-      INNER JOIN emp_table B
-         ON A.manager = B.emp
-   WHERE A.emp = '경리부장';
- 
-5교시
-
-테이블과 뷰
-- SQL 문으로 테이블을 만들어 본다.
-- 먼저 데이터베이스 생성 후 테이블 생성
-
-DROP DATABASE IF EXISTS naver_db;
-
-CREATE DATABASE naver_db;
-1 테이블 생성
-- 테이블을 생성은 기본적으로 열 이름, 데이터 형식만 계속 나열해주면 된다.
-- null과 not null을 지정한다. 아무것도 지정하지 않으면 기본값은 null 허용이다.
-- null은 빈 값을 허용한다는 의미이고, not null은 반드시 값을 넣어야 한다는 의미이다.
-- 기본키를 설정하기 위해 지정할 열 뒤에 primary key문을 붙여준다. not null 취급한다.
-
- 
-
-- member table 생성
-
-
-
-use naver_db;
-
-DROP TABLE IF EXISTS member;  -- 기존에 있으면 삭제
-CREATE TABLE member -- 회원 테이블
-( mem_id        CHAR(8) NOT NULL PRIMARY KEY,
-  mem_name      VARCHAR(10) NOT NULL, 
-  mem_number    TINYINT NOT NULL, 
-  addr          CHAR(2) NOT NULL,
-  phone1        CHAR(3) NULL,
-  phone2        CHAR(8) NULL,
-  height        TINYINT UNSIGNED NULL, 
-  debut_date    DATE NULL
-);
-
-- 구매테이블의 아이디 열을 회원테이블의 아이디 열의 외래키로 설정한다.
-- 구매테이블의 아이디는 회원테이블의 아이디만으로 이루어 진다.
-
-DROP TABLE IF EXISTS buy;  -- 기존에 있으면 삭제
-CREATE TABLE buy 
-(  num         INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-   mem_id      CHAR(8) NOT NULL, 
-   prod_name     CHAR(6) NOT NULL, 
-   group_name     CHAR(4) NULL ,
-   price         INT UNSIGNED NOT NULL,
-   amount        SMALLINT UNSIGNED  NOT NULL ,
-   FOREIGN KEY(mem_id) REFERENCES member(mem_id)
-);
-- 부모테이블 먼저 데이터를 입력한다.
-- 참조하고 있는 자식 테이블은 나중에 입력한다.
-- 외래키 열은 부모 테이블에 존재하는 컬럼값만 입력할 수 있다.
- 
-
-INSERT INTO member VALUES('TWC', '트와이스', 9, '서울', '02', '11111111', 167, '2015-10-19');
-INSERT INTO member VALUES('BLK', '블랙핑크', 4, '경남', '055', '22222222', 163, '2016-8-8');
-INSERT INTO member VALUES('WMN', '여자친구', 6, '경기', '031', '33333333', 166, '2015-1-15');
- 
-INSERT INTO buy VALUES( NULL, 'BLK', '지갑', NULL, 30, 2);
-INSERT INTO buy VALUES( NULL, 'BLK', '맥북프로', '디지털', 1000, 1);
-INSERT INTO buy VALUES( NULL, 'APN', '아이폰', '디지털', 200, 1); -- APN은 부모에 없기때문에 오류
- 
-
- 
-
-6교시
-
-제약조건
-
-- 테이블에는 기본 키, 외래 키와 같은 제약조건을 설정할 수 있다.
-- 제약조건은 테이블을 구성하는 핵심 개념으로, 이를 잘 이해하고 활용하면 데이터의 
-  오류를 줄여 완전무결한 코드를 만들 수 있다.
-
- 
-
-1. 제약조건 기본 개념과 종류
-- 제약조건은 데이터의 무결성을 지키기 위해 제한하는 조건이다.
-- 데이터 무결성이란 '데이터에 결함이 없음' 이란 의미 이다.
-- 네이버 회원아이디가 중복되면 이메일, 쇼핑, 블로그, 쇼핑 기록 등 상당한 혼란이 일어난다.
-  이것이 데이터의 결함이고, 이런 결함이 없는 것을 데이터의 무결성이라고 한다.
-- 이러한 결함을 방지하기 위해서 회원테이블의 아이디를 기본키(primary key)로 지정할 수 있다.
-- 기본키의 조건은 '중복되지 않고, 비어 있지 않음' 이므로, 실수로 중복된 아이디를 넣으려고 해도
-  입력이 불가능하다.
-
-2. 제약조건 종류
-(1) 기본 키 (primary key) 
-- 테이블의 많은 행 데이터에서 데이터를 구별할 수 있는 식별자를 기본 키(privary key)라 한다.
-- 기본 키에 입력되는 값은 중복될 수 없으며, Null값이 입력될 수 없다.
-- 기본 키로 생성된 것은 자동으로 클러스터형 인덱스가 생성된다.
-
-※ 클러스터형 인덱스
-- 영어사전, 국어사전처럼 책의 내용이 이미 알파벳 순서대로 정렬되어 있다.
-- 인덱스는 대략 테이블크기의 10%정도의 공간이 추가로 필요하다.
-- select가 아닌 데이터 변경 작업(insert, update, delete)이 자주 일어나면 
-  오히려 성능이 나빠질 수 있다. 검색에서 빠른 검색을 할 수 있다.
-
-- 기본키로 설정되면 중복될 수 없고 비어 있을 수 없다.
-
-USE naver_db;
-DROP TABLE IF EXISTS buy, member;
-CREATE TABLE member 
-( mem_id  CHAR(8) NOT NULL PRIMARY KEY, 
-  mem_name    VARCHAR(10) NOT NULL, 
-  height      TINYINT UNSIGNED NULL
-);
- 
-DESCRIBE member;  -- 테이블 정보 확인
-
-- 기본 키 지정하는 다른 방법은 제일 마지막 행에 primary key(mem_id)를 추가해도 된다.
-
-
-DROP TABLE IF EXISTS member;
-CREATE TABLE member 
-( mem_id  CHAR(8) NOT NULL, 
-  mem_name    VARCHAR(10) NOT NULL, 
-  height      TINYINT UNSIGNED NULL,
-  PRIMARY KEY (mem_id)
-);
-
-
-DROP TABLE IF EXISTS member;
-CREATE TABLE member 
-( mem_id  CHAR(8) NOT NULL, 
-  mem_name    VARCHAR(10) NOT NULL, 
-  height      TINYINT UNSIGNED NULL,
-  CONSTRAINT PRIMARY KEY PK_member_mem_id (mem_id)
-);
-
-- 이미 만들어진 테이블을 수정하는 alter table구문을 사용해서 추가할 수 있다.
- 
-DROP TABLE IF EXISTS member;
-CREATE TABLE member 
-( mem_id  CHAR(8) NOT NULL, 
-  mem_name    VARCHAR(10) NOT NULL, 
-  height      TINYINT UNSIGNED NULL
-);
- 
-ALTER TABLE member
-     ADD CONSTRAINT 
-     PRIMARY KEY (mem_id);
-(2) 외래 키(Foreign Key) 
-
-
-- 두 테이블 사이의 관계를 연결해주고, 그 결과 데이터의 무결성을 보장해주는 역할을 한다.
-- 외래 키가 설정된 열은 다른 테이블의 기본 키나 고유 키로 연결된다.
-- 기본키가 있는 테이블을 기준테이블(부모테이블)라고 하고, 외래 키가 있는 테이블을
-  참조테이블(자식테이블)이라고 한다.
-- 우리가 생성한 회원테이블은 기준테이블 구매테이블은 참조 테이블이라 할 수 있다.
-
-DROP TABLE IF EXISTS buy, member;
-CREATE TABLE member 
-( mem_id  CHAR(8) NOT NULL PRIMARY KEY, 
-  mem_name    VARCHAR(10) NOT NULL, 
-  height      TINYINT UNSIGNED NULL
-);
-CREATE TABLE buy 
-(  num         INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-   mem_id      CHAR(8) NOT NULL, 
-   prod_name     CHAR(6) NOT NULL, 
-   FOREIGN KEY(mem_id) REFERENCES member(mem_id)
-);
-
-- 참조테이블의 아이디 열 이름이 user_id와 같이 기준테이블의 mem_id와 
-  달라도 된다.
-
-DROP TABLE IF EXISTS buy, member;
-CREATE TABLE member 
-( mem_id  CHAR(8) NOT NULL PRIMARY KEY, 
-  mem_name    VARCHAR(10) NOT NULL, 
-  height      TINYINT UNSIGNED NULL
-);
- 
-CREATE TABLE buy 
-(  num         INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-   user_id      CHAR(8) NOT NULL, 
-   prod_name     CHAR(6) NOT NULL, 
-   FOREIGN KEY(user_id) REFERENCES member(mem_id)
-);
-
-- alter table에서 외래 키 설정
-
-
-
-DROP TABLE IF EXISTS buy;
-CREATE TABLE buy 
-(  num         INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-   mem_id      CHAR(8) NOT NULL, 
-   prod_name     CHAR(6) NOT NULL
-);
-ALTER TABLE buy
-    ADD CONSTRAINT 
-    FOREIGN KEY(mem_id) REFERENCES member(mem_id);
- 
- 
-
- 
-
-7교시
-
-- 기준 테이블의 열이 변경될 경우
-
-
-- 실습학인
-- 기본키-외래키로 맺어진 후에는 기준 테이블의 열이름이 변경되지 않는다.
-
-
-INSERT INTO member VALUES('BLK', '블랙핑크', 163);
-INSERT INTO buy VALUES(NULL, 'BLK', '지갑');
-INSERT INTO buy VALUES(NULL, 'BLK', '맥북');
- 
-SELECT M.mem_id, M.mem_name, B.prod_name 
-   FROM buy B
-      INNER JOIN member M
-      ON B.mem_id = M.mem_id;
-      
-UPDATE member SET mem_id = 'PINK' WHERE mem_id='BLK';
- 
->>> 오류메세지
-Error Code: 1451. Cannat delete or update a parent row: a foreign key constraint fails
-(...........................)
-
-- 삭제도 같은 오류로 삭제되지 않는다.
-DELETE FROM member WHERE  mem_id='BLK';
-
- 
-
-- 실습확인
-
-
-DROP TABLE IF EXISTS buy;
-CREATE TABLE buy 
-(  num         INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-   mem_id      CHAR(8) NOT NULL, 
-   prod_name     CHAR(6) NOT NULL
-);
-ALTER TABLE buy
-    ADD CONSTRAINT 
-    FOREIGN KEY(mem_id) REFERENCES member(mem_id)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE;
-    
-INSERT INTO buy VALUES(NULL, 'BLK', '지갑');
-INSERT INTO buy VALUES(NULL, 'BLK', '맥북');
- 
-UPDATE member SET mem_id = 'PINK' WHERE mem_id='BLK';
- 
-
-SELECT M.mem_id, M.mem_name, B.prod_name 
-   FROM buy B
-      INNER JOIN member M
-      ON B.mem_id = M.mem_id;
-
-
-- ON DELETE CASCADE : 기준 테이블의 데이터가 삭제되면 참조 테이블의 데이터도
-  삭제된다.
-
-- 실습확인
- 
-
-DELETE FROM member WHERE  mem_id='PINK';
-SELECT * FROM buy;
- 
-
-(3) 고유 키(Unique)
-- 중복되지 않는 유일한 값을 입력해야 하는 조건이다.
-- 기본 키와 차이점은 null을 허용하고 테블에 여러 개를 설정해도 된다.
-  (기본키는 테이블에 하나만 설정해야 한다.)
-- 회원테이블에 id는 기본키로 설정했다면, email은 고유 키를 설정할 수
-  있다.
-
-
- 
-
-- 고유 키 예제 확인
-drop table if exists member;
-
-CREATE TABLE member 
-( mem_id  CHAR(8) NOT NULL PRIMARY KEY, 
-  mem_name    VARCHAR(10) NOT NULL, 
-  height      TINYINT UNSIGNED NULL,
-  email       CHAR(30)  NULL UNIQUE
-);
-INSERT INTO member VALUES('BLK', '블랙핑크', 163, 'pink@gmail.com');
-
-INSERT INTO member VALUES('TWC', '트와이스', 167, NULL);
-INSERT INTO member VALUES('APN', '에이핑크', 164, 'pink@gmail.com');
- 
-SELECT * FROM member;
-
->> 오류 메세지
-Error Code : 1062. Duplication entry 'pink@gmail.com' for key 'member.email'
- 
-
-8교시
-
-(4) 체크(check) 제약조건
-- 입력되는 데이터를 점검하는 기능이다.
-- 키에 마이너스 값이 입력되지 않도록 하거나, 연락처의 국번에 02, 031,
-  041,055 중 하나만 입력 되도록 할 수 있다.
-- 키가 100이상의 값만 입력되도록 설정한다.
-- 예제 확인
-
-
-DROP TABLE IF EXISTS member;
-CREATE TABLE member 
-( mem_id  CHAR(8) NOT NULL PRIMARY KEY, 
-  mem_name    VARCHAR(10) NOT NULL, 
-  height      TINYINT UNSIGNED NULL CHECK (height >= 100),
-  phone1      CHAR(3)  NULL
-);
- 
-INSERT INTO member VALUES('BLK', '블랙핑크', 163, NULL);
-INSERT INTO member VALUES('TWC', '트와이스', 99, NULL); 
->> 오류 메세지
-Error Code : 3819. Check constraint 'member_ch_1' is violated
-
- 
-
-- Alter Table로 제약조건 추가할 수 있다.
-
-
-ALTER TABLE member
-    ADD CONSTRAINT 
-    CHECK  (phone1 IN ('02', '031', '032', '054', '055', '061' )) ;
- 
-INSERT INTO member VALUES('TWC', '트와이스', 167, '02');
-INSERT INTO member VALUES('OMY', '오마이걸', 167, '010');
->> 오류 메세지
-Error Code : 3819. Check constraint 'member_ch_2' is violated
-(5) 기본값 정의
-- 값을 입력하지 않았을 때 자동으로 입력될 값을 미리 지정해 놓는 방법이다.
-- 키를 기본값으로 160이라고 정의하면 다음과 같다
-
-
-DROP TABLE IF EXISTS member;
-CREATE TABLE member 
-( mem_id  CHAR(8) NOT NULL PRIMARY KEY, 
-  mem_name    VARCHAR(10) NOT NULL, 
-  height      TINYINT UNSIGNED NULL DEFAULT 160,
-  phone1      CHAR(3)  NULL
-);
-
-- alter table을 사용시에는 alter column문을 사용한다.
-
-
-ALTER TABLE member
-    ALTER COLUMN phone1 SET DEFAULT '02';
-
-- 기본값이 설정된 열에 기본값을 입력하려면 defalut라고 써주면 된다.
- 
-INSERT INTO member VALUES('RED', '레드벨벳', 161, '054');
-INSERT INTO member VALUES('SPC', '우주소녀', default, default);
-SELECT * FROM member;
- 
-(6) 널 허용
-
-- 널 허용하려면 컬럼 옆에 생략하거나 null을 쓴다, 허영하지 않으려면 not null을
-  사용한다.
-- primary key 설정 열은 null을 사용할 수 없으므로 생략하면 자동으로 not null로 
-  인식된다.
-- null 값은 '아무것도 없다' 의 의미이며, 공백(' ') 이나 0과는 다르다.
-
-가상테이블 뷰
-- 뷰(view)는 가상의 테이블이라 한다. 일반사용자에게는 테이블과 동일하게 보이기
-  때문이다.
-- 뷰를 사용하면 사용자에게 테이블의 필요한 내용만 보이도록 한다.
-- 뷰는 한 번 생성해 놓으면 테이블이라고 생각하고 사용해도 될 정도로 사용자들 입장
-  에서는 테이블과 거의 동일한 개체로 취급한다.
-- 뷰는 테이블 처럼 데이터를 가지고 있지 않고 Select문으로 만들어져 있다.
-- 뷰에 접근하는 순간 select 실행되고 그결과가 화면에 보여진다.
-- 단순 뷰는 하나의 테이블과 연관된 뷰이고, 복합 뷰는 2개 이상의 테이블과 연관된 뷰이다.
-
- 
 
 1. 뷰 생성
 - member table의 내용을 검색한다
@@ -855,3 +45,2137 @@ AS
          ON B.mem_id = M.mem_id;
  
 SELECT * FROM v_memberbuy WHERE mem_name = '블랙핑크';
+
+교시
+
+4. 뷰 생성, 수정 삭제
+- 뷰를 생성할 때 열이름을 테이블과 다르게 지정할 수도 있다.
+  별칭을 사용하고 중간 띄어쓰기도 할 수 있다. 
+- 뷰를 조회할 때 열 이름에 공백이 있으면 백틱(`)으로 묶어준다.
+
+USE market_db;
+
+CREATE VIEW v_viewtest1
+AS
+    SELECT B.mem_id 'Member ID', M.mem_name AS 'Member Name', 
+            B.prod_name "Product Name", 
+            CONCAT(M.phone1, M.phone2) AS "Office Phone" 
+       FROM buy B
+         INNER JOIN member M
+         ON B.mem_id = M.mem_id;
+         
+SELECT  DISTINCT `Member ID`, `Member Name` FROM v_viewtest1; -- 백틱을 사용
+- 뷰의 수정은 alter view 구문을 사용하며 열이름에 한글을 사용해도 된다.
+
+
+ALTER VIEW v_viewtest1
+AS
+    SELECT B.mem_id '회원 아이디', M.mem_name AS '회원 이름', 
+            B.prod_name "제품 이름", 
+            CONCAT(M.phone1, M.phone2) AS "연락처" 
+       FROM buy B
+         INNER JOIN member M
+         ON B.mem_id = M.mem_id;
+SELECT  DISTINCT `회원 아이디`, `회원 이름` FROM v_viewtest1;  -- 백틱을 사용
+- 뷰의 삭제는 drop view를 사용한다.
+DROP VIEW v_viewtest1;
+
+- 기존 뷰의 정보 describe 문으로 확인한다.
+
+
+USE market_db;
+CREATE OR REPLACE VIEW v_viewtest2
+AS
+    SELECT mem_id, mem_name, addr FROM member;
+ 
+DESCRIBE v_viewtest2;
+
+- show create vew문으로 뷰의 소드 코드도 확인할 수 있다.
+  [Form Editor]창에서 확인한다.
+ 
+
+2교시
+
+JAVA, MySQL 연동 실습
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+ 
+public class DriverTestMySQL {
+ 
+  public static void main(String[] args) {
+ 
+    Connection con = null;
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    try {
+      Class.forName("com.mysql.cj.jdbc.Driver");
+      
+      con = DriverManager.getConnection(url,user,passwd);
+      
+      System.out.println("데이터베이스 접속이 성공했습니다.");
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+     try {
+     if(con !=null) con.close();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    }
+    
+  }
+ 
+}
+ 
+ 
+ 
+
+2. 실습용 테이블의 생성 
+
+
+       use javadb;
+       CREATE TABLE address( 
+         addressnum INT                NOT NULL AUTO_INCREMENT PRIMARY KEY, -- 번호 
+         name         VARCHAR(10)     NULL , -- 이름 
+         handphone  VARCHAR(14)     NULL , -- 핸드폰번호 
+         address      VARCHAR(50)     NULL   -- 주소 
+     ); 
+      
+    INSERT INTO address(name, handphone, address)  
+    VALUES('개발자1', '000-123-1234', '대한민국'); 
+    INSERT INTO address(name, handphone, address)  
+    VALUES('개발자2', '111-123-1234', '일본'); 
+    INSERT INTO address(name, handphone, address)  
+    VALUES('개발자3', '222-123-1234', '러시아'); 
+     
+    SELECT addressnum, name, handphone, address  
+    FROM address; 
+   
+    SELECT addressnum, name, handphone, address  
+    FROM address WHERE addressnum=1;  
+     
+    UPDATE address  
+    SET handphone='555-555-5555', address='터키'  
+    WHERE addressnum=1;  
+
+    DELETE FROM address WHERE addressnum=3; 
+     
+    SELECT addressnum, name, handphone, address  
+    FROM address ORDER BY name DESC; -- 오름차순은 ASC 
+    
+    DELETE FROM address; 
+     
+
+ 
+
+3교시
+
+3. 레코드를 추가하는 소스 
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+ 
+public class InsertDB {
+ 
+  public static void main(String[] args) {
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver = "com.mysql.cj.jdbc.Driver";
+ 
+    Connection con = null; // DB 연결 객체
+    Statement stmt = null; // java.sql.Statement, SQL 전송 객체
+ 
+    try {
+      Class.forName(driver);
+      con = DriverManager.getConnection(url, user, passwd);
+      stmt = con.createStatement();
+ 
+      StringBuffer sql = new StringBuffer();
+      sql.append("  INSERT INTO address(name, handphone, address)  ");
+      sql.append("  VALUES('개발자1', '000-123-1234', '대한민국')  ");
+      
+      int cnt = stmt.executeUpdate(sql.toString());
+      System.out.println("새로운 레코드" + cnt + " 개가 추가 되었습니다.");
+      
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally{ 
+      try{ 
+          if ( stmt != null){ stmt.close(); } 
+      }catch(Exception e){} 
+      try{ 
+          if ( con != null){ con.close(); } 
+      }catch(Exception e){} 
+      }
+    }
+ 
+  }
+ 
+ 
+ 
+ 
+ 
+4. 하나의 레코드 출력 
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+ 
+public class SelectDBOne {
+ 
+  public static void main(String[] args) {
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver = "com.mysql.cj.jdbc.Driver";
+ 
+    Connection con = null; // DB 연결 객체
+    Statement stmt = null; // java.sql.Statement, SQL 전송 객체
+    ResultSet rs = null; // DQL의 결과를 받는 객체
+ 
+    try {
+      Class.forName(driver);
+      con = DriverManager.getConnection(url, user, passwd);
+      stmt = con.createStatement();
+ 
+      StringBuffer sql = new StringBuffer();
+      sql.append("  SELECT addressnum, name, handphone, address  ");
+      sql.append("  FROM address  ");
+      sql.append("  WHERE addressnum = 4  ");
+ 
+      rs = stmt.executeQuery(sql.toString());
+ 
+      if (rs.next()) {
+        int addressnum = rs.getInt(1);
+        String name = rs.getString(2);
+        String handphone = rs.getString("handphone");
+        String address = rs.getString("address");
+        System.out.println("번호 : " + addressnum);
+        System.out.println("성명 : " + name);
+        System.out.println("전화번호 : " + handphone);
+        System.out.println("주소 : " + address);
+      }
+ 
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      try {
+        if (rs != null)
+          rs.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      try {
+        if (rs != null)
+          stmt.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      try {
+        if (con != null)
+          con.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+ 
+  }
+ 
+}
+ 
+ 
+ 
+ 
+
+ 
+
+4교시
+
+5. 전체 레코드 목록 출력
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+ 
+public class SelectDB {
+ 
+  public static void main(String[] args) {
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver = "com.mysql.cj.jdbc.Driver";
+ 
+    Connection con = null; // DB 연결 객체
+    Statement stmt = null; // java.sql.Statement, SQL 전송 객체
+    ResultSet rs = null; // DQL의 결과를 받는 객체
+ 
+    try {
+      Class.forName(driver);
+      con = DriverManager.getConnection(url, user, passwd);
+      stmt = con.createStatement();
+ 
+      StringBuffer sql = new StringBuffer();
+      sql.append("  SELECT addressnum, name, handphone, address  ");
+      sql.append("  FROM address  ");
+      sql.append("  order by name desc  ");
+ 
+      rs = stmt.executeQuery(sql.toString());
+      while (rs.next()) {
+        int addressnum = rs.getInt(1);
+        String name = rs.getString(2);
+        String handphone = rs.getString(3);
+        String address = rs.getString(4);
+        System.out.println("번호 : " + addressnum);
+        System.out.println("성명 : " + name);
+        System.out.println("전화번호 : " + handphone);
+        System.out.println("주소 : " + address);
+        System.out.println("--------------------");
+      }
+ 
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      try {
+        if (rs != null)
+          rs.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+ 
+      try {
+        if (stmt != null)
+          stmt.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+ 
+      try {
+        if (con != null)
+          con.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+ 
+    }
+ 
+  }
+ 
+}
+ 
+ 
+ 
+
+6. 레코드를 수정하는 소스
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+ 
+public class UpdateDB {
+ 
+  public static void main(String[] args) {
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver = "com.mysql.cj.jdbc.Driver";
+ 
+    Connection con = null; // DB 연결 객체
+    Statement stmt = null; // java.sql.Statement, SQL 전송 객체
+    
+    try {
+      Class.forName(driver);
+      
+      con = DriverManager.getConnection(url, user, passwd);
+      stmt = con.createStatement();
+      StringBuffer sql = new StringBuffer();
+      sql.append("  UPDATE address  ");
+      sql.append("  SET handphone='555-555-5555',  ");
+      sql.append("  address='터키'  ");
+      sql.append("  WHERE addressnum = 9  ");
+      
+      int cnt = stmt.executeUpdate(sql.toString());
+      System.out.println("레코드 " + cnt + " 개가 수정되었습니다.");
+      
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      try {
+        if(stmt != null) stmt.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      try {
+        if(con != null) con.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      
+    }
+  }
+ 
+}
+ 
+ 
+ 
+
+
+7. 레코드를 삭제하는 소스
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+ 
+public class DeleteDB {
+ 
+  public static void main(String[] args) {
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver = "com.mysql.cj.jdbc.Driver";
+ 
+    Connection con = null; // DB 연결 객체
+    Statement stmt = null; // java.sql.Statement, SQL 전송 객체
+    
+    
+    try {
+      Class.forName(driver);
+      con = DriverManager.getConnection(url, user, passwd);
+      stmt = con.createStatement();
+      
+      StringBuffer sql = new StringBuffer();
+      sql.append("  DELETE FROM address   ");
+      sql.append("  WHERE addressnum=9   ");
+      
+      int cnt = stmt.executeUpdate(sql.toString());
+      System.out.println("레코드 " + cnt + " 개가 삭제 되었습니다.");
+      
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      try {
+        if ( stmt != null) stmt.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      try {
+        if (con != null) con.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+  }
+ 
+}
+ 
+ 
+ 
+
+
+PreparedStatement 클래스의 사용 
+
+    - 자바에서 보낸 쿼리가 데이터베이스의 캐시 영역에 컴파일되어 저장되어 있음으로  
+      같은 쿼리를 실행시 빠른 처리속도를 지원한다. 
+    - 10000개의 레코드 추가시 Statement 클래스 보다 처리속도 약 13초 빠름 
+    - 간결하고 구조적인 쿼리문 작성 가능 
+    - 반복해서 같은 쿼리를 보낼 경우 효과가 큼 
+    - SQL injection 해킹을 방어할 수 있다.
+ 
+ 
+5교시
+
+
+※ SQL injection
+
+---------------------------------------------------------------
+CREATE TABLE member( 
+    id   varchar(10) NOT NULL  PRIMARY KEY,
+  mname   VARCHAR(30)     NULL , 
+  passwd  VARCHAR(14)     NULL 
+ 
+ );  
+ 
+INSERT INTO member(id, mname, passwd)  
+VALUES('user1', '개발자1', '1234'); 
+INSERT INTO member(id, mname, passwd)  
+VALUES('user2', '개발자2', '1234'); 
+INSERT INTO member(id, mname, passwd)  
+VALUES('user3', '개발자3', '1234'); 
+ 
+-- 모든 회원수
+SELECT COUNT(id) as cnt 
+FROM member;
+ 
+- 로그인 처리
+SELECT COUNT(id) as cnt 
+FROM member 
+WHERE id = 'user4' AND passwd = '1234';  
+ 
+-- 비회원도 인증 통과 
+SELECT COUNT(id) as cnt 
+FROM member 
+WHERE id = 'user4' or 'a' = 'a' AND passwd = '1234' or 'a' = 'a';  
+ 
+-- 모든 회원의 정보 출력 
+SELECT id, passwd, mname 
+FROM member 
+WHERE id = 'user10' or 'a' = 'a' AND passwd = '1111' or 'a' = 'a';  
+1. SELECT의 이용 
+>>>>> SelectPrepDB.java 
+package test; 
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.PreparedStatement; 
+import java.sql.ResultSet; 
+import java.sql.SQLException; 
+
+public class SelectPrepDB { 
+    public static void main(String args[]) { 
+        String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+         Connection con=null; 
+        PreparedStatement  pstmt=null; 
+        ResultSet rs=null; 
+        try { 
+            Class.forName("com.mysql.cj.jdbc.Driver"); 
+        } catch(java.lang.ClassNotFoundException e) { 
+            System.err.print("ClassNotFoundException: "); 
+            System.err.println(e.getMessage()); 
+        }    
+        try { 
+            //커넥션 연결 
+            con = DriverManager.getConnection(url,"javauser", "1234"); 
+            String sql = "SELECT addressnum, name, handphone, address "; 
+            sql = sql + " FROM address WHERE addressnum = ?"; 
+            //쿼리 지정  
+            pstmt = con.prepareStatement(sql); 
+            //(물음표의 순번, 적용할 값) 
+            //문자열 지정 pstmt.setString(....) 
+            //첫번째 ?표에 값 6을 지정 
+            pstmt.setInt(1, 6);  
+            rs = pstmt.executeQuery(); 
+            while(rs.next()){ 
+                System.out.println("번호: " + rs.getInt("addressnum")); 
+                System.out.println("성명: " + rs.getString("name")); 
+                System.out.println("전화번호: " + rs.getString("handphone")); 
+                System.out.println("주소: " + rs.getString("address")); 
+                System.out.println("-------------------------------------"); 
+            } 
+         } catch(SQLException e) { 
+            System.out.println("SQLException: " + e.getMessage()); 
+        } finally{ 
+            try{ 
+                if ( rs != null){ rs.close(); } 
+            }catch(Exception e){} 
+            try{ 
+                if ( pstmt != null){ pstmt.close(); } 
+            }catch(Exception e){} 
+            try{ 
+                if ( con != null){ con.close(); } 
+            }catch(Exception e){} 
+        } 
+    } 
+} 
+
+ 
+
+2. INSERT의 이용 
+ - statementd의 PreparedStatement로의 변경 
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+ 
+public class InsertPrepDB {
+ 
+  public static void main(String[] args) {
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver = "com.mysql.cj.jdbc.Driver";
+ 
+    Connection con = null; // db 연결 객체
+    PreparedStatement pstmt = null;
+    StringBuffer sql = new StringBuffer();
+    sql.append("  INSERT INTO address(name, handphone, address)  ");
+    sql.append("  VALUES(?,?,?)  ");
+ 
+    try {
+      Class.forName(driver);
+      con = DriverManager.getConnection(url, user, passwd);
+      pstmt = con.prepareStatement(sql.toString());
+ 
+      pstmt.setString(1, "홍길동");
+      pstmt.setString(2, "010-1234-5678");
+      pstmt.setString(3, "서울시 강남구");
+      
+      int cnt = pstmt.executeUpdate();
+      System.out.println("레코드 " + cnt + "개가 추가 되었습니다.");
+ 
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      try {
+        if ( pstmt != null) pstmt.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      try {
+        if(con != null) con.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      
+    }
+ 
+  }
+ 
+}
+ 
+ 
+ 
+
+
+
+>>>>> InsertPrepDB.java  
+package test; 
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.PreparedStatement; 
+//import java.sql.ResultSet; 
+import java.sql.SQLException; 
+public class InsertPrepDB { 
+    public static void main(String args[]) { 
+String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+         Connection con=null; 
+        PreparedStatement  pstmt=null; 
+        //ResultSet rs=null; 
+        try { 
+            Class.forName("com.mysql.cj.jdbc.Driver"); 
+        } catch(java.lang.ClassNotFoundException e) { 
+            System.err.print("ClassNotFoundException: "); 
+            System.err.println(e.getMessage()); 
+        }    
+        try { 
+            //커넥션 연결 
+            con = DriverManager.getConnection(url,"javauser", "1234"); 
+            String sql = "INSERT INTO address(name, handphone, address) "; 
+            sql = sql + " VALUES(?,?,?)"; 
+            //쿼리 지정  
+            pstmt = con.prepareStatement(sql); 
+            //(물음표의 순번, 적용할 값) 
+            pstmt.setString(1, "개발자9"); 
+            pstmt.setString(2, "999-9999-9999"); 
+            pstmt.setString(3, "베트남"); 
+
+            int ret = pstmt.executeUpdate(); 
+
+            System.out.println("레코드 " + ret + "개가 추가 되었습니다."); 
+             
+        } catch(SQLException e) { 
+            System.out.println("SQLException: " + e.getMessage()); 
+        } finally{ 
+            try{ 
+                if ( pstmt != null){ pstmt.close(); } 
+            }catch(Exception e){} 
+            try{ 
+                if ( con != null){ con.close(); } 
+            }catch(Exception e){} 
+        } 
+    } 
+
+} 
+
+ 
+
+6교시
+
+preparedstatement list
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+ 
+public class SelectPrepList {
+ 
+  public static void main(String[] args) {
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver = "com.mysql.cj.jdbc.Driver";
+    Connection con = null; //DB 연결 객체
+    PreparedStatement pstmt = null;//SQL 전송 객체
+    ResultSet rs = null;
+    StringBuffer sql = new StringBuffer();
+    sql.append(" select addressnum, name, handphone, address ");
+    sql.append(" from address ");
+    sql.append(" order by name desc ");
+ 
+    try {
+      Class.forName(driver);
+      con = DriverManager.getConnection(url, user, passwd);
+      pstmt = con.prepareStatement(sql.toString());
+      
+      rs = pstmt.executeQuery();
+      
+      while(rs.next()) {//
+        int addressnum = rs.getInt(1);
+        String name = rs.getString(2);
+        String handphone = rs.getString(3);
+        String address = rs.getString(4);
+        
+        System.out.println("번호: "+addressnum);
+        System.out.println("이름: "+name);
+        System.out.println("전화번호: "+handphone);
+        System.out.println("주소: "+address);
+        System.out.println("-------------------");      
+      }
+      
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      try {
+        if(rs!=null) rs.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      try {
+        if(pstmt!=null) pstmt.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      try {
+        if(con!=null) con.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }      
+    }
+  }
+}
+ 
+ 
+
+preparedstatement update
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+ 
+ 
+public class UpdatePrep {
+ 
+  public static void main(String[] args) {
+ 
+    String url = "jdbc:mysql://127.0.0.1:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver ="com.mysql.cj.jdbc.Driver";
+preparedstatement 전체 리스트
+    Connection con = null; //DB연결객체
+    PreparedStatement pstmt = null; //sql전송객체
+    
+    StringBuffer sql = new StringBuffer();
+    sql.append("  INSERT INTO address(name, handphone, address)  ");
+    sql.append("  VALUES(?,?,?)  ");
+ 
+    try {
+      Class.forName(driver);
+      con = DriverManager.getConnection(url, user, passwd);
+      pstmt = con.prepareStatement(sql.toString());
+ 
+      pstmt.setString(1, "홍길동");
+      pstmt.setString(2, "010-1234-5678");
+      pstmt.setString(3, "서울시 강남구");
+      
+      int cnt = pstmt.executeUpdate();
+      System.out.println("레코드"+cnt+"개가 추가되었습니다");
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }finally {
+      try {
+        if(pstmt != null) pstmt.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }try {
+        if(con != null) con.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+  }
+ 
+}
+ 
+ 
+
+
+preparedstatement delete
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+ 
+public class DeletePrep {
+ 
+  public static void main(String[] args) {
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver = "com.mysql.cj.jdbc.Driver";
+ 
+    Connection con = null; // DB 연결 객체
+    PreparedStatement pstmt = null; // java.sql.Statement, SQL 전송 객체
+    
+    try {
+      StringBuffer sql = new StringBuffer();
+      sql.append("  DELETE FROM address   ");
+      sql.append("  WHERE addressnum=10   ");
+      
+      Class.forName(driver);
+      con = DriverManager.getConnection(url, user, passwd);
+      pstmt = con.prepareStatement(sql.toString());
+      
+      
+      int cnt = pstmt.executeUpdate(sql.toString());
+      System.out.println("레코드 " + cnt + " 개가 삭제 되었습니다.");
+      
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      try {
+        if ( pstmt != null) pstmt.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      try {
+        if (con != null) con.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+  }
+ 
+}
+ 
+
+7교시
+
+DB open 클래스 작성
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+package utility;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+ 
+public class DBOpen {
+ 
+  private static Connection con;
+ 
+  public static Connection getConnection() {
+ 
+    try {
+      Class.forName(Constant.DRIVER);
+      con = DriverManager.getConnection(Constant.URL, Constant.USER, Constant.PASSWD);
+ 
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+ 
+    return con;
+  }
+ 
+}
+ 
+ 
+Constant 클래스 작성
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+package utility;
+ 
+import java.sql.SQLException;
+ 
+public class Constant {
+ 
+  public static final String URL = "com.mysql.cj.jdbc.Driver";
+  public static final String DRIVER = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+  public static final String USER = "javauser";
+  public static final String PASSWD = "1234";
+ 
+  public static void main(String[] args) {
+    // TODO Auto-generated method stub
+ 
+}
+}
+ 
+ 
+DB close 클래스 작성
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+package utility;
+ 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+ 
+public class DBClose {
+  public static void close(Connection con) {
+    try {
+      if(con!=null)con.close();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+  public static void close(PreparedStatement pstmt, Connection con) {
+    try {
+      if(pstmt!=null)pstmt.close();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    
+    try {
+      if(con!=null)con.close();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+  public static void close(ResultSet rs, PreparedStatement pstmt, Connection con) {
+    try {
+      if(rs!=null)rs.close();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    
+    try {
+      if(pstmt!=null)pstmt.close();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    
+    try {
+      if(con!=null)con.close();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+ 
+}
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+8교시
+
+DTO 작성
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+package address;
+ 
+public class AddressDTO {
+ 
+    private int addressnum    ;
+    private String name       ;
+    private String handphone  ;
+    private String address    ;
+    
+  public AddressDTO() {}
+  public AddressDTO(int addressnum, String name, String handphone, String address) {
+    super();
+    
+    this.addressnum = addressnum;
+    this.name = name;
+    this.handphone = handphone;
+    this.address = address;
+  }
+  @Override
+  public String toString() {
+    return "AddressDTO [addressnum=" + addressnum + ", name=" + name + ", handphone=" + handphone + ", address="
+        + address + "]";
+  }
+  public int getAddressnum() {
+    return addressnum;
+  }
+  public void setAddressnum(int addressnum) {
+    this.addressnum = addressnum;
+  }
+  public String getName() {
+    return name;
+  }
+  public void setName(String name) {
+    this.name = name;
+  }
+  public String getHandphone() {
+    return handphone;
+  }
+  public void setHandphone(String handphone) {
+    this.handphone = handphone;
+  }
+  public String getAddress() {
+    return address;
+  }
+  public void setAddress(String address) {
+    this.address = address;
+  }
+ 
+}
+ 
+ 
+ 
+ 
+
+DAO 작성
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+package address;
+ 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+ 
+import utility.DBClose;
+import utility.DBOpen;
+ 
+public class AddressDAO {
+ 
+  
+  /**
+   * db에서 여러 건의 데이터를 가져온다.(DQL)
+   * @return 여러 건의 레코드 
+   */
+  public List<AddressDTO> list(){
+    List<AddressDTO> list = new ArrayList<AddressDTO>();
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    
+    StringBuffer sql = new StringBuffer();
+    sql.append("  SELECT addressnum, name, handphone, address  ");
+    sql.append("  FROM address  ");
+    sql.append("  order by name desc  ");
+    
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      rs = pstmt.executeQuery();
+      while(rs.next()) {
+        AddressDTO dto = new AddressDTO();
+        dto.setAddressnum(rs.getInt("addressnum"));
+        dto.setName(rs.getString("name"));
+        dto.setHandphone(rs.getString("handphone"));
+        dto.setAddress(rs.getString("address"));
+        
+        list.add(dto); // DTO에 저장한 데이터 list에 저장
+      }
+      
+      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }finally {
+      DBClose.close(rs, pstmt, con);
+    }
+    
+    return list;
+  }
+ }
+ 
+ 
+ 
+Address 작성
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+package MySQL;
+ 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+ 
+public class SelectDB {
+ 
+  public static void main(String[] args) {
+    String url = "jdbc:mysql://localhost:3306/javadb?useUnicode=true&characterEncoding=utf8";
+    String user = "javauser";
+    String passwd = "1234";
+    String driver = "com.mysql.cj.jdbc.Driver";
+ 
+    Connection con = null; // DB 연결 객체
+    Statement stmt = null; // java.sql.Statement, SQL 전송 객체
+    ResultSet rs = null; // DQL의 결과를 받는 객체
+ 
+    try {
+      Class.forName(driver);
+      con = DriverManager.getConnection(url, user, passwd);
+      stmt = con.createStatement();
+ 
+      StringBuffer sql = new StringBuffer();
+      sql.append("  SELECT addressnum, name, handphone, address  ");
+      sql.append("  FROM address  ");
+      sql.append("  order by name desc  ");
+ 
+      rs = stmt.executeQuery(sql.toString());
+      while (rs.next()) {
+        int addressnum = rs.getInt(1);
+        String name = rs.getString(2);
+        String handphone = rs.getString(3);
+        String address = rs.getString(4);
+        System.out.println("번호 : " + addressnum);
+        System.out.println("성명 : " + name);
+        System.out.println("전화번호 : " + handphone);
+        System.out.println("주소 : " + address);
+        System.out.println("--------------------");
+      }
+ 
+    } catch (ClassNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      try {
+        if (rs != null)
+          rs.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+ 
+      try {
+        if (stmt != null)
+          stmt.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+ 
+      try {
+        if (con != null)
+          con.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+ 
+    }
+ 
+  }
+ 
+}
+ 
+ 
+ 
+
+MySQL에서 확인한 테이블
+
+
+ 
+
+STS에서 확인한 값
+
