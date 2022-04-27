@@ -1,0 +1,1621 @@
+1교시
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+  /** 
+   * db에서 한 건의 레코드를 가져온다 (DQL)
+   * @param addressnum pk 값
+   * @return 한 건의 레코드를 저장한 값 
+   */
+  public AddressDTO read(int addressnum) {
+    AddressDTO dto = null;
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    
+    StringBuffer sql = new StringBuffer();
+    sql.append("   SELECT addressnum, name, handphone, address   ");
+    sql.append("   FROM address  ");
+    sql.append("   WHERE addressnum= ?  ");
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setInt(1,  addressnum); // where addressnum=? 의 순서를 나타냄
+      
+      rs = pstmt.executeQuery();
+      
+      if(rs.next()) { // 데이터가 존재하면 실행할 것
+        dto = new AddressDTO();
+        dto.setAddressnum(rs.getInt("addressnum")); // rs의 addressnum을 DTO에 저장
+        dto.setName(rs.getString("name"));
+        dto.setHandphone(rs.getString("handphone"));
+        dto.setAddress(rs.getString("address"));
+        
+      }
+      
+      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      DBClose.close(rs, pstmt, con);
+    }
+    
+    
+    return dto;
+  }
+ 
+ 
+ 
+
+ 
+
+2교시
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+  public static void main(String[] args) {
+    AddressDAO dao = new AddressDAO();
+ 
+    // create(dao);
+    // list(dao);
+    read(dao);
+ 
+  }
+ 
+  private static void read(AddressDAO dao) {
+    int addressnum = 3;
+    AddressDTO dto = dao.read(addressnum);
+    p(dto);
+  }
+ 
+  private static void list(AddressDAO dao) {
+    List<AddressDTO> list = dao.list();
+////    System.out.println("레코드 갯수: " + list.size());
+//    for (int i = 0; i < list.size(); i++) {
+//      AddressDTO dto = list.get(i);
+//      p(dto);
+//      p("--------------");
+//    }
+    Iterator<AddressDTO> iter = list.iterator();
+    while(iter.hasNext()) {
+      AddressDTO dto = iter.next();
+      p(dto);
+      p("----------------");
+  }
+  }
+ 
+ 
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+public class AddressDAO {
+  /**
+   * db로 한 건의 레코드 생성(DML)
+   * @param dto 저장할 데이터
+   * @return 저장 성공 or 실패 값
+   */
+  public boolean create(AddressDTO dto) {
+    boolean flag = false;
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    
+    StringBuffer sql = new StringBuffer();
+    sql.append("     INSERT INTO address(name, handphone, address)   ");
+    sql.append("     VALUES( ?, ? , ?)    ");
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setString(1, dto.getName()); // 첫번째 ?에 dto의 name 필드값을  가져와 연결한다.
+      pstmt.setString(2, dto.getHandphone()); // 두번째 ?에 dto의 handphone 필드값을  가져와 연결한다.
+      pstmt.setString(3, dto.getAddress());  // 세번째 ?에 dto의 address 필드값을 가져와 연결한다.
+      
+      int cnt = pstmt.executeUpdate();
+      
+      if(cnt>0) flag = true; // 등록 성공
+      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      DBClose.close(pstmt, con);
+    }
+    
+    
+    return flag;
+  }
+ 
+ 
+ 
+
+ 
+
+3교시
+
+create list read update delete 만들기
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+package address;
+ 
+import java.util.Iterator;
+import java.util.List;
+ 
+public class AddressTest {
+ 
+  public static void main(String[] args) {
+    AddressDAO dao = new AddressDAO();
+ 
+//    create(dao);
+//      list(dao);
+//      read(dao);
+//    update(dao);
+      delete(dao);
+ 
+  }
+ 
+  private static void delete(AddressDAO dao) {
+    int addressnum = 7;
+    if(dao.delete(addressnum)) {
+      p("성공");
+    } else {
+      p("실패");
+    }
+  }
+ 
+  private static void update(AddressDAO dao) {
+    AddressDTO dto = dao.read(4);
+    dto.setHandphone("000-0000-0000");
+    dto.setAddress("서울시 성동구");
+ 
+    if (dao.update(dto)) {
+      p("성공");
+      dto = dao.read(4);
+      p(dto);
+    } else {
+      p("실패");
+    }
+ 
+  }
+ 
+  private static void read(AddressDAO dao) {
+    int addressnum = 1;
+    AddressDTO dto = dao.read(addressnum);
+    p(dto);
+  }
+ 
+  private static void list(AddressDAO dao) {
+    List<AddressDTO> list = dao.list();
+////    System.out.println("레코드 갯수: " + list.size());
+//    for (int i = 0; i < list.size(); i++) {
+//      AddressDTO dto = list.get(i);
+//      p(dto);
+//      p("--------------");
+//    }
+    Iterator<AddressDTO> iter = list.iterator();
+    while (iter.hasNext()) {
+      AddressDTO dto = iter.next();
+      p(dto);
+      p("------");
+    }
+  }
+ 
+  private static void p(AddressDTO dto) {
+    p("번호: " + dto.getAddressnum());
+    p("이름: " + dto.getName());
+    p("번호: " + dto.getHandphone());
+    p("주소: " + dto.getAddress());
+  }
+ 
+  private static void p(String string) {
+    System.out.println(string);
+  }
+ 
+  private static void create(AddressDAO dao) {
+ 
+    AddressDTO dto = new AddressDTO(0, "김길동", "010-1234-1234", "서울시 성동구");
+    System.out.println(dto);
+ 
+    if (dao.create(dto)) {
+      p("성공");
+    } else {
+      p("실패");
+    }
+ 
+  }
+}
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+
+4교시
+
+teamDAO DTO test 만들기  (list / read 두가지)
+
+DTO
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+package team;
+ 
+public class TeamDTO {
+                             
+      private int     no    ;
+      private String name   ;
+      private String phone  ;
+      private String email  ;
+      private String skills ;
+      private String address;
+      public TeamDTO() {
+        super();
+        // TODO Auto-generated constructor stub
+      }
+      public TeamDTO(int no, String name, String phone, String email, String skills, String address) {
+        super();
+        this.no = no;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.skills = skills;
+        this.address = address;
+      }
+      @Override
+      public String toString() {
+        return "teamDTO [no=" + no + ", name=" + name + ", phone=" + phone + ", email=" + email + ", skills=" + skills
+            + ", address=" + address + "]";
+      }
+      public int getNo() {
+        return no;
+      }
+      public void setNo(int no) {
+        this.no = no;
+      }
+      public String getName() {
+        return name;
+      }
+      public void setName(String name) {
+        this.name = name;
+      }
+      public String getPhone() {
+        return phone;
+      }
+      public void setPhone(String phone) {
+        this.phone = phone;
+      }
+      public String getEmail() {
+        return email;
+      }
+      public void setEmail(String email) {
+        this.email = email;
+      }
+      public String getSkills() {
+        return skills;
+      }
+      public void setSkills(String skills) {
+        this.skills = skills;
+      }
+      public String getAddress() {
+        return address;
+      }
+      public void setAddress(String address) {
+        this.address = address;
+      }
+  
+  
+}
+ 
+ 
+ 
+DAO
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+package team;
+ 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+ 
+import utility.DBClose;
+import utility.DBOpen;
+ 
+public class TeamDAO {
+  
+  
+/**
+ * DB에서 한 건의 데이터를 가져올 때 (DQL)
+ * @param no pk
+ * @return 한 건의 레코드
+ */
+  public TeamDTO read(int no) {
+    TeamDTO dto = null;
+    
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    StringBuffer sql = new StringBuffer();
+    sql.append("    select *      ");
+    sql.append("    from team     ");
+    sql.append("    where no = ?  ");
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setInt(1, no);
+      
+      rs = pstmt.executeQuery();
+      
+      if(rs.next()) {
+        dto = new TeamDTO();
+        dto.setNo(rs.getInt("no"));
+        dto.setName(rs.getString("name"));
+        dto.setPhone(rs.getString("phone"));
+        dto.setEmail(rs.getString("email"));
+        dto.setSkills(rs.getString("skills"));
+        dto.setAddress(rs.getString("address"));
+      }
+          
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      DBClose.close(rs, pstmt, con);
+    }
+    
+    
+    return dto;
+  }
+  
+  
+/**
+ * DB에서 여러 건의 데이터를 가져올 때 (DQL)
+ * @return List 가져온 데이터
+ */
+  public List<TeamDTO> list(){
+    List<TeamDTO> list = new ArrayList<TeamDTO>();
+    
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    StringBuffer sql = new StringBuffer();
+    sql.append("  select no, name, phone, email, skills, address  ");
+    sql.append("  from team                                       ");
+    sql.append("  order by no                                     ");
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      rs = pstmt.executeQuery();
+      
+      while(rs.next()) {
+        TeamDTO dto = new TeamDTO();
+        dto.setNo(rs.getInt("no"));
+        dto.setName(rs.getString("name"));
+        dto.setPhone(rs.getString("phone"));
+        dto.setEmail(rs.getString("email"));
+        dto.setSkills(rs.getString("skills"));
+        dto.setAddress(rs.getString("address"));
+ 
+        list.add(dto);
+      }
+      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      DBClose.close(rs, pstmt, con);
+    }
+    
+    return list;
+  }
+ 
+}
+ 
+ 
+ 
+test
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+package team;
+ 
+import java.util.List;
+ 
+public class Teamtest {
+ 
+  public static void main(String[] args) {
+    TeamDAO dao = new TeamDAO();
+    
+//    list(dao);
+    read(dao);
+    
+  }
+ 
+  private static void read(TeamDAO dao) {
+    int no = 1;
+    TeamDTO  dto = dao.read(no);
+    p(dto);
+  }
+ 
+  private static void list(TeamDAO dao) {
+    List<TeamDTO> list = dao.list();
+//    System.out.println(list.size());
+    for(int i=0; i<list.size(); i++) {
+      TeamDTO dto = list.get(i);
+      p(dto);
+      p("------------------------------");
+    }
+    
+  }
+ 
+  private static void p(String string) {
+    System.out.println(string);
+  }
+ 
+  private static void p(TeamDTO dto) {
+    p("번호 : " + dto.getNo());
+    p("이름 : " + dto.getName());
+    p("연락처 : " + dto.getPhone());
+    p("메일 : " + dto.getEmail());
+    p("능력 : " + dto.getSkills());
+    p("주소 : " + dto.getAddress());
+  }
+ 
+}
+ 
+ 
+ 
+list / read 두가지.
+
+ 
+
+5교시
+
+teamDAO DTO test 만들기  (create / update /)
+
+package team;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import utility.DBClose;
+import utility.DBOpen;
+
+public class TeamDAO {
+  
+  public boolean delete(int no) {
+    boolean flag = false;
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    StringBuffer sql = new StringBuffer();
+    sql.append(" delete from team ");
+    sql.append(" where no = ?     ");
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setInt(1, no);
+      
+      int cnt = pstmt.executeUpdate();
+      
+      if(cnt>0) flag = true;
+      
+      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      DBClose.close(pstmt, con);
+      
+    }
+    return flag;
+  }
+  
+  
+  
+  /**
+   * DB에 한 건의 레코드 수정
+   * @param dto에 수정할 한 건의 데이터
+   * @return falg 성공 or 실패
+   */
+  
+  public boolean update(TeamDTO dto) {
+    boolean flag = false;
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    
+    StringBuffer sql = new StringBuffer();
+    sql.append("  UPDATE team   ");
+    sql.append("  SET phone=?,  ");
+    sql.append("      email=?,  ");
+    sql.append("      skills=?, ");
+    sql.append("      address=?,");
+    sql.append("       no=?     ");
+    
+    
+   try {
+    pstmt = con.prepareStatement(sql.toString());
+    pstmt.setString(1, dto.getPhone());
+    pstmt.setString(2, dto.getEmail());
+    pstmt.setString(3, dto.getSkills());
+    pstmt.setString(4, dto.getAddress());
+    pstmt.setInt(5, dto.getNo());
+
+        
+    int cnt = pstmt.executeUpdate();
+    
+    if (cnt > 0) flag = true;
+    
+  } catch (SQLException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+  } finally {
+    
+    DBClose.close(pstmt, con);
+  }
+    return flag;
+  }
+  
+  
+  
+  /**
+   * DB에 한 건의 레코드 등록
+   * @param DTO에 등록할 한 건의 데이터
+   * @return flag 성공 or 실패
+   */
+  
+  public boolean create(TeamDTO dto) {
+  boolean flag = false;  
+  Connection con = DBOpen.getConnection();
+  PreparedStatement pstmt = null;
+  
+  StringBuffer sql = new StringBuffer();
+  sql.append(" insert into team(name, phone, email, skills, address) ");
+  sql.append("                 values(?,?,?,?,?) "                    );
+  
+    
+  try {
+    pstmt = con.prepareStatement(sql.toString());
+    pstmt.setString(1, dto.getName());
+    pstmt.setString(2, dto.getPhone());
+    pstmt.setString(3, dto.getEmail());
+    pstmt.setString(4, dto.getSkills());
+    pstmt.setString(5, dto.getAddress());
+    
+    
+    int cnt = pstmt.executeUpdate();
+    if(cnt>0) flag = true;
+    
+    
+  } catch (SQLException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+  } finally {
+    DBClose.close(pstmt, con);
+  }
+  
+  
+  
+  return flag;
+    
+  }
+  
+  
+  
+/**
+ * DB에서 한 건의 데이터를 가져올 때 (DQL)
+ * @param no pk
+ * @return 한 건의 레코드
+ */
+  public TeamDTO read(int no) {
+    TeamDTO dto = null;
+    
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    StringBuffer sql = new StringBuffer();
+    sql.append("    select *      ");
+    sql.append("    from team     ");
+    sql.append("    where no = ?  ");
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setInt(1, no);
+      
+      rs = pstmt.executeQuery();
+      
+      if(rs.next()) {
+        dto = new TeamDTO();
+        dto.setNo(rs.getInt("no"));
+        dto.setName(rs.getString("name"));
+        dto.setPhone(rs.getString("phone"));
+        dto.setEmail(rs.getString("email"));
+        dto.setSkills(rs.getString("skills"));
+        dto.setAddress(rs.getString("address"));
+      }
+          
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      DBClose.close(rs, pstmt, con);
+    }
+    
+    
+    return dto;
+  }
+  
+  
+/**
+ * DB에서 여러 건의 데이터를 가져올 때 (DQL)
+ * @return List 가져온 데이터
+ */
+  public List<TeamDTO> list(){
+    List<TeamDTO> list = new ArrayList<TeamDTO>();
+    
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    StringBuffer sql = new StringBuffer();
+    sql.append("  select no, name, phone, email, skills, address  ");
+    sql.append("  from team                                       ");
+    sql.append("  order by no                                     ");
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      rs = pstmt.executeQuery();
+      
+      while(rs.next()) {
+        TeamDTO dto = new TeamDTO();
+        dto.setNo(rs.getInt("no"));
+        dto.setName(rs.getString("name"));
+        dto.setPhone(rs.getString("phone"));
+        dto.setEmail(rs.getString("email"));
+        dto.setSkills(rs.getString("skills"));
+        dto.setAddress(rs.getString("address"));
+
+        list.add(dto);
+      }
+      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      DBClose.close(rs, pstmt, con);
+    }
+    
+    return list;
+  }
+
+}
+
+ 
+
+package team;
+
+public class TeamDTO {
+                             
+      private int     no    ;
+      private String name   ;
+      private String phone  ;
+      private String email  ;
+      private String skills ;
+      private String address;
+      public TeamDTO() {
+        super();
+        // TODO Auto-generated constructor stub
+      }
+      public TeamDTO(int no, String name, String phone, String email, String skills, String address) {
+        super();
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.skills = skills;
+        this.address = address;
+      }
+      @Override
+      public String toString() {
+        return "teamDTO [no=" + no + ", name=" + name + ", phone=" + phone + ", email=" + email + ", skills=" + skills
+            + ", address=" + address + "]";
+      }
+      public int getNo() {
+        return no;
+      }
+      public void setNo(int no) {
+        this.no = no;
+      }
+      
+      public String getName() {
+        return name;
+      }
+      public void setName(String name) {
+        this.name = name;
+      }
+      
+      public String getPhone() {
+        return phone;
+      }
+      public void setPhone(String phone) {
+        this.phone = phone;
+      }
+      
+      public String getEmail() {
+        return email;
+      }
+      public void setEmail(String email) {
+        this.email = email;
+      }
+      
+      public String getSkills() {
+        return skills;
+      }
+      public void setSkills(String skills) {
+        this.skills = skills;
+      }
+      
+      public String getAddress() {
+        return address;
+      }
+      public void setAddress(String address) {
+        this.address = address;
+      }
+  
+  
+}
+
+6교시
+
+teamDAO DTO test 만들기 delete 
+
+package team;
+
+import java.util.List;
+
+public class Teamtest {
+
+  public static void main(String[] args) {
+    TeamDAO dao = new TeamDAO();
+    
+//    list(dao);
+//    read(dao);
+//    create(dao);
+    update(dao);
+//    delete(dao);
+  }
+
+  private static void delete(TeamDAO dao) {
+    int no = 2;
+    if(dao.delete(no)) {
+      p("성공");
+    } else {
+      p("실패");
+    }
+  }
+
+  private static void update(TeamDAO dao) {
+    TeamDTO dto = dao.read(1);
+    dto.setPhone("010-0000-0000");
+    dto.setEmail("ko@mail.com");
+    dto.setSkills("shouting");
+    dto.setAddress("서울 마포구");
+    
+    
+    
+    if(dao.update(dto)) {
+      p("성공");
+      p("--------------");
+      dto = dao.read(1);
+      p(dto);
+    } else {
+      p("실패");
+    }
+  }
+
+  private static void create(TeamDAO dao) {
+    
+    TeamDTO dto = new TeamDTO(7,
+        "손흥민", "010-7777-7777", "hm@mail.com", "shooting", "영국 토트넘");
+    System.out.println(dto);
+    
+    if(dao.create(dto)) {
+      p("성공");
+    }else {
+      p("실패");
+    }
+       
+    
+  }
+
+  private static void read(TeamDAO dao) {
+    int no = 1;
+    TeamDTO  dto = dao.read(no);
+    p(dto);
+  }
+
+  private static void list(TeamDAO dao) {
+    List<TeamDTO> list = dao.list();
+//    System.out.println(list.size());
+    for(int i=0; i<list.size(); i++) {
+      TeamDTO dto = list.get(i);
+      p(dto);
+      p("------------------------------");
+    }
+    
+  }
+
+  private static void p(String string) {
+    System.out.println(string);
+  }
+
+  private static void p(TeamDTO dto) {
+    p("번호 : " + dto.getNo());
+    p("이름 : " + dto.getName());
+    p("연락처 : " + dto.getPhone());
+    p("메일 : " + dto.getEmail());
+    p("능력 : " + dto.getSkills());
+    p("주소 : " + dto.getAddress());
+  }
+
+}
+
+ 
+
+ 
+
+7교시 8교시
+
+memo dto dao test 만들기
+
+ 
+
+package memo;
+
+public class MemoDTO {
+
+  private int memono        ;
+  private String wname      ;
+  private String title      ;
+  private String content    ;  
+  private String passwd     ;
+  private String wdate      ;
+  public MemoDTO() {
+    super();
+    // TODO Auto-generated constructor stub
+  }
+  public MemoDTO(int memono, String wname, String title, String content, String passwd, String wdate) {
+    super();
+    this.wname = wname;
+    this.title = title;
+    this.content = content;
+    this.passwd = passwd;
+    this.wdate = wdate;
+  }
+  @Override
+  public String toString() {
+    return "MemoDTO [memono=" + memono + ", wname=" + wname + ", title=" + title + ", content=" + content + ", passwd="
+        + passwd + ", wdate=" + wdate + "]";
+  }
+  public int getMemono() {
+    return memono;
+  }
+  public void setMemono(int memono) {
+    this.memono = memono;
+  }
+  public String getWname() {
+    return wname;
+  }
+  public void setWname(String wname) {
+    this.wname = wname;
+  }
+  public String getTitle() {
+    return title;
+  }
+  public void setTitle(String title) {
+    this.title = title;
+  }
+  public String getContent() {
+    return content;
+  }
+  public void setContent(String content) {
+    this.content = content;
+  }
+  public String getPasswd() {
+    return passwd;
+  }
+  public void setPasswd(String passwd) {
+    this.passwd = passwd;
+  }
+  public String getWdate() {
+    return wdate;
+  }
+  public void setWdate(String wdate) {
+    this.wdate = wdate;
+  }
+  
+
+
+
+}
+
+package memo;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import utility.DBClose;
+import utility.DBOpen;
+
+public class MemoDAO {
+
+  
+  public boolean create(MemoDTO dto) {
+    boolean flag = false;
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    
+    StringBuffer sql = new StringBuffer();
+    sql.append("  insert into memo(wname, title, content, passwd, wdate)  ");
+    sql.append("  values(?,?,?,?,?)                                       ");
+
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setString(1, dto.getWname()); 
+      pstmt.setString(2, dto.getTitle());
+      pstmt.setString(3, dto.getContent());  
+      pstmt.setString(4, dto.getPasswd());  
+      pstmt.setString(5, dto.getWdate());  
+      
+     int cnt = pstmt.executeUpdate();
+      
+      if(cnt > 0) flag = true; 
+      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally{
+      DBClose.close(pstmt, con);
+    }
+    
+    return flag;
+  }
+  /**
+   * 한 건의 데이터를 가져온다 (DQL)
+   * @param memono pk 값
+   * @return 한 건의 레코드
+   */
+  public MemoDTO read(int memono) {
+    MemoDTO dto = null;
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    
+    StringBuffer sql = new StringBuffer();
+    sql.append("   SELECT wname, title, content, passwd, wdate   ");
+    sql.append("   FROM memo  ");
+    sql.append("   WHERE memono= ?  ");
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setInt(1, memono);
+      
+      rs = pstmt.executeQuery();
+      
+      if(rs.next()) {
+        dto = new MemoDTO();
+        dto.setWname(rs.getString("wname"));
+        dto.setTitle(rs.getString("title"));
+        dto.setContent(rs.getString("content"));
+        dto.setPasswd(rs.getString("passwd"));
+        dto.setWdate(rs.getString("wdate"));
+      }
+          
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      DBClose.close(rs, pstmt, con);
+    }
+    
+       
+    
+    return dto;
+  }
+  
+  public boolean update(MemoDTO dto) {
+  boolean flag = false;
+  Connection con = DBOpen.getConnection();
+  PreparedStatement pstmt = null;
+  
+  StringBuffer sql = new StringBuffer();
+  sql.append(" update memo        ");
+  sql.append("  set title = ?,    ");
+  sql.append("    content = ?     ");
+  sql.append("  where memono = ?  ");
+  
+  try {
+    pstmt = con.prepareStatement(sql.toString());
+    pstmt.setString(1, dto.getTitle());
+    pstmt.setString(2, dto.getContent());
+    pstmt.setInt(3, dto.getMemono());
+  } catch (SQLException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+  } finally {
+    DBClose.close(pstmt, con);
+  }
+  
+  
+  return flag;
+  }
+  
+  public boolean delete(int memono) {
+    boolean flag = false;
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    StringBuffer sql = new StringBuffer();
+    sql.append("   DELETE FROM memo  ");
+    sql.append("   WHERE memono=?   ");
+    
+    try {
+     pstmt = con.prepareStatement(sql.toString());
+     pstmt.setInt(1, memono);
+     
+     int cnt = pstmt.executeUpdate();
+     
+     if(cnt>0) flag = true;
+     
+     
+   } catch (SQLException e) {
+     // TODO Auto-generated catch block
+     e.printStackTrace();
+   } finally {
+     DBClose.close(pstmt, con);
+   }
+    
+    
+    
+    
+    
+    return flag;
+  }
+  /**
+   * DB에서 여러 건의 데이터를 가져올 때(DQL)
+   * @return 여러 건의 레코드
+   */
+  public List<MemoDTO> list(){
+    List<MemoDTO> list = new ArrayList<MemoDTO>();
+    Connection con = DBOpen.getConnection();
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    
+    StringBuffer sql = new StringBuffer();
+    sql.append("  select wname, title, content, passwd, wdate  ");
+    sql.append("  from memo                                    ");
+    sql.append("  order by wname desc;                         ");
+    
+    
+    try {
+      pstmt = con.prepareStatement(sql.toString());
+      rs = pstmt.executeQuery();
+      while(rs.next()) {
+        MemoDTO dto = new MemoDTO();
+        dto.setWname(rs.getString("wname"));
+        dto.setTitle(rs.getString("title"));
+        dto.setContent(rs.getString("content"));
+        dto.setPasswd(rs.getString("passwd"));
+        dto.setPasswd(rs.getString("wdate"));
+        
+        list.add(dto);
+      }
+      
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }finally {
+      DBClose.close(rs, pstmt, con);
+    }
+  
+    
+    return list;
+  }
+}
+
+package memo;
+
+import java.util.Iterator;
+import java.util.List;
+
+
+public class MemoTest {
+
+  public static void main(String[] args) {
+    MemoDAO dao = new MemoDAO();
+//    list(dao);     //됨
+//    read(dao);     //됨
+//    create(dao);   //됨
+    update(dao);
+//    delete(dao);   //됨
+    
+    
+}
+
+  private static void update(MemoDAO dao) {
+    MemoDTO dto = dao.read(2);
+    dto.setTitle(" github강의 ");
+    dto.setContent(" test 설정입니다. ");
+    
+    if(dao.update(dto)) {
+      p("성공");
+      p("-------------");
+      p(dto);
+    } else {
+      p("실패");
+    }
+  }
+
+  private static void delete(MemoDAO dao) {
+    int memono = 2;
+    if(dao.delete(memono)) {
+      p("성공");
+    } else {
+      p("실패");
+    }
+  }    
+
+
+
+
+  private static void create(MemoDAO dao) {
+    MemoDTO dto =
+        new MemoDTO(5, "왕눈이", "github 수업", "test 설정합니다.", "4321", "220427" );
+    System.out.println(dto);
+    
+    if(dao.create(dto)) {
+      p("성공");
+    } else {
+      p("실패");
+    }
+  }
+
+  private static void read(MemoDAO dao) {
+    int memono = 3;
+    MemoDTO dto = dao.read(memono);
+    p(dto);
+  }
+
+  private static void list(MemoDAO dao) {
+    List<MemoDTO> list = dao.list();
+    Iterator<MemoDTO> iter = list.iterator();
+    while(iter.hasNext()) {
+      MemoDTO dto = iter.next();
+      p(dto);
+      p("-------");
+    }
+    
+  }
+
+  private static void p(MemoDTO dto) {
+    p("이름: " + dto.getWname());
+    p("제목: " + dto.getTitle());
+    p("내용: " + dto.getContent());
+    p("암호: " + dto.getPasswd());
+    p("날짜: " + dto.getWdate());
+    
+  }
+
+  private static void p(String string) {
+    System.out.println(string);
+  }
+  
+}
+
+ 
