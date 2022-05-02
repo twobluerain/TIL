@@ -826,4 +826,4 @@ HTML tag의 분류
  
 
 - https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure
-- body tag를  header, nav, main, aside, footer 등으로 나누어 보여지게 한다.
+- body tag를  header, nav, main, aside, footer 등으로 나누어 보여지게 한다.t

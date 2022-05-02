@@ -1,0 +1,926 @@
+1교시
+
+ CSS Syntax
+- Cascading Style Sheet  : Cascading은 위에서 아래로 떨어지는 느낌으로 폭포처럼 흐른다는 
+  의미를 가지고 있다. 
+- 어떤 UI의 스타일이 필요할때 이미정의된 스타일 시트가 있다면 그것을 사용하고 없다면
+  브라우저에서 정의하고 있는 기본 스타일을 사용한다.
+- https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
+
+
+◎ Selectors
+ Universal :  *
+ type : Tag
+ ID   : #id
+ Class : .class
+ State :  :
+ Attribute : []
+
+2. CSS Example
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  
+  <style>
+    p{
+      color : green;
+      text-align: center;
+    }
+  </style>
+  
+  
+</head>
+<body>
+
+  <p>Hello World!</p>
+  <p>This paragraph is styled with CSS</p>
+  Hello world!
+  This paragraph <br> is styled with CSS
+  
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+ 
+  <ol>
+    <li id='special'>First</li>
+    <li>Second</li>
+  </ol>
+  <h1 id='special'>Hello</h1>
+  <button>Button 1</button>
+  <button>Button 2</button>
+  <div class='red'></div>
+  <div class='blue'></div>
+  <a href="naver.com"> Naver </href>
+  <a href="google.com">Google</href>
+  <a>Empty</a>
+  
+</body>
+</html>	*{
+  color:green;
+}
+li{
+  color:blue;
+}
+li#special{
+  color:pink;
+}
+.red{
+  width:100px;
+  height:100px;
+  background:yellow;
+}
+button:hover {
+  color:red;
+  background:beige;
+}
+a[href]{
+  color:purple;
+}
+a[href='naver.com']{
+  color:skyblue;
+}
+a[href^='naver']{
+  color:red;
+}
+a[href$='.com']{
+  color:purple;
+}
+3. CSS 주석
+
+ /* This is a single-line comment */
+
+
+ /* This is a single-line comment */
+
+4. CSS Background
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <h1>CSS background-color example!</h1>
+  <div>
+  This is a text inside a div element
+  <p>This paragraph has its own background color.</p>
+  We are still in the div element.
+  </div>
+  
+  
+  
+</body>
+</html>	h1{
+  background-color:#6485ed;
+}
+p{
+  background-color:#e0fa;
+}
+div{
+  background-color:#b0c43e;
+}
+- background-repeat  배경이미지의 반복을 지정 4가지 사용
+
+- repeat : 배경이미지가 반복적으로 적용, 기본값.
+- repeat-x : 배경이미지가 가로방향으로만 반복적으로 적용.
+- repeat-y : 배경이미지가 세로방향으로만 반복적으로 적용.
+- no-repeat : 배경이미지가 반복적으로 적용되지 않고 한번만 적용.
+2교시
+
+- background-repeat: no-repeat 일때 이미지가 왼쪽 상단에 위치하는데
+ 그위치를 변경하는것이 background-position 이다
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    background-image: url("tree.jpg");
+    background-repeat: no-repeat;
+    background-position: right top;
+    margin-right: 200px;
+}
+</style>
+</head>
+<body>
+ 
+<h1>Hello World!</h1>
+<p>W3Schools background no-repeat, set position example.</p>
+<p>Now the background image is only shown once, and positioned away from the text.</p>
+<p>In this example we have also added a margin on the right side, so the background image will never disturb the text.</p>
+ 
+</body>
+</html>
+
+- CSS background-attachment 속성은 배경 이미지를 뷰포트 내에서 고정할지,
+  아니면 자신의 컨테이닝 블록과 함께 스크롤할지 지정한다.
+>>> background-attachment.html
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <p>Click the radio buttons and scroll the DIV element to see the effect of the background-attachment property:</p>
+ 
+  <form name="myForm">
+  <input type="radio" name="myAtt" value="scroll"
+         onclick="myFunction()" checked>scroll
+  <input type="radio" name="myAtt" value="local"
+         onclick="myFunction()">local
+  </form>
+  
+  <div id="myDIV">
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  <h1>Hello</h1>
+  </div>
+  
+   
+</body>
+</html>
+#myDIV {
+    width: 400px;
+    height: 500px;
+    background: lightyellow url('tree.jpg') no-repeat;
+    color: pink;
+    overflow: auto;
+}	
+function myFunction() {
+    if (document.forms["myForm"]["myAtt"][0].checked) {
+      document.getElementById("myDIV").style.backgroundAttachment = "scroll";
+    } else {
+      document.getElementById("myDIV").style.backgroundAttachment = "local";
+    }
+}
+- scroll : 스크롤 움직일 시 배경에 삽입한 이미지는 고정하고 텍스트만 내려가는 형식
+
+- local : 스크롤 움직일 시 배경에 삽입한 이미지는 고정없이 모두 다 내려가는 형식
+
+3교시
+
+CSS Margin, Padding, Border, Outline
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  
+  <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+    deserunt mollit anim id est laborum.</div>
+
+</body>
+</html>	div {
+    background-color: beige;
+    width: 300px;
+    padding: 15px;
+    border: 20px solid pink;
+    margin: 15px;
+}
+1. Margin Style
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <p>This is a paragraph with no specified margins.</p>
+  <p class="ex">This is a paragraph with specified margins.</p>
+ 
+  
+</body>
+</html>	p {
+    background-color: yellow;
+}
+ 
+p.ex {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 150px;
+    margin-left: 50px;
+}
+
+2. Padding Style
+
+
+3. Border Style
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  
+<p>2 different border styles.</p>
+  
+</body>
+</html>	p {
+    border-top-style: dotted;
+    border-right-style: solid;
+    border-bottom-style: dotted;
+    border-left-style: solid;
+}
+/* border-style : dotted solid; 와 같다. */
+4.Outline Style
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  
+  <p><b>Note:</b> IE8 supports the outline properties only if a !DOCTYPE is 
+specified.</p>  
+  
+</body>
+</html>	p {
+    border: 4px solid yellow;
+    outline: purple solid thick;
+}
+1.Hiding an Element - display:none or visibility:hidden
+
+
+2.CSS Display - Block and Inline Elements
+
+
+
+strong : inline element
+
+
+- html
+
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+ 
+  <div></div>
+  <div></div>
+  <div></div>
+  <span>1</span>
+  <span>2</span>
+  <span>3</span>
+  
+</body>
+</html>	div, span {
+  width:100px;
+  height:100px;
+  margin:50px
+  
+}
+ 
+div {
+  background:lightgreen;
+}
+ 
+span {
+  background: yellow;
+}
+CSS Position
+- position : static (default) - html에 정의된 순서대로 브라우저에 자연스럽게 보여줌 
+- position : relative - 나의 원래자리에서 상대적으로 이동
+- position : absolute - 내 아이템이 담겨있는 상자에서 이동됨
+- position : fixed - 내 아이템이 담겨있는 상자에서 벗어나 원도우 즉 page 상에서 이동된다
+- position : sticky - 원래자리에 고정되어, 스크롤바를 이동해도 그자리에 그대로 있다
+
+- https://developer.mozilla.org/ko/docs/Web/CSS/position
+
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+ 
+  <article class="container">
+    <div></div>
+    <div class="box">I'm Box</div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </article>
+  
+</body>
+</html>	div, span {
+  width:50px;
+  height:50px;
+  margin:25px;
+  background:pink;
+}
+ 
+.container{
+  background:beige;
+}
+.box{
+  background:blue;
+  left:80px;
+  top:150px;
+  position:fixed;
+}
+4교시
+
+CSS overflow property
+
+  - overflow, overflow-x, overflow-y
+
+  - contents가 Box 영역을 벗어났을때 처리되는 방법을 나타냄.
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  
+  <p>The overflow property specifies what to do if the content of an element exceeds the size of the element's box.</p>
+ 
+  <p>overflow:scroll</p>
+  <div class="scroll">You can use the overflow property when you want to have better control of the layout. The default value is visible.</div>
+ 
+  <p>overflow:hidden</p>
+  <div class="hidden">You can use the overflow property when you want to have better control of the layout. The default value is visible.</div>
+  
+</body>
+</html>	div.scroll {
+    background-color: beige;
+    width: 200px;
+    height: 100px;
+    overflow: scroll;
+}
+ 
+div.hidden {
+    background-color: lightgrey;
+    width: 200px;
+    height: 100px;
+    overflow: hidden;
+}
+initial : 디폴트 값
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+<div>
+  <h1>Initial</h1>
+  <p>The header and this text is inside a DIV element, which has the color property set to "red". The header element has its color property set to "initial", which in this case is "black".</p>
+</div>
+
+<p><b>Note:</b> The initial keyword is not supported as a property value in Internet Explorer, or in Opera before version 15.</p>
+
+</body>
+</html>
+div {
+    color: red; 
+}
+
+h1  {
+    color: initial; 
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <div>
+Here is <span>a span element</span> which is blue, as span elements are set to be.
+  </div>
+ 
+  <div class="extra" style="color:green">
+Here is <span>a span element</span> which is green, because it inherits from its parent.
+  </div>
+ 
+  <div style="color:red">
+Here is <span>a span element</span> which is blue, as span elements are set to be.
+  </div>
+  
+</body>
+</html>	span {
+    color: blue;
+    border: 4px solid purple;
+}
+.extra span {
+    color: inherit;
+}
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <p>Click the "Try it" button to change the overflow-x property of the DIV element:</p>
+ 
+  <button onclick="myFunction()">Try it</button>
+ 
+  <div id="myDIV">
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit,<br> sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br> Ut wisi enim ad minim veniam,<br> quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+  </div>
+  
+</body>
+</html>	#myDIV {
+    border: 1px solid black;
+    background-color: lightblue;
+    width: 200px;
+    height: 210px;
+    white-space: nowrap;
+}	function myFunction() {
+    document.getElementById("myDIV").style.overflowX = "scroll";
+}
+
+
+5교시
+
+CSS Float
+
+- 문서에 사진이나 글그림을 왼쪽이나 오른쪽에 띄어서 정렬하거나 각 객체를 오른쪽이나
+  왼쪽으로 정렬하여 문서를 배치한다
+- float는 left right none으로 설정할 수 있다.
+- block형 요소에만 사용된다. 예) div, p, ol, ul, table, img ...
+- https://developer.mozilla.org/en-US/docs/Web/CSS/float
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <h1>간단한 float 예제</h1>
+  <div class="box">"We always overestimate the change that will occur in the next two years and underestimate the change that will occur in the next ten. Don't let yourself be lulled into inaction."</div>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus aliquam dolor, eu lacinia lorem placerat vulputate. Duis felis orci, pulvinar id metus ut, rutrum luctus orci. Cras porttitor imperdiet nunc, at ultricies tellus laoreet sit amet. </p>
+  <p>Sed auctor cursus massa at porta. Integer ligula ipsum, tristique sit amet orci vel, viverra egestas ligula. Curabitur vehicula tellus neque, ac ornare ex malesuada et. In vitae convallis lacus. Aliquam erat volutpat. Suspendisse ac imperdiet turpis. Aenean finibus sollicitudin eros pharetra congue. Duis ornare egestas augue ut luctus. Proin blandit quam nec lacus varius commodo et a urna. Ut id ornare felis, eget fermentum sapien.</p>
+  <p>Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada ultrices. Phasellus turpis est, posuere sit amet dapibus ut, facilisis sed est. Nam id risus quis ante semper consectetur eget aliquam lorem. Vivamus tristique elit dolor, sed pretium metus suscipit vel. Mauris ultricies lectus sed lobortis finibus. Vivamus eu urna eget velit cursus viverra quis vestibulum sem. Aliquam tincidunt eget purus in interdum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+  
+</body>
+</html>	  body {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  font: .9em/1.2 Arial, Helvetica,
+        sans-serif
+}
+ 
+.box {
+  float: right ;
+  margin-right: 15px;
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  background-color: rgb(207,232,220);
+  padding: 1em;
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+.thumbnail {
+    float: left;
+    width: 110px;
+    height: 90px;
+    margin: 5px;
+}
+</style>
+</head>
+<body>
+
+  <h3>Image Gallery</h3>
+<p>Try to resize the browser-window to see what happens when the images do not have enough room.</p>
+<img class="thumbnail" src="1.jpg" width="107" height="90">
+<img class="thumbnail" src="2.jpg" width="107" height="80">
+<img class="thumbnail" src="3.jpg" width="116" height="90">
+<img class="thumbnail" src="4.jpg" width="120" height="90">
+<img class="thumbnail" src="5.jpg" width="107" height="90">
+<img class="thumbnail" src="6.jpg" width="107" height="80">
+<img class="thumbnail" src="7.jpg" width="116" height="90">
+<img class="thumbnail" src="8.jpg" width="120" height="90">
+<img class="thumbnail" src="9.jpg" width="128" height="90">
+  
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.thumbnail {
+    float: left;
+    width: 110px;
+    height: 90px;
+    margin: 5px;
+}
+ 
+.text_line {
+    clear: both;
+    margin-bottom: 2px;
+}
+</style>
+</head>
+<body>
+ 
+<h3>Image Gallery</h3>
+<p>Try to resize the browser-window to see what happens when the images does not have enough room.</p>
+<img class="thumbnail" src="1.jpg" width="107" height="90">
+<img class="thumbnail" src="2.jpg" width="107" height="80">
+<img class="thumbnail" src="3.jpg" width="116" height="90">
+<img class="thumbnail" src="4.jpg" width="120" height="90">
+ 
+<h3 class="text_line">Second row</h3>
+<img class="thumbnail" src="5.jpg" width="107" height="90">
+<img class="thumbnail" src="6.jpg" width="107" height="80">
+<img class="thumbnail" src="7.jpg" width="116" height="90">
+<img class="thumbnail" src="8.jpg" width="120" height="90">
+<img class="thumbnail" src="9.jpg" width="120" height="90">
+</body>
+</html>
+
+
+6교시 / 7교시
+
+FlexBox
+- https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox
+- https://css-tricks.com/snippets/css/a-guide-to-flexbox/#flexbox-properties
+- https://material.io/resources/color/#!/?view.left=0&view.right=0
+
+- Flexbox는 box와 아이템들을 행 또는 열로 자유자재로 배치시켜주는 방법이다.
+- 박스가 커지면 박스의 공간을 어떻게 매꿔야 될지 , 박스가 작아지면 아이템이 
+- 어떻게 작아져서 유연하게 박스안에서 배치되는지 자유롭게 정의할 수 있다.
+- 웹 사이트의 layout을 쉽게구성할 수있다.
+- FlexBox는 container에 적용되는 속성과 그안 item들에 적용되는 속성이 있다.
+- Container 안 항목들이 가로(left -> right)로 정렬되면 main axis(메인축,중심축)은 수평축이 되고
+  cross axis(교차축,반대축)은 수직축이 된다. 
+- Container 안 항목들이 세로(top -> bottom)로 정렬되면 main axis(메인축,중심축)은 수직축이 되고
+  cross axis(교차축, 반대축)은 수평축이 된다.
+
+속성	의미
+display	Flex Container를 정의
+flex-flow	flex-direction와 flex-wrap의 단축 속성
+flex-direction	Flex Items의 주 축(main-axis)을 설정
+flex-wrap	Flex Items의 여러 줄 묶음(줄 바꿈) 설정
+justify-content	주 축(main-axis)의 정렬 방법을 설정
+align-content	교차 축(cross-axis)의 정렬 방법을 설정(2줄 이상)
+align-items	교차 축(cross-axis)에서 Items의 정렬 방법을 설정(1줄)
+
+값	의미
+flex	Block 특성의 Flex Container를 정의
+inline-flex	Inline 특성의 Flex Container를 정의
+
+
+
+flex-direction	Items의 주 축(main-axis)을 설정
+flex-wrap	Items의 여러 줄 묶음(줄 바꿈) 설정
+row	Itmes를 수평축(왼쪽에서 오른쪽으로)으로 표시
+row-reverse	Items를 row의 반대 축으로 표시
+column	Items를 수직축(위에서 아래로)으로 표시
+column-reverse	Items를 column의 반대 축으로 표시
+
+시작점(flex-start)과 끝점(flex-end)
+
+nowrap	모든 Itmes를 여러 줄로 묶지 않음(한 줄에 표시)
+wrap	Items를 여러 줄로 묶음
+wrap-reverse	Items를 wrap의 역 방향으로 여러 줄로 묶음
+
+flex-start	Items를 시작점(flex-start)으로 정렬	flex-start
+flex-end	Items를 끝점(flex-end)으로 정렬	
+center	Items를 가운데 정렬	
+space-between	시작 Item은 시작점에, 마지막 Item은 끝점에 정렬되고 나머지 Items는 사이에 고르게 정렬됨	
+space-around	Items를 균등한 여백을 포함하여 정렬
+
+stretch	Container의 교차 축을 채우기 위해 Items를 늘림
+flex-start	Items를 시작점(flex-start)으로 정렬
+flex-end	Items를 끝점(flex-end)으로 정렬
+center	Items를 가운데 정렬
+space-between	시작 Item은 시작점에, 마지막 Item은 끝점에 정렬되고 나머지 Items는 사이에 고르게 정렬됨
+space-around	Items를 균등한 여백을 포함하여 정렬
+
+stretch	Container의 교차 축을 채우기 위해 Items를 늘림
+flex-start	Items를 각 줄의 시작점(flex-start)으로 정렬
+flex-end	Items를 각 줄의 끝점(flex-end)으로 정렬
+center	Items를 가운데 정렬
+baseline	Items를 문자 기준선에 정렬
+
+order	Flex Item의 순서를 설정
+flex	flex-grow, flex-shrink, flex-basis의 단축 속성
+flex-grow	Flex Item의 증가 너비 비율을 설정
+flex-shrink	Flex Item의 감소 너비 비율을 설정
+flex-basis	Flex Item의 (공간 배분 전) 기본 너비 설정
+align-self	교차 축(cross-axis)에서 Item의 정렬 방법을 설정
+
+flex-grow	Item의 증가 너비 비율을 설정	0
+flex-shrink	Item의 감소 너비 비율을 설정	1
+flex-basis	Item의 (공간 배분 전) 기본 너비 설정	auto
+flex-shrink
+Item이 감소하는 너비의 비율을 설정합니다.
+숫자가 크면 더 많은 너비가 감소합니다.
+Item이 가변 너비가 아니거나, 값이 0일 경우 효과가 없습니다.
+
+
+숫자	Item의 감소 너비 비율을 설정
+flex-basis
+Item의 (공간 배분 전) 기본 너비를 설정합니다.
+값이 auto일 경우 width, height 등의 속성으로 Item의 너비를 설정할 수 있습니다.
+하지만 단위 값이 주어질 경우 설정할 수 없습니다.
+
+
+auto	가변 Item과 같은 너비
+단위	px, em, cm 등 단위로 지정
+align-self
+교차 축(cross-axis)에서 개별 Item의 정렬 방법을 설정합니다.
+
+align-items는 Container 내 모든 Items의 정렬 방법을 설정합니다.
+필요에 의해 일부 Item만 정렬 방법을 변경하려고 할 경우 align-self를 사용할 수 있습니다.
+이 속성은 align-items 속성보다 우선합니다.
+
+
+auto	Container의 align-items 속성을 상속받음
+stretch	Container의 교차 축을 채우기 위해 Item을 늘림
+flex-start	Item을 각 줄의 시작점(flex-start)으로 정렬
+flex-end	Item을 각 줄의 끝점(flex-end)으로 정렬
+center	Item을 가운데 정렬
+baseline	Item을 문자 기준선에 정렬
+
+
+8교시
+
+반응형 웹( Responsive Web)
+- https://developer.mozilla.org/ko/docs/Learn/CSS/CSS_layout/Responsive_Design
+
+
+
+- 사용자의 웹사이트 이용이 데스크탑, 태블릿, 모바일등으로 다양해지면서 웹페이지가 여러 크기의
+  스크린에서 내용이 보여지기 위해서 반응형 웹 디자인이 중요하다
+
+- 콘텐츠를 물과 같이 만들어야 유동적으로 만들어진 콘텐츠가 어떤 모양의 컨테이너든 상관없이 
+  잘 맞게 보여질 수 있다 (Content is like water)
+
+- 유동적 layout을 위해서 flex grid, flex box, %, vw, vh등을 사용한다.
+- CSS Media Queries를 이용하면 모바일, 태블릿, 데스크탑 등에서 자유롭게 layout을 바꿀수 있다.
+
+//적어도 스크린이 800px이상이면 container의 width를 50%이상으로
+
+반응형 CSS Units
+
+- size를 결정하는 유닛은 절대적인(absolute) 과 상대적인(relative) 값으로  나눌 수 있다.
+- 절대적인 값을 나타내는 유닉은 px이다. px은 컨텐츠의 크기가 변경되더라도 콘텐츠는
+  고정된다.
+- 유동적인 콘텐츠를 나타내기 위해선 % 로 사이즈를 표현해야 한다.
+- px은 모니터 위에서 화면에 나타낼 수 있는 가장 작은 단위이다.
+- 브라우저는 기본적으로 16 px로 지정된다.
+
+※ px -> em/ em -> px 변환계산 참조 사이트
+http://pxtoem.com/
+
+
+
+1. 상대적인 값을 가타내는 Units
+
+https://webdesign.tutsplus.com/ko/articles/7-css-units-you-might-not-know-about--cms-22573
+
+(1) em 
+- 폰트사이즈 단위이다.
+- 폰트 패밀리에 상관없이 고정된 폰트 사이즈를 가진다.
+- 1em == 16px
+- em은 부모의 폰트 사이즈의 상대적으로 크기가 계산된다.
+- parent 안에 child가 있을 경우 이다.
+
+
+
+(2) rem
+- root에 지정된 폰트 사이즈에 따라 크기가 결정된다.
+- parent 안에 child가 있을 경우 이다.
+- parent는 root html 기본 폰트 사이즈 16px과 8배가 곱해진다.
+- child도 root html 기본 폰트 사이즈 16px에 0.5배 곱해진다.
+
+
+
+(3) vw
+- viewport width(브라우저 너비)의 크기를 나타낸다.
+- 100vw는 viewport width 크기를 다 사용
+- 50vw는 viewport width 크기의 반을 사용 
+
+(4) vh
+- viewport heigtt(브라우저의 높이)의 크기를 나타낸다.
+- 100vh 는 viewport height 크기를 다 사용
+- 50vh는 viewport height 크기를 반을 사용
+
+(5) vmin
+- viewport의 withd와  height의 작은 값을 사용
+- 50vmin은 브라우저의 높이보다 너비가 작기 때문에  너비의 50 % 크기 값이 지정된다.
+
+
+(6) vmax
+- viewport의  width와 height의 큰값을 사용
+- 50vmax는 브라우저의 높이가 너비보다 크기 때문에 높의 50% 크기 값이 지정된다.
+
+(7) % 
+- 부모 요소에 상대적으로 크기가 계산되어진다.
+- em대신에 %로 대신 지정할 수 있다.
+
+em/rem
+
+1. em과 rem 나누어 사용하는 기준
+- 부모 요소의 사이즈에 따라서 사이즈가 변경이 되면 %나 em을 사용한다.
+- 부모와 상관없이 브라우저 사이즈에 반응해야 한다면  뷰포트(v*)와 rem을 사용한다.
+
+- 요소의 너비와 높이에 따라서 사이즈가 변경되야 한다면 %나 뷰포트(v*)을 사용한다.
+- font 사이즈에 따라서 사이즈가 변경되야 한다면 em과 rem을 사용한다.
+
+(1) rem/em 차이 
+- rem : 좋아요 버튼은 root요소에서나 header(부모) 요소나 크기가 동일하게 보여진다.
+- em : 좋아요 버튼은 root요소에서와 header(부모) 요소에서 다르게 보여진다.
+         em은 부모 크기에 상대적으로 계산되기 때문이다.
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+      <div class="level1">
+      <h1>level 1</h1>
+      <div class="level2">
+        <h1>level 2</h1>
+        <div class="level3">
+          <h1>level 3</h1>
+          <div class="level4">
+            <h1>level 4</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+</body>
+</html>	.level1 {
+  font-size:2rem;
+}
+ 
+.level2 {
+  font-size: 2rem;
+}
+ 
+.level3 {
+  font-size: 2rem;
+}
+ 
+.level4 {
+  font-size: 2rem;
+}
+
+
+
+
