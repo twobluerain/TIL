@@ -1,4 +1,3 @@
-today im lazy
-tomorrow im late 
-toward improving life 
-today I learned
+Tomorrow I'm late \n
+Toward improving life \n
+Today I learned
