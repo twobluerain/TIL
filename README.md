@@ -1,3 +1,3 @@
-Tomorrow I'm late \n
-Toward improving life \n
+Tomorrow I'm late
+Toward improving life
 Today I learned
