@@ -1,0 +1,684 @@
+1교시
+
+실습 예제
+
+
+입력된 문장에 금지어가 있는 경우 금지어를 추출하여 출력 후 원본 문자열도 출력하는 스크립트를 작성.
+
+[조건]
+- 태그는 <TEXTAREA>와 <INPUT TYPE='button'>만을 사용.
+- indexOf() 함수를 활용.
+[실행 결과]
+ 
+
+원본문자열:
+      가을에는 단풍 여행을 내장산으로 가야한다고 한다.
+      내장산은 단풍이 웅장하고 걷기편해 산책하기 좋다.
+      단풍 나무와 함께 감나무에 감이 주렁주렁 열려 가을을 느끼기에 아주 좋다.
+      하지만 단풍과 기암 괴석의 경치를 감사하고 싶으면 가을 설악의 단풍을
+      추천한다. 하지만 교통체증이 너무 심해 새벽 2시 출발을 각오해야 한다. 
+수정 문자열: 
+      XX에는 XX 여행을 내장산으로 가야한다고 한다.
+ 
+
+      내장산은 XX이 웅장하고 걷기편해 산책하기 좋다.
+      XX 나무와 함께 감나무에 감이 주렁주렁 열려 XX을 느끼기에 아주 좋다.
+      하지만 XX과 기암 괴석의 경치를 감사하고 싶으면 XX 설악의 XX을
+      추천한다. 하지만 교통체증이 너무 심해 새벽 2시 출발을 각오해야 한다. 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel ="stylesheet" href="style.css">
+    <script>
+        function check(){
+            let f = document.frm;
+            let str = f.data.value;
+            // console.log(str);
+           
+            let warning = ['가을', '단풍'];
+       
+            for(let i=0; i < warning.length; i++){
+                let sw = true;
+                //console.log(i);
+                while(sw){
+                    let index = str.indexOf(warning[i]);
+                    if (index >= 0 ){
+                        str = str.replace(warning[i], "XX");
+                    } else {
+                        sw = false;
+                    }
+                }
+            }
+            f.panel.value = str;
+        }
+    </script>
+</head>
+<body>
+    <form name='frm'>
+        <TEXTAREA name='data' rows='9' cols='50'>가을에는 단풍 여행을 내장산으로 가야한다고 한다.
+내장산은 단풍이 웅장하고 걷기편해 산책하기 좋다.
+단풍 나무와 함께 감나무에 감이 주렁주렁 열려 가을을 느끼기에 아주 좋다.
+하지만 단풍과 기암 괴석의 경치를 감사하고 싶으면 가을 설악의 단풍을추천한다.
+하지만 교통체증이 너무 심해 새벽 2시 출발을 각오해야 한다.  
+        </TEXTAREA>
+        <br><br>
+        <input type='button' value='변환' onclick="check()">
+
+        <br><br>
+        <TEXTAREA name='panel' rows='9' cols='50'></TEXTAREA>
+        </form>  
+</body>
+</html>
+2교시
+
+ 
+
+Event의 처리(BUTTON, SUBMIT) 
+
+- <a href="javascript:sendit();">에서 javascript 생략 불가능.
+ 
+1. Anchor 태그에서 click 이벤트를 받는 소스
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel ="stylesheet" href="style.css">
+    <script>
+        function sendit(){
+            let str = document.getElementById('url').value; //id 로 검색
+            console.log(`str: ${str}`);
+   
+            if(str == ''){
+                alert('주소를 입력하세요');
+                document.regiform.url.focus(); //name속성으로 검색
+            }else{
+                location.href = str; //주소 요청
+            }
+        }
+        </script>
+</head>
+<body>
+    <form name='regiform'>
+        <input type='text' id='url' name='url' size= '50'>
+        <a href="javascript:sendit();">주소이동</a>
+       
+    </form>
+</body>
+</html>
+ 
+
+ 
+
+3교시 / 4교시
+
+2. 입력값을 검사하는 기본 자바 스크립트
+   - button 태그는 항상 자바스크립트 함수와 같이 사용.
+   - onClick='check(this.form)': this.form은 폼 태그를 지칭.
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function check(f){
+            if(f.wname.value == '' || f.wname.value.length == 0){
+                alert('이름을 입력하세요');
+                f.wname.focus();
+                return false;
+            }else if(f.subject.value.length == 0 ) {
+                alert('제목을 입력하세요');
+                f.subject.focus();
+                return false;
+            }else if(f.wcontent.value == ''){
+                alert('내용을 입력하세요');
+                f.wcontent.focus();
+                return false;
+            }else{
+                alert('데이터 정상 입력, 계속진합니다.');
+                //f.submit();
+
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <form method="post" action=""
+    name="myform"
+    onsubmit="return check(this)">
+        <h2>방명록</h2>
+        이름 : <input type="text" name="wname"><br>
+        제목 : <input type="text" name="subject" size="50"><br>
+        내용 : <textarea name="wcontent" rows="8" cols="54"></textarea><br>
+        <!-- <button type="button" onclick="check(this.form)">저장</button> -->
+        <!-- <button>저장</button> -->
+        <!-- <input type="image" src="disks.jpg"></input> -->
+        <a href="javascript:check(myform)">
+            <img src = "disks.jpg" border='0'>
+        </a>
+    </form>
+</body>
+</html>
+ 
+ 
+ 
+
+[과제 1] Input 태그에서 행의 수와 열의 수를 입력받아 자바스크립트로 
+         테이블을 생성하는 예제를 작성하세요. 
+         입력되는 값은 수만 입력가능하며, 문자열 입력시
+         에러 메시지를 출력하세요. 입력 가능 값의 범위는 3 ~ 10 만 가능하며
+         이 값의 범위를 벗어나면 역시 에러메세지를 출력하세요.
+ 
+         조건: 1) 숫자 입력 여부 검사, 2) 입력되는 수의 범위 검사
+         힌트: 함수 안에서 다른 함수를 호출할 수 있습니다. 
+ 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function check(f){
+            let row = f.row.value;
+            let col = f.col.value;
+            console.log(`row:${row}, col:${col}`);
+            if(isFinite(row)==false){
+                alert("숫자를 입력하세요");
+                f.row.value = '';
+                f.row.focus();
+                return false;
+            }else if(row<3 || row>10){
+                alert('3~10 사이의 수만 입력하세요');
+                f.row.value = '';
+                f.row.focus();
+                return false;
+            }else if(isFinite(col)==false){
+                alert("숫자를 입력하세요");
+                f.col.value = '';
+                f.col.focus();
+                return false;
+            }else if(col<3 || col>10){
+                alert('3~10 사이의 수만 입력하세요');
+                f.col.value = '';
+                f.col.focus();
+                return false;
+            }else{
+                makeTable(row,col);
+                return false;
+            }
+        }
+        function makeTable(row,col){
+            console.log(`row:${row}, col:${col}`);
+            let html ='<table><tr>';
+           for(let j=0; j<col ; j++){
+              html += `<th>${j+1}</th>`;
+           }
+           html += '</tr>' ;
+            for(let i=0; i<row; i++){
+                html += '<tr>';
+                    for(let j=0; j<col ; j++){
+                        html += '<td>&nbsp</td>';
+                    }
+                html +='</tr>';
+            }
+
+            html += '</table>';
+
+            let panel = document.getElementById('panel').innerHTML = html;
+        }
+    </script>
+</head>
+<body>
+    <form name='myform' onsubmit="return check(this)">
+        행의수:<input type="text" name="row" id="row" value="5" size="20"><br>
+        열의수:<input type="text" name="col" id="col" value="5" size="20"><br>
+        <button>테이블 생성</button>
+    </form>
+    <div id="panel"></div>
+</body>
+</html>
+ 
+
+ 
+
+ 
+
+5교시
+
+Event의 처리
+
+ 
+1. split()함수를 이용하여 입력된 값을 분리하여 출력한다.
+  - onload event: 페이지 로딩시 자동실행 함수 선언, BODY 태그 실행후 실행
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</style>
+<script>
+    function searchW(){
+        let str ='기획자/설계자/개발자/디자이너';
+        let strout = '';
+        let strSplit = str.split('/');
+        console.log(`추출된 문자열 갯수:  ${strSplit.length}`);
+        for(let i=0 ; i < strSplit.length; i++){
+            strout += '▶ ' + strSplit[i] +' ';
+        }
+        let panel = document.getElementById('panel');
+        panel.innerHTML = strout;
+    }
+</script>
+</head>
+<body onload="searchW()">
+
+<div id='panel'></div>
+   
+</body>
+</html>
+2. 파일의 확장자를 검사하는 함수
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript">
+        // 페이지 로딩시 자동 실행 함수, 이름이 없는 무명 함수로 1회만 실행됨.
+        window.onload = function(){
+        var word1 = document.getElementById("word1");
+        var result1 = document.getElementById("result1");
+       
+          word1.innerHTML = "test.jsp";  // SPAN 태그로 값을 할당
+          var str = word1.innerHTML;     // SPAN 태그에서 값을 추출
+       
+        if (str.lastIndexOf(".jsp") >= 0){
+            result1.innerHTML = "전송할수 없는 형식입니다.";  // SPAN 태그로 값을 할당
+        }
+       
+        }
+       
+        </script>
+</head>
+<body>
+<H1>자바 스크립트 확장자 검사</H1><br><br>
+
+<DIV id="panel">
+<SPAN id="word1"></SPAN>: <SPAN id="result1"></SPAN><BR>
+</DIV>
+
+</body>
+</html>
+6교시
+
+Event의 처리 3
+
+ 
+1. select 태그 자바스크립트에서 연동하기
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</style>
+<Script type="text/javascript">
+// 글 종류 선택시
+function ansquChange(f){
+  var frm = document.frmData;  // value 값을 출력할 폼
+
+  var str = f.ansqu.options[f.ansqu.selectedIndex].text; // 레이블
+f.title.value=str;
+
+  frm.ansqu.value = f.ansqu.options[f.ansqu.selectedIndex].value; // 서버로 전송되는 값
+}
+
+// 언어 선택시
+function partChange(f){
+  var frm = document.frmData;  // value 값을 출력할 폼
+
+var str= f.title.value + f.pt.options[f.pt.selectedIndex].text + " ";
+f.title.value=str;
+
+  f.title.focus(); // 커서 이동
+
+  frm.pt.value = f.pt.options[f.pt.selectedIndex].value; // 서버로 전송되는 값
+}
+</Script>
+</head>
+<body>
+    <form name="frmSelect">
+        <select name="ansqu" onchange='ansquChange(this.form)'>
+            <option value=''> [종류 선택] </option>
+            <option value='A001'> [질문] </option>    
+            <option value='A002'> [답변] </option>
+            <option value='A003'> [참고] </option>
+            <option value='A004'> [공지] </option>
+            <option value='A005'> [추천] </option>
+            <option value='A006'> [선택 안함] </option>
+        </select>
+   
+        <select name="pt" onchange='partChange(this.form)'>
+            <option value=''> [분야 선택] </option>
+            <option value='P001'> [JAVA] </option>
+            <option value='P002'> [JSP] </option>
+            <option value='P003'> [Spring] </option>
+            <option value='P004'> [JavaScript] </option>
+            <option value='P005'> [ORACLE] </option>
+            <option value='P006'> [선택 안함] </option>
+        </select>
+        <input type="text" name="title" size="85" style="font-size:12; color:#000000; height:18; border:1px dashed" maxlength="100">
+    </form>
+   
+    <hr>
+    <form name='frmData'>
+        분야 선택 전송값: <input type='text' name='ansqu' value='' size='50'><br>
+        언어 선택 전송값: <input type='text' name='pt' value='' size='50'>
+    </form>
+</body>
+</html>
+ 
+
+ 
+
+ 
+
+2. substring 함수
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>
+        <script type="text/javascript">
+            var str = '123ABC 가나다/가나다';
+            document.write(str + '<br>');
+       
+            document.write(str.substring(0, 3) + '<br>');
+       
+            document.write(str.substring(3, 6) + '<br>');
+       
+            document.write(str.substring(7) + '<br>');
+       
+            document.write(str.lastIndexOf('가나다') + '<br>');
+       
+        </script>
+        </h1>
+</body>
+</html>
+ 
+
+ 
+
+3. 문자열에서 공백을 제거하는 스크립트
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function trimSpace(f){
+            let str = f.txtData.value;
+            console.log(str);
+            for(let i=0; i<str.length; i++){
+                if(str.charAt(i) == ' '){
+                    str = str.substring(0, i) + str.substring(i+1,str.length);
+                    i = i - 1;
+                }
+            }
+            f.txtData2.value = str;
+        }
+
+    </script>
+</head>
+<body>
+    <form name="myform" method="GET">
+        원본 문자열 : <input name="txtData" type="text" size=60 maxlength=60>
+        <a href="javascript:trimSpace(myform)"><b>문자열 공백지우기</b></a>
+        <br><br>
+        공백 제거 문자열 : <input name="txtData2" type="text" size=60 maxlength=60>
+    </form>
+</body>
+</html>
+7교시 / 8교시
+
+html,css, javascript 실습 예제
+- 쇼핑아이팀을 상품종류나 색상별로 구분하는 내용
+- JSON으로 작성된 데이터 사용
+- template 프로젝트 다운로드 후 코딩
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Shopping</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="src/main.js" defer></script>
+  </head>
+  <body>
+<!--logo-->
+<img src="img/logo.png" alt="logo" class="logo">
+
+<!--buttons-->
+<section class="buttons">
+<button class="btn">
+ <img
+ src="img/blue_t.png"
+ alt="tshirt"
+ class="imgBtn" />
+</button>
+<button class="btn"><img src="img/blue_p.png" alt="pants" class="imgBtn"/></button>
+<button class="btn"><img src="img/blue_s.png" alt="skirt" class="imgBtn"/></button>
+<button class="btn colorBtn blue">Blue</button>
+<button class="btn colorBtn yellow">Yello</button>
+<button class="btn colorBtn pink">Pink</button>
+</section>
+<!--Items-->
+<ul class="items">
+  <li class='item'>
+    <img src="img/blue_p.png" alt="pants" class="item__thumbnail"/>
+     <span class="item__description">male, large</span>
+  </li>
+  <li class='item'>
+    <img src="img/blue_p.png" alt="pants" class="item__thumbnail"/>
+     <span class="item__description">male, large</span>
+  </li>
+</ul>
+
+  </body>
+</html>
+:root {
+  /* color */
+  --color-black: #3f454d;
+  --color-white: #ffffff;
+  --color-blue: #3b88c3;
+  --color-yellow: #fbbe28;
+  --color-pink: #fd7f84;
+  --color-light-grey: #dfdfdf;
+  /* size */
+  --base-space: 8px;
+  --size-button: 60px;
+  --size-border: 4px;
+  --size-thumbnail: 50px;
+  --font-size: 18px;
+  /* animation */
+  --size-animation-duration: 300ms;
+}
+ 
+body {
+  height: 100vh;
+  background-color: var(--color-black);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+ 
+.logo {
+  cursor: pointer;
+  transition: transform var(--size-animation-duration) ease; /* 애니메이션 효과*/
+}
+ 
+.btn:hover,
+.logo:hover {
+  transform: scale(1.1); /* 크기 변경 */
+}
+ 
+.buttons {
+  display: flex;
+  align-items: center;
+}
+ 
+.btn {
+  background-color: transparent; /*투명*/
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform var(--size-animation-duration) ease; /* 애니메이션 효과*/
+  margin-right: var(--base-space);
+}
+ 
+.imgBtn {
+  width: var(--size-button);
+  height: var(--size-button);
+}
+ 
+.colorBtn {
+  font-size: var(--font-size);
+  padding: calc(var(--base-space) * 2); /* 정사각형 모양이 되도록 */
+  border-radius: var(--size-border); /* 모서리를 둥굴게 */
+}
+ 
+.blue {
+  background-color: var(--color-blue);
+}
+.yellow {
+  background-color: var(--color-yellow);
+}
+.pink {
+  background-color: var(--color-pink);
+}
+ 
+.items {
+  width: 60%;
+  height: 60%;
+  list-style: none;
+  padding-left: 0;
+  overflow-y: scroll; /*items만 스크롤이 되도록한다 */
+}
+ 
+.item {
+  background-color: var(--color-white);
+  display: flex;
+  align-items: center;
+  padding: var(--base-space);
+  margin-bottom: var(--base-space); /* item의 간격을 조절한다.  */
+}
+ 
+.item__thumbnail {
+  width: var(--size-thumbnail);
+  height: var(--size-thumbnail);
+}
+ 
+.item__description {
+  margin-left: var(--base-space);
+  font-size: var(--font-size);
+}
+//Fetch the items from the json file, return response
+function loadItems(){
+    return fetch('data/data.json')
+    .then(response => response.json())//json객체로 변환
+    .then(json => json.items);
+ 
+}
+ 
+//update the list with the given items
+function displayItems(items){
+    const container = document.querySelector('.items'); //ul 태그 찾는다.
+    //const html = items.map(item => createHTMLString(item)).join('');
+    //console.log(html);
+    container.innerHTML = items.map(item => createHTMLString(item)).join(''); //생성된 li태그를 문자열로 변경(join)
+}
+ 
+//create HTML List iem from the given data item
+function createHTMLString(item) {
+    return `
+    <li class="item">
+        <img src="${item.image}" alt="${item.type}" class="item__thumbnail">
+        <span class="item__description">${item.gender}, ${item.size}</span>  
+    </li>
+    `;
+}
+ 
+function onButtonClick(event, items){//이벤트가 발생하는 버튼에 필터링되는 값을 가지도록 한다.
+    const dataset = event.target.dataset;
+    const key = dataset.key;
+    const value = dataset.value;
+   
+    if(key == null || value == null){
+        return;
+    }
+ 
+    const filtered = items.filter(item => item[key] === value);
+    console.log(filtered);
+    displayItems(filtered);
+ 
+}
+ 
+function setEventListeners(items){
+    const log = document.querySelector('.logo');
+    const buttons = document.querySelector('.buttons');
+    log.addEventListener('click', () => displayItems(items));
+    buttons.addEventListener('click', event => onButtonClick(event, items));
+}
+//main (시작)
+loadItems()
+    .then(items => {
+        console.log(items);
+        displayItems(items);
+        setEventListeners(items);
+    })
+    .catch(console.log);
