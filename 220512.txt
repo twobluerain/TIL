@@ -1,0 +1,877 @@
+1교시 2교시 3교시
+
+ HTML DOM(Document Object Model)
+
+
+
+DOM(Document Object Model)
+
+- W3C에서 표준을 제작하고 있다.
+- DOM은 구조화된 nodes와 property 와 method 를 갖고 있는 objects로 문서를 표현한다. 
+- 웹 페이지를 스크립트 또는 프로그래밍 언어들에서 사용될 수 있게 연결시켜주는 역할을 담당한다.
+- DOM 은 동일한 문서를 표현하고, 저장하고, 조작하는 방법을 제공한다. 
+- DOM 은 웹 페이지의 객체 지향 표현이며, 자바스크립트와 같은 스크립팅 언어를 이용해 DOM 을
+  수정할 수 있다.
+- 웹 페이지는 일종의 문서(document)다. 이 문서는 웹 브라우저를 통해 그 내용이 해석되어
+  웹 브라우저 화면에 나타나거나 HTML 소스 자체로 나타나기도 한다. 
+- Ajax를 사용하여 서버로부터의 응답 결과를 전송받아 브러우저의 HTML상에 출력할 때에
+  DOM 모델을 이용한다.
+- DOM은 Object들을 Tree 처럼 생성한다.
+- DOM은 동적으로 HTML 태그를 생성할때 필요하다.
+
+- 참조 :  MDN Web Docs
+
+
+DOM은 내부적으로 HTML 태그를 Tree 형태로 표현합니다
+
+
+
+
+HTML DOM 활용
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="intro">Hello World!</p>
+
+    <p>This example demonstrates the <b>getElementById</b> method!</p>
+
+    <p id="demo"></p>
+    <script>
+        var myElement = document.getElementById("intro");
+        document.getElementById("demo").innerHTML =
+        "The text from the intro paragraph is " + myElement.innerHTML;
+        </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hello World!</p>
+
+    <p>The DOM is very useful.</p>
+    <p>This example demonstrates the <b>getElementsByTagName</b> method</p>
+
+    <p id="demo"></p>
+
+<script>
+    var x = document.getElementsByTagName("p");
+    document.getElementById("demo").innerHTML =
+    'The first paragraph (index 0) is: ' + x[0].innerHTML;
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hello World!</p>
+
+<div id="main">
+    <p>The DOM is very useful.</p>
+    <p>This example demonstrates the <b>getElementsByTagName</b> method</p>
+    </div>
+
+    <p id="demo"></p>
+
+<script>
+    var x = document.getElementById("main");
+    var y = x.getElementsByTagName("p");
+    document.getElementById("demo").innerHTML =
+    'The first paragraph (index 0) inside "main" is: ' + y[0].innerHTML;
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hello World!</p>
+
+    <p class="intro">The DOM is very useful.</p>
+    <p class="intro">This example demonstrates the <b>getElementsByClassName</b> method.</p>
+
+    <p id="demo"></p>
+
+<script>
+    var x = document.getElementsByClassName("intro");
+    document.getElementById("demo").innerHTML =
+    'The first paragraph (index 0) with class="intro": ' + x[0].innerHTML;
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hello World!</p>
+
+    <p class="intro">The DOM is very useful.</p>
+    <p class="intro">This example demonstrates the <b>querySelectorAll</b> method.</p>
+
+    <p id="demo"></p>
+
+<script>
+    var x = document.querySelectorAll("p.intro");
+    document.getElementById("demo").innerHTML =
+    'The first paragraph (index 0) with class="intro": ' + x[0].innerHTML;
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="frm1" action="form_action.asp">
+        First name: <input type="text" name="fname" value="Donald"><br>
+        Last name: <input type="text" name="lname" value="Duck"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+       
+        <p>Click "Try it" to display the value of each element in the form.</p>
+       
+        <button onclick="myFunction()">Try it</button>
+       
+        <p id="demo"></p>
+   
+    <script>
+        function myFunction() {
+            var x = document.forms["frm1"];
+            var text = "";
+            var i;
+            for (i = 0; i < x.length ;i++) {
+                text += x.elements[i].value + "<br>";
+            }
+            document.getElementById("demo").innerHTML = text;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+4교시
+
+자식 노드의 갯수 산출
+   - 주석도 태그로 인식.
+
+ㅇ
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <title>Insert title here</title>
+<script type="text/javascript">
+
+// 페이지 로딩시 실행
+// window 브러우저 내부 객체의 onload 이벤트에 무명의 함수 연결
+window.onload = function(){
+    // 변수 선언, divHolder란 이름의 태그 검색
+    var divel = document.getElementById('divHolder');
+   
+    // 경고창, childNodes: 자식 태그
+    alert ("divHolder div의 자식노드의 갯수는 :" + divel.childNodes.length);
+}
+
+</script>
+</head>
+<body>
+    <div id="divHolder">
+        <!-- Ajax 정복 루트 -->
+        <div>HTML</div>
+        <div>JavaScript</div>
+        <div>DOM</div>
+        <div>Ajax</div>
+    </div>
+</body>
+</html>
+
+
+
+
+2. 주석을 뺀 태그의 개수 산출
+
+
+
+NodeTypes - Named Constants
+NodeType Named Constant
+
+
+   1           ELEMENT_NODE
+   2           ATTRIBUTE_NODE
+   3           TEXT_NODE
+   4           CDATA_SECTION_NODE
+   5             ENTITY_REFERENCE_NODE
+   6           ENTITY_NODE
+   7           PROCESSING_INSTRUCTION_NODE
+   8           COMMENT_NODE
+   9           DOCUMENT_NODE
+  10           DOCUMENT_TYPE_NODE
+  11           DOCUMENT_FRAGMENT_NODE
+  12           NOTATION_NODE
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        // 페이지가 로딩되면 자동 실행
+        window.onload = function(){
+            var count =0;
+       
+            var divel = document.getElementById('divHolder');
+       
+            // 자식 노드 수 만큼 순환
+            for (i=0; i < divel.childNodes.length ; i++){
+                if (divel.childNodes[i].nodeType == 1){ // 태그인지 검사
+                    count++;                            // 태그의 갯수 증가
+                }
+            }
+           
+            alert ("자식 엘레멘트(태그) 노드의 갯수는 " + count);
+        }
+        </script>
+</head>
+<body>
+    <div id="divHolder">
+        <!-- Ajax 정복 루트 -->
+        <div>HTML</div>
+        <div>JavaScript</div>
+        <div>DOM</div>
+        <div>Ajax</div>
+    </div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        window.onload = function(){
+            // ⓐ innerText는 div 태그의 값을 가져옵니다.
+            var div1text = document.all.div1.innerText;
+       
+            // ⓑ firstChild.nodeValue는 div2 태그의 값을 가져옵니다.
+            var div2el = document.getElementById('div2');
+            var div2text = div2el.firstChild.nodeValue;
+       
+            // ⓒ 모든 브러우저를 호환함
+            var div3text = (document.getElementById('div3').textContent)? document.getElementById('div3').textContent : document.getElementById('div3').innerText ;
+       
+            // 경고창
+            alert ("div1text :" + div1text +"\r\n" + "div2text :" + div2text +"\r\n" +
+        "div3text :" + div3text );
+        }
+         </script>
+</head>
+<body>
+    <div id='div1'>백두산</div><br>
+    <div id='div2'>한라산</div><br>
+    <div id='div3'>금강산</div><br>
+    <div id='div4'>설악산</div><br>
+    <div id='div5'>관악산</div><br>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        function setDiv(){
+            var str = "<table><tr bgcolor='#00ff00'>";
+            str = str + "<td width='500' height='200' align='center' valign='middle'>";
+            str = str + "<font color='#ff0000' size='5'>";
+       
+            str = str + "A0001 - 컴퓨터 A<br>";
+            str = str + "A0002 - 컴퓨터 B<br>";
+            str = str + "A0003 - 컴퓨터 C<br>";
+            str = str + "A0004 - 컴퓨터 D<br>";
+            str = str + "</font>";
+            str = str + "</td></tr></table>";
+           
+            document.getElementById("div1").innerHTML =str;
+        }    
+       
+           
+        </script>
+       
+</head>
+<body>
+    <div id='div1'>*****</div><br>
+    <input type="button"
+    onclick="setDiv()" value="테이블 생성">
+</body>
+</html>
+5교시
+
+태그(Element)의 생성, 이미지 변경
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+   
+        function imgShow(){
+            // img 태그 생성
+            var img = document.createElement("img");
+           
+            // img 태그의 src속성 설정
+            img.src ="http://www.apache.org/images/ac2008us_343x114.jpg";
+           
+            // imgPlaceHolder DIV 태그 검색
+            var holder = document.getElementById("imgPlaceHolder");
+           
+            // div 태그에 img 태그 추가
+            holder.appendChild(img);
+        }
+       
+    </script>
+</head>
+<body>
+    <input type="button" onclick="imgShow();" value="이미지 표시"/>
+
+    <div id="imgPlaceHolder"></div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            background: #ECE9D8 ;
+            height: 100vh;
+            display: flex; /*flexbox 선언, 기본 중심축이 행방향*/
+            justify-content :center ; /*item들 중심축에서 가운데 정렬*/
+           
+        }
+        .mainItem1 {
+            margin: 100px 10px 0 0;
+            width:700px;
+            height:470px;
+            background: aqua;
+        }
+        .mainItem2 {
+            margin-top: 100px;
+            width:100px;
+            height:450px;
+            background: white;
+            display: flex; /*flexbox선언*/
+            flex-direction: column; /*중심축을 열방향으로 선언*/
+            justify-content:  space-between; /* 앞,뒤 공간없고 중간에만 균등 간격 */
+       
+        }
+       
+       
+        </style>
+        <script type="text/javascript">
+            window.onload = function(){
+                var img1 = document.createElement("img");
+                img1.src ="./images/showImg/01.jpg";
+                img1.width=100;
+                img1.height=90;
+                var show1Div = document.getElementById("show1");
+                show1Div.appendChild(img1);
+       
+                var img2 = document.createElement("img");
+                img2.src ="./images/showImg/02.jpg";
+                img2.width=100;
+                img2.height=90;
+                var show2Div = document.getElementById("show2");
+                show2Div.appendChild(img2);
+       
+                var img3 = document.createElement("img");
+                img3.src ="./images/showImg/03.jpg";
+                img3.width=100;
+                img3.height=90;        
+                var show3Div = document.getElementById("show3");
+                show3Div.appendChild(img3);
+       
+                var img4 = document.createElement("img");
+                img4.src ="./images/showImg/04.jpg";
+                img4.width=100;
+                img4.height=90;
+                var show4Div = document.getElementById("show4");
+                show4Div.appendChild(img4);
+       
+                var img5 = document.createElement("img");
+                img5.src ="./images/showImg/05.jpg";
+                img5.width=100;
+                img5.height=90;
+                var show5Div = document.getElementById("show5");
+                show5Div.appendChild(img5);
+            }
+       
+            function show(div){
+                var temp = div.firstChild;
+                var mainImg = document.createElement("img");
+                mainImg.src = temp.src; // 이미지 경로 전달
+                mainImg.width=700;
+                mainImg.height=470;
+                var showMain = document.getElementById("showMain");
+                showMain.innerHTML="";
+                showMain.appendChild(mainImg);
+            }
+        </script>
+</head>
+<body>
+    <div class='container'>
+        <div class='mainItem1' id='showMain'></div>
+        <div class='mainItem2'>
+            <div class='item item1' id="show1" onclick="show(this)"></div>
+            <div class='item item2' id="show2" onclick="show(this)"></div>
+            <div class='item item3' id="show3" onclick="show(this)"></div>
+            <div class='item item4' id="show4" onclick="show(this)"></div>
+            <div class='item item5' id="show5" onclick="show(this)"></div>
+        </div>
+    </div>
+</body>
+</html>
+6교시
+
+체크 상자의 선택 상태를 읽거나 변경하기
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        // id를 받지 않는 경우
+        function check(){
+           document.getElementById("chkLCD").checked=true
+        }
+       
+        function uncheck(){
+           document.getElementById("chkLCD").checked=false
+        }
+       
+        // id를 받는 경우
+        function check2(id){
+           document.getElementById(id).checked=true
+        }
+       
+        function uncheck2(id){
+           document.getElementById(id).checked=false
+        }
+       
+        // 선택된 체크 상자 구함
+        function getOption(){
+           var lcd = document.getElementById("chkLCD"); // 태그 검색
+           var ram = document.getElementById("chkRAM"); // 태그 검색
+           var printer = document.getElementById("chkPrinter"); // 태그 검색
+           var str = "";
+           
+           if (lcd.checked == true){
+               str = lcd.value + "   ";
+           }  
+       
+           if (ram.checked == true){
+               str = str + ram.value + "   ";
+           }  
+       
+           if (printer.checked == true){
+               str = str + printer.value;
+           }  
+               
+           // alert(str); // 선택값의 출력
+           document.getElementById('opt').value = str;
+           
+        }
+       </script>
+</head>
+<body>
+    <form>
+        <p>상품 옵션 선택 </p>
+        <p>
+          <input type="checkbox" id="chkLCD" value="LCD 24" />
+          <input type="button" onClick="check()" value="LCD 24' 선택" />
+          <input type="button" onClick="uncheck()" value="LCD 24' 선택 안함 " />
+          </p>
+        <p>
+          <input type="checkbox" id="chkRAM" value="RAM 2G" />
+          <input type="button" onClick="check2('chkRAM')" value="RAM 2G 선택" />
+          <input type="button" onClick="uncheck2('chkRAM')" value="RAM 2G 선택 안함 " />
+          </p>
+        <p>
+          <input type="checkbox" id="chkPrinter" value="프린터" />
+          <input type="button" onClick="check2('chkPrinter')" value="프린터 선택" />
+          <input type="button" onClick="uncheck2('chkPrinter')" value="프린터 선택 안함 " />
+          </p>        
+          <p>
+         <input type="button" name="btnOpt" value="선택한 옵션" onClick="getOption()">
+         <input type="text" id="opt" size="40">
+          </p>
+      </form>
+</body>
+</html>
+태그에 특정 CSS 적용하기
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function cssapply(cssName){
+            document.getElementById('content').className = cssName;
+        }
+    </script>
+    <style>
+        .greenText {
+            padding: 0px 0px 4px 0px;
+            margin: 0px;
+            FONT: bold italic 26px Georgia;
+            COLOR: #7e9e50;
+        }
+        .redText {
+            padding: 0px 0px 4px 0px;
+            margin: 0px;
+            FONT: bold italic 26px Georgia;
+            COLOR: #FF493f;;
+        }
+        .hide {
+            DISPLAY:NONE
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        JAVA-MySQL, JSP-Oracle, MVC-Struts, OJT
+    </div>
+   
+     <input type="button" onclick="cssapply('greenText');" value="CSS 적용 1(녹색 텍스트)" />
+     <input type="button" onclick="cssapply('redText');" value="CSS 적용 2(적색 텍스트)" />
+     <input type="button" onclick="cssapply('hide');" value="CSS 적용 3(감추기)" />
+</body>
+</html>
+
+
+
+
+화면의 특정 영역을 동적으로 숨기거나 감추기
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+    // 태그 보이기
+ function show(){
+    document.getElementById("content").style.display ="";
+ }
+ 
+ // 태그 감추기
+ function hide(){
+    document.getElementById("content").style.display ="none";
+ }
+</script>
+
+</head>
+<body>
+    <div id="content">
+        DIV 태그 출력<br/>
+        <img src='http://www.apache.org/images/ac2008us_343x114.jpg' width='300' height='250'>
+   
+    </div>
+   
+     <input type="button" onclick="show()" value="div 보이기" />
+     <input type="button" onclick="hide()" value="div 감추기" />
+</body>
+</html>
+7교시 / 8교시
+
+텍스트의 링크를 동적으로 변경
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        function kma(){
+           document.getElementById("thelink").href="http://www.kma.go.kr";
+        }
+       
+        function yahoo(){
+           document.getElementById("thelink").href="http://www.yahoo.com";
+        }
+       
+        function func(){
+           document.getElementById("thelink").href="javascript:display();";
+       
+        }
+       
+        function display(){
+            alert('display 함수가 호출 되었습니다.');
+        }
+       </script>
+</head>
+<body>
+    <a id="thelink">클릭하세요</a>
+ 
+  <input type="button" onclick="kma()" value="기상청" />
+  <input type="button" onclick="yahoo()" value="야후" />
+  <input type="button" onclick="func()" value="링크로 함수 걸기" />
+</body>
+</html>
+
+
+
+
+
+
+
+
+텍스트를 div 태그로 감싸서 추가
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        function show()
+        {
+           // DIV 태그 검색
+           var parentdiv = document.getElementById("textHolder");
+           // 새로운 DIV 태그 생성
+           var divel = document.createElement("div");
+           // 새로운 DIV태그에 텍스트 생성
+           divel.appendChild(document.createTextNode("재미있는 개발공부"));
+           // 새로운 DIV 태그를 부모 DIV 태그인 'textHolder'에 추가
+           parentdiv.appendChild(divel);
+       
+        }
+       
+       </script>
+</head>
+<body>
+    <input type="button" onclick="show()" value="텍스트 추가" />
+    <div id="textHolder"></div>
+</body>
+</html>
+
+
+파일 전송 태그 추가 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" name="btnAdd" value="파일 선택 추가" />
+<input type="button" name="btnAdd" value="파일 선택 제거" />
+<br/>
+<DIV id="textHolder">
+파일 선택 1:
+<input type="file" name="file"/>
+</DIV>
+</body>
+</html>
+
+
+
+
+드롭다운 리스트 상자에 아이템을 추가, 삭제, 변경
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 대분류
+        var addressList = ["서울","인천","경기도","강원도"];
+       
+        // 중분류
+        var gugunListSeoul = ["노원구", "강남구", "구로구", "마포구"];
+        var gugunListIncheon = ["남동구", "부평구", "서구", "계양구"];
+        var gugunListKy = ["부천시", "시흥시", "안양시", "수원시"];
+ 
+        window.onload = function(){
+            let sido = document.getElementById('sidoSelect');
+            for(i=0 ; i < addressList.length; i++){
+                let optionel = document.createElement('option');
+                optionel.value = addressList[i];
+                optionel.appendChild(document.createTextNode(addressList[i]));
+                sido.appendChild(optionel);
+            }
+ 
+            let gugun = document.getElementById('gugunSelect');
+            let btnArea = document.getElementById('btnArea');
+            gugun.style.display= 'none';
+            btnArea.style.display = 'none';
+ 
+        }
+ 
+        function changeSidoSelect(){
+            let sido = document.getElementById('sidoSelect');
+            let idx = sido.options.selectedIndex;
+ 
+            var area = document.getElementById("area");
+            area.value = "";
+ 
+            gugunSelectFill(idx);
+ 
+        }
+ 
+        function gugunSelectFill(idx){
+            let data = null;
+            let gugun = document.getElementById('gugunSelect');
+            let btnArea = document.getElementById('btnArea');
+            if (idx == 0) {
+                gugun.style.display = "none";  // 중분류 태그 감추기
+                btnArea.style.display = "none";
+                return;
+            }
+            if (idx == 1){ data = gugunListSeoul }
+            if (idx == 2){ data = gugunListIncheon }
+            if (idx == 3){ data = gugunListKy }
+           
+            if (idx == 4){
+                gugun.style.display = "none";
+                alert("현재는 지원하지 않습니다.");
+                return;
+            }
+            gugun.innerHTML = "";
+           
+            for (i =0 ; i<data.length; i++){  
+                // 새로운 <option value=''>값</option> 태그 생성
+                var optionEl = document.createElement("option");
+           
+                // value 속성 태그에 저장
+                optionEl.value = data[i];
+               
+                // text 문자열을 새로 생성한 <option> 태그에 추가
+                optionEl.appendChild (document.createTextNode(data[i]));
+               
+                // 만들어진 option 태그를 <select>태그에 추가
+                gugun.appendChild(optionEl);
+            }
+   
+            gugun.style.display = "";                      
+            btnArea.style.display = "";        
+        }
+ 
+        function getArea(){
+            var area = document.getElementById("area"); // 태그 검색
+            var sido = document.getElementById("sidoSelect");
+            var gugun = document.getElementById("gugunSelect");
+            //alert(sido.value + " " + gugun.value); // 선택값의 출력
+           
+            area.value = sido.value + " " + gugun.value;
+     
+        }
+    </script>
+</head>
+<body>
+    <div id="sido">
+        <select id="sidoSelect" onChange="changeSidoSelect();">
+            <option value="">대분류를 선택하세요.</option>
+        </select>
+       
+        <select id="gugunSelect">
+            <option value="">중분류 선택하세요.</option>
+        </select>
+     
+        <label>
+        <button id="btnArea" name="btnArea" onClick="getArea()">선택</button>
+        선택한 지역:
+        <input type="text" id="area" size="40">
+        </label>
+    </div>
+</body>
+</html>
