@@ -1,0 +1,1303 @@
+1교시 / 2교시 / 3교시
+
+ jQuery 명령어
+(1) 텍스트 변경과 가져오기  
+// p>b{Test}+{Paragraph.}
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    var str = $( "p" ).first().html(); // 첫번째 텍스트 P를 찾아 html로 바꾼다.
+    $( "p" ).last().html( str ); // 마지막 P를 html로 바꾼다
+});
+</script>
+<style>
+    p {
+    color: blue;
+    margin: 8px;
+    }
+    b {
+    color: red;
+    }
+    </style>
+</head>
+<body>
+    <p><b>Test</b> Paragraph.</p>
+<p></p>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $("p").text("<b>Some</b> new text."); // p를 원래 Test Paragraph 에서 <b>Some</b> new text. 로 바꾼다.
+    $("ul li").text(function(index){ // ul 속 li에 텍스트를 넣을건데 인덱스 함수를 포함한다.
+        return "item number" + (index + 1);  // item number 텍스트를 넣고 기존 0 1 에 1을 더해 1 2 로 바꾼다
+    }); 
+});
+</script>
+<style>
+    p {
+        color : pink;
+        margin : 8px;
+    }
+</style>
+</head>
+<body>
+    <p>Test Paragraph</p>
+    <ul>
+        <li>list item 1</li>
+        <li>list <strong>item</strong>2</li>
+    </ul>
+</body>
+</html>
+
+
+
+
+(2) HTML 변경과 취득
+ - html(...)/html()/html(funtion) 
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).click(function() {
+    let htmlString = $( this ).html(); // p에 클릭 함수를 설정하고 클릭하면 함수가 호출되게끔 설정한다 / htmlString 변수를 설정하고 클릭한 것(this)을 html(태그까지)을 갖고 오도록 설정한다.
+    $( this ).text( htmlString ); // 클릭한 그 곳에다 텍스트 htmlString을 보여지게끔 한다.
+});
+});
+</script>
+<style>
+    p {
+        margin: 8px;
+        font-size: 20px;
+        color: pink;
+        cursor: pointer;
+    }
+    b {
+        text-decoration: underline;
+    }
+    button {
+        cursor: pointer;
+    }
+    </style>
+</head>
+<p>
+    <p>
+        <b>Click</b> to change the <span id="tag">html</span>
+    </p>
+    <p>
+        to a <span id="text">text</span> node.
+    </p>
+    <p>
+        This <button name="nada">button</button> does nothing.
+    </p>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "div" ).html( "<span class='red'>Hello <b>Again</b></span>" ); //div에 html을 넣는다.
+    $( "div.demo-container" ).html("<p>All new content. <em>You bet!</em></p>"); // div.demo-container에 html 추가
+    $( "div.demo-container" ).html(function() {
+    let emphasis = "<em>" + $( "p" ).length + " paragraphs!</em>"; // emphasis 변수 설정 p태그 입력
+    return "<p>All new content for " + emphasis + "</p>";
+    });
+});
+</script>
+</head>
+<style>
+    .red {
+    color:  pink;
+    }
+    </style>
+<body>
+    <span>Hello</span>
+        <div></div>
+        <div></div>
+        <div></div>
+    <div class="demo-container">
+        <div class="demo-box">Demonstration Box</div>
+    </div>
+</body>
+</html>
+
+
+HTML 삽입
+ - prepend(...)/append(...)  : 태그 안의 맨앞/맨뒤에 HTML을 삽입함
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).first().prepend( "<b>Hello </b>" ); // p 첫번째에 b태그 삽입
+    $( "p" ).last().append( "<strong>Hello</strong>" ); // p 마지막에 텍스트 삽입
+});
+</script>
+<style>
+    p {
+    background: pink;
+    }
+    </style>
+</head>
+<body>
+    <p>there, friend!</p>
+    <p>amigo!</p>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).first().prepend( "<b>Hello </b>" ); // p 첫번째에 b태그 삽입
+    $( "p" ).last().append( "<strong>Hello</strong>" ); // p 마지막에 텍스트 삽입
+    $( "p" ).first().before( "<b>Hello</b>" ); // p 맨앞에 b태그 생성
+    $( "p" ).last().after( "<b>Hello</b>" ); // p 맨뒤에 b태그 생성
+});
+</script>
+<style>
+    p {
+    background: pink;
+    }
+    </style>
+</head>
+<body>
+    <p>there, friend!</p>
+    <p>amigo!</p>
+</body>
+</html>
+
+
+(4) HTML 이동
+ - prependTo()/appendTo(...) 
+ -  $( "span" ).prependTo( "#foo" );
+   : 'span' 를  #foo요소 안의 앞으로 이동
+ - $( "span" ).appendTo( "#foo2" );
+   : 'span' 를  #foo2요소 안의 뒤로 이동
+ 
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).first().prepend( "<b>Hello </b>" ); // p 첫번째에 b태그 삽입
+    $( "p" ).last().append( "<strong>Hello</strong>" ); // p 마지막에 텍스트 삽입
+    $( "p" ).first().before( "<b>Hello</b>" ); // p 맨앞에 b태그 생성
+    $( "p" ).last().after( "<b>Hello</b>" ); // p 맨뒤에 b태그 생성
+    $( "span" ).first().prependTo( "#foo" ); // span태그 첫번째에 맨 뒤 foo 추가
+    $( "span" ).eq(1).appendTo( "#foo2" ); // span태그 두번째에 맨 뒤 foo2 추가
+});
+</script>
+<style>
+    p {
+    background: pink;
+    }
+    div {
+    background: yellow;
+    }
+    </style>
+</head>
+<body>
+    <p>there, friend!</p>
+    <p>amigo!</p>
+
+    <div> is what I said...</div>
+    <div> is what I said...</div>
+
+    <div id="foo">FOO!</div>
+    <div id="foo2">FOO!</div>
+    <span>I have something to say... </span>
+    <span>I have not something to say... </span>
+
+</body>
+</html>
+
+
+
+
+HTML 이동
+ - prependTo()/appendTo(...) 
+ -  $( "span" ).prependTo( "#foo" );
+   : 'span' 를  #foo요소 안의 앞으로 이동
+ - $( "span" ).appendTo( "#foo2" );
+   : 'span' 를  #foo2요소 안의 뒤로 이동
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "span" ).first().prependTo( "#foo" );
+    $( "span" ).eq(1).appendTo( "#foo2" );
+});
+</script>
+<style>
+    div {
+    background: pink;
+    }
+    </style>
+</head>
+<body>
+    <div id="foo">FOO!</div>
+    <div id="foo2">FOO!</div>
+    <span>I have something to say... </span>
+    <span>I have not something to say... </span>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).first().insertBefore( "#foo" );
+    $( "p" ).last().insertAfter( "#foo2" );
+});
+</script>
+<style>
+    div {
+    background: pink;
+    }
+    </style>
+</head>
+<body>
+    <div id="foo">FOO!</div>
+    <div id="foo2">FOO!~~</div>
+    <p>I have something to say... </p>
+    <p>I have not something to say... </p>
+</body>
+</html>
+
+
+다른 태그로 묶음
+ - .wrap('<div></div>')  ;  각 요소를 <div></div> 태그로 각각 감싼다.
+ - .wrapAl('<div></div>')    ;  요소 전체를  <div></div> 태그로 한번에 감싼다.
+ - .wrapInner(.'<b></b>')  ; 자식 요소 각각을 <b></b> 태그로 각각 감싼다.
+//(p{hello}+p{cruel}+p{World}+hr)*3
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).slice(0,3).wrap( "<div></div>" ); // 하나씩 div 스타일 적용 (뒤에 숫자는 포함 안함)
+    $( "p" ).slice(3,6).wrapAll( "<div></div>" ); // 한번에 div 적용
+    $( "p" ).slice(6,10).wrapInner( "<div></div>" ); // 백그라운드랑 겹쳐서 적용
+});
+</script>
+<style>
+    div {
+    border: 2px solid pink;
+    }
+    p {
+    background: beige;
+    margin: 4px;
+    }
+    </style>
+</head>
+<body>
+    <p>hello</p>
+    <p>cruel</p>
+    <p>World</p>
+    <hr>
+    <p>hello</p>
+    <p>cruel</p>
+    <p>World</p>
+    <hr>
+    <p>hello</p>
+    <p>cruel</p>
+    <p>World</p>
+
+</body>
+</html>
+ 태그변경/제거
+
+-  $( this ).replaceWith( "<div>" + $( this ).text() + "</div>" );
+   this 요소를 "<div>" + $( this ).text() + "</div>" 로 바꾼다.
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "button" ).click(function() {
+    console.log($(this).attr('id')); // 버튼을 눌렀을 때 실행되는 함수 설정
+    if($(this).attr('id')=='rem'){
+        $('div.rem').remove();  // 속성을 찾는다 -> id가 rem이면 rem을 없앤다.
+    }
+    $( this ).replaceWith( "<div>" + $( this ).text() + "</div>" ); // 없앤 그것의 text 값을 div태그로 적용
+
+    });
+});
+</script>
+<style>
+    button {
+    display: block;
+    margin: 3px;
+    color: lightcoral;
+    width: 200px;
+    }
+    div {
+    color: lightblue;
+    border: 2px solid blueviolet;
+    width: 200px;
+    margin: 3px;
+    text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <button>First</button>
+    <button>Second</button>
+    <button>Third</button>
+    <button id='rem'>del</button>
+    <div class='rem'>삭제될 요소</div>  
+</body>
+</html>
+
+
+
+
+
+
+속성값 변경과 취득
+
+ - attr(...,...)    : 지정한 속성값 변경
+ - attr(...)       : 지정한 속성값 가져옴
+ - removeAttr(...) : 지정한 속성값 제거
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $("a").first().attr("href","http://daum.net/"); // 첫번째 a태그의 속성을 바꾼다
+    $("a").first().text( $("a").attr("href") ); // 첫번째 a태그의 텍스트를 href인 다음으로 바꾼다
+    $("a").last().removeAttr("target"); // 마지막 a태그의 타겟(새로운 탭이 열리도록 하는) 속성을 제거한다
+});
+</script>
+</head>
+<body>
+    <a href="http://naver.com">링크</a>
+    <a href="http://naver.com/" target="_blank">링크</a>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).addClass( "selected" ); // p에 스타일 클래스를 적용
+    $( "p" ).first().removeClass( "selected" ); // 첫번째 p에 적용된 클래스 제거
+});
+</script>
+<style>
+    p {
+        margin: 8px;
+        font-size: 16px;
+    }
+    .selected {
+        color: blue;
+    }
+    .highlight {
+        background: yellow;
+    }
+    </style>
+</head>
+<body>
+    <p>Hello</p>
+    <p>and</p>
+    <p>Goodbye</p>
+</body>
+</html>
+
+
+css 제어
+ - css(...,...)     : 지정한 CSS 속성값 설정
+ - css(..)        : 지정한 CSS 속성값 가져옴
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "div" ).click(function() {
+    var color = $( this ).css( "background-color" ); // div를 클릭할 때 함수를 실행하도록 한다. 그 함수는
+    $( "#result" ).html( "That div is <span style='color:" +
+    color + ";'>" + color + "</span>." ); // html을 추가하고 각자 색깔 적용
+    $( "p" ).mouseover( function() {
+    $( this ).css( "color", "red" );    // 마우스 커서를 대면 빨간색
+    }).mouseout(function() {    
+    $( this ).css( "color", "black" );  // 마우스 커서를 떼면 검정색
+});
+});
+});
+</script>
+<style>
+    div {
+        width: 60px;
+        height: 60px;
+        margin: 5px;
+        float: left;
+    }
+
+    p {
+        clear:left;
+    }
+    </style>
+</head>
+<body>
+
+    <span id="result">&nbsp;</span>
+    <div style="background-color:blue;"></div>
+    <div style="background-color:rgb(15,99,30);"></div>
+    <div style="background-color:#123456;"></div>
+    <div style="background-color:#f11;"></div>
+    <p>Just roll the mouse over me.</p>
+    <p>Or me to see a color change.</p>
+
+</body>
+</html>
+4교시
+
+
+
+jQuery 이벤트
+
+
+1.  이벤트가 발생한 태그 얻기
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).click(function() {
+    $( this ).slideUp();  // p를 클릭 할 때 실행될 slideup 입력
+});
+
+});
+</script>
+<style>
+    p {
+    color: pink;
+    margin: 5px;
+    cursor: pointer;
+    }
+    p:hover {
+    background: beige;
+    }
+    </style>
+</head>
+<body>
+    <p>First Paragraph</p>
+<p>Second Paragraph</p>
+<p>Yet one more Paragraph</p>
+</body>
+</html>
+ toggle()
+  - 일치하는 요소를 표시하거나 숨긴다.
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).click(function() {
+    $( this ).slideUp();  // p를 클릭 할 때 실행될 slideup 입력
+});
+    $( "button" ).click(function() {
+    //   $( "p" ).toggle();
+    $( "p" ).toggle( "slow" ); // 버튼을 클릭할 때 p가 토글이 되는 함수를 생성
+});
+
+});
+</script>
+<style>
+    p {
+    background-color : grey;
+    font-weight : bold;
+    font-size : 16px;
+    color: pink;
+    margin: 5px;
+    cursor: pointer;
+    }
+    p:hover {
+    background: beige;
+    }
+    </style>
+</head>
+<body>
+    <button>Toggle 'em</button>
+    <p>Hiya</p>
+    <p>Such interesting text, eh?</p>
+</body>
+</html>
+
+
+unbind()
+- 요소에서 이전에 연결된 이벤트 핸들러 제거
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    function aClick() {
+    $( "div" ).show().fadeOut( "slow" ); // div를 클릭하면 사라진다.
+}
+    $( "#bind" ).click(function() {
+    $( "#theone" )
+    .bind( "click", aClick )
+    .text( "Can Click!" );  // id bind 버튼을 클릭하면 the one버튼이 Can Click 텍스트로 바뀌도록
+});
+    $( "#unbind" ).click(function() {
+    $( "#theone" )
+    .unbind( "click", aClick )
+    .text( "Does nothing..." ); // id Unbind 버튼을 클릭하면the one버튼이 Does nothing... 텍스트로 바뀌도록
+});
+});
+</script>
+<style>
+    button {
+    margin: 5px;
+    }
+    button#theone {
+    color: pink;
+    background: beige;
+    }
+    </style>
+</head>
+<body>
+    <button id="theone">Does nothing...</button>
+    <button id="bind">Bind Click</button>
+    <button id="unbind">Unbind Click</button>
+    <div style="display:none;">Click!</div>
+</body>
+</html>
+
+
+
+ on
+ - 하나 이상의 이벤트에 대한 이벤트 핸들러 함수를 선택한 요소에 연결한다..
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    var count = 0;
+    $( "body" ).on( "click", "p", function() {
+    $( this ).after( "<p>Another paragraph! " + (++count) + "</p>" ); // body를 찾고 p태그를 클릭하면 Another paragraph!라는 p태그가 생성이 되는 함수
+    });
+});
+</script>
+<style>
+    p {
+    background: pink;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px;
+    }
+    p.over {
+    background: #ccc;
+    }
+    span {
+    color: beige;
+    }
+    </style>
+</head>
+<body>
+    <p>Click me!</p>
+    <span></span>
+</body>
+</html>
+
+
+5교시 / 6교시 / 7교시 / 8교시
+
+jQuery Ajax 
+ - 비동기 통신 처리를 구현하는 기술. 
+
+$.ajaxt() 사용
+- 비동기 HTTP(Ajax) 요청을 수행
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $.ajax({
+        url: "./test.jsp",
+        dataType: "json",
+        success: function(data){
+            console.log(`data:${data}, typee:${typeof data}`);
+            result  = data;
+            console.log(`Call Back Call:${result.name}`);
+                $("#panel").append(
+            `<tr>
+                <td>이름</td>
+                <td>아이디</td>
+                <td>국어</td>
+                <td>영어</td>
+            </tr>
+            <tr>
+                <td>${result.name}</td>
+                <td>${result.id}</td>
+                <td>${result.kuk}</td>
+                <td>${result.eng}</td>
+            </tr>`
+        );
+    },statusCode:{
+        404:function(){
+            alert('page not found');
+        },
+        500:function(){
+            alert('server error');
+        }
+    }
+    });
+});
+</script>
+<style>
+    table, td{
+        border : 1px solid grey;
+    }
+</style>
+</head>
+<body>
+        <table id="panel"></table>
+</body>
+</html>
+
+
+
+
+$.getJSON 사용
+
+- GET HTTP 요청을 사용하여 서버에서 JSON 인코딩 데이터를 로드한다.
+- flickr.com 에서 제공하는 데이터 정보 API에서 JSON 데이터를 가져와서 출력한다.
+
+- 자바 스크립트는 서로 다른 도메인에 대한 요청을 보안상 제한한다.
+- 다른 도메인으로부터 데이터를 가져올 때 JSONP(JSON with Padding)사용할 수 있다.
+- JSONP 요청 URL에 '?jsoncallback=?' 를 붙여서 사용한다.
+- tags:, tagmode, format 는 서버에 보내는 파라메터이다.
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    let flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+    $.getJSON( flickerAPI, {
+    tags: "mount rainier",
+    tagmode: "any",
+    format: "json"
+    }).done(function(data){
+        console.log(data.items[0]);
+        $.each( data.items, function(i,item){
+            $("<img>").attr("src", item.media.m).appendTo("#images");
+            if(i === 3){
+                return false;
+            }
+        })
+    })
+});
+</script>
+</head>
+<body>
+    <div id="images"></div>
+</body>
+</html>
+
+
+
+파라메터 보낸후 결과 받아오기
+(1)  JSON 결과 요청 페이지 
+<%@ page  contentType="text/html; charset=UTF-8" %>
+<%
+request.setCharacterEncoding("utf-8");
+ 
+String name= request.getParameter("name");
+System.out.println("name: " + name);
+ 
+int kuk = Integer.parseInt(request.getParameter("kuk"));
+System.out.println("kuk: " + kuk);
+ 
+int eng = Integer.parseInt(request.getParameter("eng"));
+System.out.println("eng: " + eng);
+ 
+int tot = kuk + eng;
+int avg = tot / 2;
+%>
+{
+    "name": "<%=name%>",
+    "kuk": <%=kuk%>,
+    "eng": <%=eng%>,
+    "tot": <%=tot%>,
+    "avg": <%=avg%>
+}
+
+ $.get() 사용
+
+★ 주의: 실행은 톰캣을 실행하고 요청페이 확인 후 Ajax로 요청한다.
+- http://localhost:8000/get.jsp  : 요청페이지 확인
+- http://localhost:8000/getAjax.html  : 비동기 통신 요청
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $.get(
+                "./get.jsp",
+                {
+                    "name":"가길동",
+                    "kuk": 90,
+                    "eng": 100
+                },
+                function (data) {
+                    console.log(data);
+                    result = data;
+                    console.log('Call Back Call: ' + result.name);
+                    $("#panel").append(
+                        " 성명: " + result.name+
+                        " 국어: " + result.kuk+
+                        " 영어: " + result.eng+
+                        " 총점: " + result.tot+
+                        " 평균: " + result.avg
+                    );
+                },"json");
+        });
+</script>
+</head>
+<body>
+    <div id="panel"></div>
+</body>
+</html>
+ 
+
+
+
+) $.post() 사용
+★ 주의: 실행은 톰캣을 실행하고 요청페이 확인 후 Ajax로 요청한다.
+- http://localhost:8000/get.jsp  : 요청페이지 확인
+- http://localhost:8000/postAjax.html  : 비동기 통신 요청
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+function requestCheck(){
+    let param = $('#frmSungjuk').serialize();
+    console.log(`param:${param}`);
+    $.post(
+        'get.jsp',
+        param,
+        function(data){
+            display(data);
+       },'json')
+       .fail(function(){
+           alert('error');
+       });
+}
+ 
+function display(result){
+    $('#panel').text('').append(
+        `성명: ${result.name}
+         국어: ${result.kuk}
+         영어: ${result.eng}
+         총점: ${result.tot}
+         평균: ${result.avg}`
+    );
+ 
+}
+</script>
+</head>
+<body>
+<div id="panel">
+</div>
+<hr>
+<form action="" id="frmSungjuk">
+    성명 :<input type="text" name="name" value="가길동">
+    국어 :<input type="text" name="kuk" value="80">
+    영어 :<input type="text" name="eng" value="100">
+    <button type="button" onclick="requestCheck()">성적계산</button>
+</form>
+</body>
+</html>
+
+
+$.ajax() 사용
+★ 주의: 실행은 톰캣을 실행하고 요청페이 확인 후 Ajax로 요청한다.
+- http://localhost:8000/get.jsp  : 요청페이지 확인
+- http://localhost:8000/testAjax.html  : 비동기 통신 요청
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+function requestCheck(){
+    let param = $('#frmSungjuk').serialize();
+    $.ajax({
+        url: "get.jsp",
+        dataType: "json",
+        data : param,
+        success: function(data){
+            console.log(`data:${data}, typee:${typeof data}`);
+           
+            display(data);
+
+    },statusCode:{
+        404:function(){
+            alert('page not found');
+        },
+        500:function(){
+            alert('server error');
+        }
+    }
+    });
+}
+function display(result){
+        $("#panel").append(
+            `성명: ${result.name}
+            국어 : ${result.kuk}
+            영어 : ${result.eng}
+            총점 : ${result.tot}
+            평균 : ${result.avg}`
+    );
+}
+</script>
+<style>
+    table, td{
+        border : 1px solid grey;
+    }
+</style>
+</head>
+<body>
+    <div id="panel">
+    </div>
+    <hr>
+    <form action="" id="frmSungjuk">
+        성명 :<input type="text" name="name" value="가길동">
+        국어 :<input type="text" name="kuk" value="80">
+        영어 :<input type="text" name="eng" value="100"> <br><br><br>
+        <button type="button" onclick='requestCheck()'>성적계산</button>  
+    </form>
+</body>
+</html>
+
+
+8교시
+
+ jQuery Effects
+1. jQuery Hide/Show
+ - jQuery는 Html elements를 숨기고 보여준다
+ - 파라메터에 speed와 callback함수명이 올수있다.
+ - speed: slow, fast, milliseconds(초단위)
+ - callback함수명 :hidden, show 한후 실행할 함수 호출
+ - toggle(): hide(), show()가 번갈아 호출
+
+
+1. hide()/show()
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(document).ready(function(){
+    $("#hide").click(function(){
+    $("p").hide(); // hide를 누르면 p태그를 숨긴다.
+    });
+    $("#show").click(function(){
+    $("p").show(); // show를 누르면 p태그를 보여준다
+    });
+});
+</script>
+</head>
+<body>
+    <p>If you click on the "Hide" button, I will disappear.</p>
+    <button id="hide">Hide</button>
+    <button id="show">Show</button>
+</body>
+</html>
+
+
+2. jQuery Fade
+(1) fadeIn() - 보여짐/ fadeOut()- 안보임
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+    $(document).ready(function(){
+        $("button").first().click(function(){
+            $("#div1").fadeIn("fast");
+            $("#div2").fadeIn("slow");
+            $("#div3").fadeIn(1500);
+        }); // 첫번째 버튼을 누르면 서서히 보이게 설정
+        $("button").eq(1).click(function(){
+            $("#div1").fadeOut();
+            $("#div2").fadeOut();
+            $("#div3").fadeOut();
+        }); // 두번째 버튼을 누르면 바로 사라지게 설정
+        $("button").last().click(function(){
+            $("#div1").fadeOut("fast");
+            $("#div2").fadeOut("slow");
+            $("#div3").fadeOut(1500);
+        }); // 마지막 버튼을 누르면 서서히 사라지게 설정
+    });
+</script>
+<style>
+    div {
+        width:80px;height:80px;display:none;
+    }
+    div#div1{
+        background-color:pink;
+    }
+    div#div2{
+        background-color:beige;
+    }
+    div#div3{
+        background-color:lightgreen;
+    }
+</style>
+</head>
+<body>
+    <p>Demonstrate fadeIn()/fadeOut with different parameters.</p>
+
+    <button>Click to fade in boxes</button><br>
+    <button id="abc">Click to fade in boxes</button><br>
+    <button>Click to fade out boxes</button><br<br>
+   
+    <div id="div1"></div><br>
+    <div id="div2"></div><br>
+    <div id="div3"></div>
+
+</body>
+</html>
+(2) .fadeToggle( [duration ] [, easing ] [, complete ] )
+
+ duration  : 애니메이션 실행 시간을 결정하는 문자열 또는 숫자
+ easing : 전환에 사용할 여유 함수를 나타내는 문자열(swing, linear)
+ complete : 애니메이션이 완료되면 호출할 함수로, 일치하는 요소당 한 번 호출된다.
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function(){
+    $( "button" ).first().click(function() {
+    $( "p" ).first().fadeToggle( "slow", "linear" ); // 첫번째 버튼을 클릭하면 천천히 사라지도록
+    });
+    $( "button" ).last().click(function() {
+    $( "p" ).last().fadeToggle( "fast", function() {
+    $( "#log" ).append( "<br><br><div>finished</div>" ); // 두번째 버튼을 클릭하면 천천히 사라지도록하고
+    }); // finished가 보이도록 한다.
+});
+});
+</script>
+</head>
+<body>
+    <button>fadeToggle p1</button>
+    <button>fadeToggle p2</button>
+    <p>This paragraph has a slow, linear fade.</p>
+    <p>This paragraph has a fast animation.</p>
+    <div id="log"></div>
+</body>
+</html>
+(3) .fadeTo( duration, opacity [, complete ] )
+ - duration : 애니메이션 실행 시간을 결정하는 문자열 또는 숫자
+ - opacity : 대상 불투명도를 나타내는 0과 1 사이의 숫자
+ - complete : 애니메이션이 완료되면 호출할 함수
+  - 일치하는 요소의 불투명도를 조정한다.
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "p" ).first().click(function() {
+    $( this ).fadeTo( "slow", 0.33 ); // 첫번째 p태그를 클릭하면 서서히 흐려지게끔 한다.
+});
+});
+</script>
+</head>
+<body>
+    <p>
+        Click this paragraph to see it fade.
+    </p>
+    <p>
+        Compare to this one that won't fade.
+    </p>
+</body>
+</html>
+3. jQuery Slide
+- 슬라이딩 동작으로 일치하는 요소를 표시한다.
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( document.body ).click(function () {
+    if ( $( "div" ).first().is( ":hidden" ) ) {
+    $( "div" ).slideDown( "slow" ); // body를 클릭했을 때 div가 없으면 div가 슬라이드로 내려간다(사라진다)
+    } else{
+    $( "div" ).slideUp("slow"); // 이미 사라졌다면 천천히 슬라이드로 올라온다(보여준다)
+    }
+    });
+});
+</script>
+<style>
+    div {
+    background: pink;
+    margin: 3px;
+    width: 80px;
+    height: 40px;
+    display: none;
+    float: left;
+    }
+    </style>
+</head>
+<body>
+   <h1>Click me!</h1>
+<div></div>
+<div></div>
+<div></div>
+</body>
+</html>
+- slideToggle()
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "button" ).click(function() {
+    $( "p" ).slideToggle( "slow" ); // 버튼을 클릭하면 p태그가 슬라이드 토글된다(없으면 생기고 있으면 없어지는)
+});
+});
+</script>
+<style>
+    p {
+        width: 400px;
+    }
+    </style>
+</head>
+<body>
+    <button>Toggle</button>
+    <p>
+    This is the paragraph to end all paragraphs.  You
+    should feel <em>lucky</em> to have seen such a paragraph in
+    your life.  Congratulations!
+    </p>
+</body>
+</html>
+4. animation()
+- CSS 속성 집합의 사용자 지정 애니메이션을 수행한다.
+
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title></title>
+<style></style>
+<script src='https://code.jquery.com/jquery-3.5.0.js'></script>
+<script>
+$(function () {
+    $( "#go" ).click(function() {
+    $( "#block" ).animate({
+    width: "70%",
+    opacity: 0.4,
+    marginLeft: "2em",
+    fontSize: "3em",
+    borderWidth: "10px"
+    }, 400 );
+    }); // go라는 id를 가진 버튼을 클릭하면 block이라는 div에 애니메이션이 적용된다.
+});
+</script>
+<style>
+    div {
+        background-color: pink;
+        width: 100px;
+        border: 1px solid beige;
+    }
+    </style>
+</head>
+<body>
+    <button id="go">&raquo; Run</button>
+    <div id="block">Hello!</div>
+</body>
+</html>
