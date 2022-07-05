@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+ 
+<tiles-definitions>
+  <!-- main -->
+  <definition name="main"
+    template="/WEB-INF/views/template/template.jsp">
+    <put-attribute name="header"
+      value="/WEB-INF/views/template/top.jsp" />
+  </definition>
+  <definition name="/home" extends="main">
+    <put-attribute name="title" value="기본페이지"></put-attribute>
+    <put-attribute name="body"
+      value="/WEB-INF/views/index.jsp" />
+  </definition>
+  <definition name="/create" extends="main">
+    <put-attribute name="title" value="등록"></put-attribute>
+    <put-attribute name="body"
+      value="/WEB-INF/views/createForm.jsp" />
+  </definition>
+  <definition name="/list" extends="main">
+    <put-attribute name="title" value="목록"></put-attribute>
+    <put-attribute name="body"
+      value="/WEB-INF/views/list.jsp" />
+  </definition>
+  <definition name="/read" extends="main">
+    <put-attribute name="title" value="조회"></put-attribute>
+    <put-attribute name="body"
+      value="/WEB-INF/views/read.jsp" />
+  </definition>
+   <definition name="/update" extends="main">
+    <put-attribute name="title" value="수정"></put-attribute>
+    <put-attribute name="body"
+      value="/WEB-INF/views/updateForm.jsp" />
+  </definition>
+  <definition name="/delete" extends="main">
+    <put-attribute name="title" value="삭제"></put-attribute>
+    <put-attribute name="body"
+      value="/WEB-INF/views/deleteForm.jsp" />
+  </definition>
+  
+</tiles-definitions>

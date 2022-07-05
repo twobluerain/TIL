@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.review.ReviewMapper">
+
+<delete id="bdelete" parameterType="int">
+	delete from review
+	where contentsno = #{contentsno}
+	
+</delete>
+
+<select id="list" parameterType="Map" resultType="com.study.review.ReviewDTO">
+
+    select rnum, content, regdate, id, contentsno
+    from review
+    where contentsno = #{contentsno}
+    order by rnum DESC
+    limit #{sno}, #{eno}
+
+</select>
+
+<select id="rcount" parameterType="int" resultType="int">
+   SELECT count(*) FROM review
+   WHERE contentsno = #{contentsno}
+</select>
+
+<select id="total" resultType="int" parameterType="int">
+	select count(*) from review
+	where contentsno = #{contentsno}
+</select>
+
+<insert id="create" parameterType="com.study.review.ReviewDTO">
+	 insert into review(content, regdate, id, contentsno)
+	 values(#{content}, sysdate(), #{id}, #{contentsno}) 
+</insert>
+ 
+<select id="read" parameterType="int" resultType="com.study.review.ReviewDTO">
+ select * from review
+ where rnum = #{rnum}
+</select>
+
+<update id="update" parameterType="com.study.review.ReviewDTO">
+update review
+set content = #{content}
+where rnum = #{rnum}
+ 
+</update>
+
+<delete id="delete" parameterType="int">
+delete from review
+where rnum = #{rnum}
+</delete>
+</mapper>
