@@ -1,0 +1,513 @@
+1교시
+
+id, passwd 입력후 비동기 통신 요청 페이지
+
+
+class UserStorage{
+    constructor(){
+        if (window.XMLHttpRequest) {
+            this.xhr = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            this.xhr = ActiveXObject('Microsoft.XMLHTTP');
+        }
+        console.log(this.xhr);
+    }
+    loginUser(id, passwd) {
+        return new Promise((resolve, reject) => {
+            this.xhr.onload = () => {
+            // alert(this.xhr.responseText);
+            resolve(this.xhr.responseText);
+        };
+            this.xhr.onerror = () => {
+            reject(new Error(this.xhr.status));
+        };
+          //alert(`pay.jsp?id=${id}&passwd=${passwd}`);
+            this.xhr.open('GET', `pay.jsp?id=${id}&passwd=${passwd}`, true);
+            this.xhr.send();
+        });
+    }
+    }
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%
+String[] titles = {
+"  급  여  명  세  서 ",
+"기 본 급: 2,500,000 원",
+"야근수당:   100,000 원",
+"주말수당:   200,000 원",
+"세금합계:   100,000 원",
+"실수령액: 2,900,000 원",
+"입금 예정일: 2021-10-01일 수고하셨습니다.",
+};
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+          font-family: gulim;
+          font-size: 20px;
+          color:green;
+          font-weight: bold;
+        }
+         
+    </style>
+</head>
+<body>
+    <ul>
+<%
+String id = request.getParameter("id");
+String passwd = request.getParameter("passwd");
+System.out.println(id);
+if (id.equals("테스트") && passwd.equals("테스트")){
+    for (int i = 0 ; i < titles.length ; i++) {
+        out.println("<li>" + titles[i] + "<br/><br/>");
+    }
+}else{
+    out.println("<li>인증 실패입니다.<br/><br/>");
+    out.println("<li>다시 시도해 주세요.<br/><br/>");
+}
+%>    
+</ul>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="ajax.js" defer></script>
+    <script>
+        function send(id, passwd){
+            // console.log(` id:${id}, passwd:${passwd}`) //확인
+            const userStorage = new UserStorage();
+            userStorage
+                .loginUser(id, passwd)
+                .then(text => {
+                    let patList = document.getElementById("payList");
+                    payList.innerHTML = text;
+                })
+                .catch(console.log);
+            }
+    </script>
+</head>
+<body>
+    <h2>급여 명세서</h2>
+    <br>
+    <div class="well well-sm" id="payList"></div>
+    <br>
+    <form class="form-inline">
+        <div class="form-group">
+          <label class="sr-only" for="id">사원id:</label>
+          <input type="email" class="form-control" id="id" value="테스트" name="id">
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="pwd">비밀번호:</label>
+          <input type="password" class="form-control" id="pwd" value="테스트" name="passwd">
+        </div>
+        <button type="button" class="btn btn-default"
+        onclick="send(this.form.id.value, this.form.passwd.value)">급여확인</button>
+      </form>
+    </div>
+
+    </form>
+</body>
+</html>
+ 
+
+ 
+
+2교시
+
+Fetch API 사용 
+
+
+- Fetch API를 사용하면 XMLHttpRequest(XHR)와 유사한 네트워크 요청을 만들 수 있다. 
+- 가장 큰 차이점은 Fetch API가 Promises를 사용하므로 더 간단하고 깔끔한 API를 제공하여 
+  콜백 지옥 피하고 XMLHttpRequest의 복잡한 API를 기억하지 않아도 된다.
+
+- ajax.js 사용안함  pay.html만 수정
+ 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script>
+        function getItem(id, passwd){
+            return fetch(`pay.jsp?id=${id}&passwd=${passwd}`)
+            .then(response => response.text());
+        }
+        function send(id, passwd){
+            // console.log(` id:${id}, passwd:${passwd}`) //확인
+                getItem(id,passwd)
+                .then(text => {
+                    let patList = document.getElementById("payList");
+                    payList.innerHTML = text;
+                })
+                .catch(console.log);
+            }
+    </script>
+</head>
+<body>
+    <h2>급여 명세서</h2>
+    <br>
+    <div class="well well-sm" id="payList"></div>
+    <br>
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="id">사원id:</label>
+                <input type="email" class="form-control" id="id" value="테스트" name="id">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="pwd">비밀번호:</label>
+            <input type="password" class="form-control" id="pwd" value="테스트" name="passwd">
+        </div>
+        <button type="button" class="btn btn-default"
+        onclick="send(this.form.id.value, this.form.passwd.value)">급여확인</button>
+      </form>
+    </div>
+
+    </form>
+</body>
+</html>
+ 
+
+ 
+
+3교시 / 4교시 / 5교시 / 6교시 / 7교시
+
+ 
+
+
+use webtest;
+
+ CREATE TABLE suggest(
+        suggestno int NOT NULL auto_increment primary key,
+        sqlpart   VARCHAR(20)  NOT NULL,
+        sqlquery  VARCHAR(100) NOT NULL, 
+        etc       VARCHAR(100)     NULL
+    );
+    
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('INSERT', 'INSERT 테이블명 VALUES( ~ )', '');
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('INSERT','INSERT 테이블명 ( ~ ) VALUES( ~ )', '');
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('SELECT','SELECT * FROM ~', '');    
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('SELECT','SELECT * FROM ~ WHERE ~', '');    
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('UPDATE','UPDATE ~ SET ~', '');    
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('UPDATE','UPDATE ~ SET ~ WHERE ~', '');    
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('DELETE','DELETE FROM ~', ''); 
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('DELETE','DELETE FROM ~ WHERE ~', ''); 
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('자바코드', '자바001', ''); 
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('자바코드', '자바002', '');                       
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('자바코드','자바003', '');                       
+ 
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 15inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 16inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 17inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 18inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 19inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 20inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 21inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 22inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 23inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 24inch', '');      
+    INSERT INTO suggest( sqlpart, sqlquery, etc)
+    VALUES('모니터','LCD 25inch', '');  
+ 
+-----------------------------------------------------------------------   
+    SELECT * FROM suggest;             
+ 
+ 
+    SELECT COUNT(sqlquery) as cnt
+    FROM suggest 
+    WHERE sqlquery LIKE 'INS%';
+ 
+    SELECT COUNT(sqlquery) as cnt
+    FROM suggest 
+    WHERE sqlquery LIKE '자%';
+    
+    
+    SELECT sqlquery 
+    FROM suggest 
+    WHERE sqlquery LIKE 'INS%'
+    ORDER BY sqlquery;
+ 
+ 
+    SELECT sqlquery 
+    FROM suggest 
+    WHERE sqlquery LIKE '자%'
+    ORDER BY sqlquery;
+ 
+
+
+package utility;
+
+import java.sql.SQLException;
+
+public class Constant {
+
+  public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+  public static final String URL = "jdbc:mysql://localhost:3306/webtest?useUnicode=true&characterEncoding=utf8";
+  public static final String USER = "javauser";
+  public static final String PASSWD = "1234";
+
+  public static void main(String[] args) {
+    // TODO Auto-generated method stub
+
+}
+}
+
+
+package suggest;
+ 
+import java.sql.*;
+import utility.*;
+import java.util.*;
+ 
+public class SuggestDAO {
+    public int getCount(String keyword) {
+        int count = 0;
+        Connection con = DBOpen.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        StringBuffer sql = new StringBuffer();
+        
+        sql.append(" SELECT COUNT(sqlquery)");
+        sql.append(" FROM suggest");
+        sql.append(" WHERE sqlquery LIKE '"+keyword+"%'");
+         
+ 
+        try {
+            pstmt = con.prepareStatement(sql.toString());
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1); // 수량 산출
+            }
+        } catch (Exception e) {
+         e.printStackTrace();
+        } finally {
+            DBClose.close(rs, pstmt, con);
+        }
+        return count;
+    }
+ 
+    public List<String> getSqlquery(String keyword) {
+        List<String> list = new ArrayList<String>();
+        Connection con = DBOpen.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        StringBuffer sql = new StringBuffer();
+ 
+        sql.append(" SELECT sqlquery");
+        sql.append(" FROM suggest");
+        
+        sql.append(" WHERE sqlquery LIKE '"+keyword+"%'");
+              
+        sql.append(" ORDER BY sqlquery ASC");
+ 
+        try {
+            pstmt = con.prepareStatement(sql.toString());
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String str = rs.getString(1);
+                list.add(str);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBClose.close(rs, pstmt, con);
+        }
+        return list;
+    }
+}	<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="java.util.*" %>
+<jsp:useBean id="dao" class="suggest.SuggestDAO" />
+<%
+request.setCharacterEncoding("UTF-8");
+String keyword = request.getParameter("keyword");
+System.out.println(keyword);
+int count = dao.getCount(keyword);
+List<String> list = dao.getSqlquery(keyword);
+ 
+out.print(count + "|") ;
+for(int i =0; i < list.size() ; i++){
+    count = count - 1;
+    String key = list.get(i);
+    out.print(key);
+    if (count > 0){ 
+        out.print(",");
+    }
+}
+%>
+DAO
+
+data access object 를 만들어 mysql에 접근이 가능하도록 만든다.
+
+preparedstatement : 전송객체 ( sql => mysql server)
+
+resulset : 결과를 가져오는 객체 (쿼리문에 대한 결과값을 받아오기)
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+function sendKeyword(params) {
+     return fetch(new Request('suggest.jsp', {
+     method: 'post',
+     headers: {
+       "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+     },
+     body: params
+       }))
+       .then(response => response.text());   
+}
+function select(selectedKeyword) {
+    document.search.keyword.value = selectedKeyword;
+     
+    hide('suggest');
+}
+function show(id){
+    if(id) {
+        document.getElementById(id).style.display='';
+    }
+}
+function hide(id){
+    if(id) {
+        document.getElementById(id).style.display='none';
+    }
+}	<%@ page  contentType="text/html; charset=UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>제시어</title>
+<script src="ajax.js"></script>
+<style> 
+#suggest {
+display: block;
+position: static;
+left: 0px;
+top: 30px;
+color: #000000;
+background: #EAEAEA;
+width: 500px"
+}
+</style>
+<script>
+    function send(){
+        let keyword = document.search.keyword.value; 
+        console.log(`.... : \${keyword.length}`);
+        let params = `keyword=\${keyword}`;
+        console.log(`params:\${params}`);
+        if(keyword.length > 0){
+sendKeyword(params)   // 비동기 통신 요청
+            .then(text =>
+         {
+          //  3|자바001,자바002,자바003
+         let result = text.split('|');
+         
+         // 갯수, 문자열을 정수로 변환
+         let count = parseInt(result[0]);
+         
+         let keywordList = null;
+         
+         if (count > 0) {
+             // ,를 구분한 1차원 배열 생성
+             keywordList = result[1].split(',');
+             
+             let html = '';
+             html += "등록된 쿼리 목록(선택하세요.)<br>";
+             
+             for (var i = 0; i < keywordList.length; i++) { 
+             
+             //※ 특수 문자 표현: " --> \", \ --> \\ 
+             //※ jsp에서 js의 template literal 사용시 앞에 '\' 사용
+             html += `<a href=\"javascript:select(\'\${keywordList[i]}\')\">\${keywordList[i]}</a><br>`;
+             
+             }
+             
+             // 목록을 출력할 DIV 태그
+             let listView = document.getElementById('suggestList');
+             
+             // DIV 태그 값 저장
+             listView.innerHTML = html;
+             
+             // 목록을 가지고 있는 DIV 태그 출력
+             show('suggest');
+         } else {
+           hide('suggest');
+         }
+         
+            }) //then end
+            .catch(console.log);
+ 
+            }//if end
+            else{
+             hide('suggest');
+            }
+       }//send end
+    
+    function frmSend(f) {
+         f.submit();
+    }
+</script>
+ 
+ 
+</head>
+<body>
+ 
+<form name="search" action="./proc.jsp" method="post">
+<input type="text" name="keyword" id="keyword" onkeyup="send()" size="70" /> 
+<button>검색</button>
+ 
+<!-- 서버로부터 검색된 목록 출력 -->
+<div id="suggest">
+<div id="suggestList"></div>
+</div>
+</form>
+</body>
+</html>
