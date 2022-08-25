@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.cart.CartMapper">
+
+	<delete id="deleteAll" parameterType="String">
+		delete from cart
+		where id = #{id}
+	</delete>
+	<delete id="delete" parameterType="int">
+		delete from cart
+		where cartno = #{cartno}
+	</delete>
+	<insert id="create" parameterType="com.study.cart.CartDTO">
+		insert into cart(contentsno, count, size, id)
+		values(#{contentsno}, #{count}, #{size}, #{id})
+	</insert>
+	
+	<resultMap type="com.study.cart.CartDTO" id="cartlist">
+		<result property="cartno" column="cartno"/>
+		<result property="size" column="size"/>
+		<result property="count" column="count"/>
+		<association property="cdto" javaType="com.study.contents.ContentsDTO">
+			<result property="contentsno" column="contentsno"/>
+			<result property="pname" column="pname"/>
+			<result property="price" column="price"/>
+			<result property="filename" column="filename"/>
+		</association>
+	</resultMap>
+	<select id="list" parameterType="String" resultMap="cartlist">
+	select c.contentsno, c.pname, c.price,c.filename, t.cartno, t.size,t.count
+	from contents c inner join cart t
+	on c.contentsno = t.contentsno
+	where t.id = #{id}
+	</select>
+	
+	
+</mapper>

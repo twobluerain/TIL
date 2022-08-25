@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.model.ReplyMapper">
+<insert id="create" parameterType="com.study.model.ReplyDTO">
+    insert into Reply(content, regdate, id, contentsno)
+    values(#{content}, sysdate(), #{id}, #{contentsno}) 
+	</insert>
+	<delete id="delete" parameterType="int">
+			delete from Reply
+		where rnum = #{rnum}
+	</delete>
+	
+	<select id="list" parameterType="Map" resultType="com.study.model.ReplyDTO">
+		select rnum, content, regdate, id, contentsno
+	    from Reply
+	    where contentsno= #{contentsno}
+	    order by rnum DESC
+	    limit #{sno}, #{eno}
+	</select>
+	
+	<select id="read" parameterType="int" resultType="com.study.model.ReplyDTO">
+		   select * from Reply
+    where rnum = #{rnum}
+	</select>
+	
+	<select id="total" parameterType="int" resultType="int" >
+		select count(*) from reply
+    	where contentsno = #{contentsno}
+	</select>
+	
+	<update id="update" parameterType="com.study.model.ReplyDTO">
+			update reply
+		set content = #{content}
+		where rnum = #{rnum}
+	</update>
+</mapper>

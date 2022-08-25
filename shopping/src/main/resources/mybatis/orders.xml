@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.orders.OrderMapper">
+
+	<update id="updateState" parameterType="Map">
+		update orders
+		set ostate = #{ostate}
+		where orderno = #{orderno}
+	</update>
+	<select id="total" parameterType="Map" resultType="int">
+		select count(*) from order_detail
+		<where>
+			<choose>
+				<when test="col=='id'">
+					o.id like concat('%',#{word},'%')
+				</when>
+				<when test="col=='mname'">
+					o.mname like concat('%',#{word},'%')
+				</when>
+				<when test="col=='pname'">
+					d.pname like concat('%',#{word},'%')
+				</when>
+			</choose>
+		</where>
+	</select>
+	<resultMap id="orderList" type="com.study.orders.OrdersDTO">
+		<result property="id" column="id" />
+		<result property="orderno" column="orderno" />
+		<result property="odate" column="odate" />
+		<result property="mname" column="mname" />
+		<result property="total" column="total" />
+		<result property="ostate" column="ostate" />
+		<result property="reqtext" column="reqtext" />
+		<collection property="list" column="orderno"
+			javaType="List" ofType="com.study.orders.OrderdetailDTO">
+			<result property="quantity" column="quantity" />
+			<result property="contentsno" column="contentsno" />
+			<result property="pname" column="pname" />
+			<result property="size" column="size" />
+		</collection>
+	</resultMap>
+	<select id="list" parameterType="Map" resultMap="orderList">
+		select o.id,o.mname, o.orderno,o.odate,o.total,o.ostate,o.reqtext,
+		d.quantity,d.contentsno,d.pname, d.size
+		from orders o inner join
+		order_detail d
+		on o.orderno = d.orderno
+		<where>
+			<choose>
+				<when test="col=='id'">
+					o.id like concat('%',#{word},'%')
+				</when>
+				<when test="col=='mname'">
+					o.mname like concat('%',#{word},'%')
+				</when>
+				<when test="col=='pname'">
+					d.pname like concat('%',#{word},'%')
+				</when>
+			</choose>
+		</where>
+		order by orderno desc
+		limit #{sno}, #{eno}
+	</select>
+
+	<insert id="createOrder"
+		parameterType="com.study.orders.OrdersDTO">
+
+		INSERT INTO orders(id, mname, odate, total, payment, reqtext)
+		VALUES(#{id}, #{mname}, sysdate(), #{total}, #{payment}, #{reqtext})
+
+		<selectKey keyProperty="orderno" resultType="int"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+
+	</insert>
+	<insert id="createDetail"
+		parameterType="com.study.orders.OrderdetailDTO">
+		INSERT INTO order_detail(contentsno, orderno, pname,
+		quantity, size )
+		VALUES(#{contentsno}, #{orderno}, #{pname},
+		#{quantity}, #{size})
+	</insert>
+
+</mapper>
