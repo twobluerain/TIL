@@ -1,0 +1,196 @@
+1교시 : 반복
+
+
+
+touch a.txt
+
+touch b.txt
+
+git init
+
+ls -a
+
+a- login
+
+b- login
+
+git add a.txt
+
+git status -> a.txt b.txt
+
+git rm --cached a.txt -> rm 'a.txt'  (a.txt 취소)
+
+git status -> a.txt b.txt
+
+git commit -m ''    (탈출 : Q Ctrl+C Ctrl+D)
+
+git log --oneline -> add b.txt
+
+git commit --amend -> i -> 'commit b.txt' esc -> :wq
+
+git log --oneline -> commit b.txt (해쉬값을 바꿔버리는 행동.)
+
+github repository 추가 -> git remote add origin '주소'
+
+git remote -v -> fetch push (브릿지) 확인
+
+git remote remove '주소' -> 삭제 -> git remote add origin '주소'
+
+git remote -v -> 바뀐 fetch push 확인
+
+git push origin master
+
+
+
+github -> setting -> danger zone -> delete
+
+
+
+2교시 : Clone
+
+
+
+git init : 이 공간을 관리해줘! (한 번만 입력)
+
+git colne : 이 공간에 온라인 repository를 폴더째 들고와줘! (한 번만 입력)
+
+1) git init이 된 상태에서 폴더를 가져와준다.
+
+2) 브릿지도 제대로 이어져있다! (주소가 이미 연결되어 있다)
+
+클론하고 난 후 푸쉬(내보내고) 푸쉬(받기)
+
+
+
+깃헙 주소 받고 
+
+bash에서 git clone '주소' -> 폴더 생성
+
+but master 없음
+
+cd '폴더' -> (master)
+
+git remote -v -> 브릿지 연결 확인
+
+code. 열기
+
+
+
+A/B 클론
+
+B가 새로 커밋하고 git push origin master해도 모른다.
+
+A가 git pull origin master 해야 커밋을 받을 수 있다.
+
+
+
+3교시 : 충돌개념
+
+
+
+바탕화면 
+
+배쉬
+
+mkdir collision
+
+cd collision/
+
+touch a.txt
+
+code .
+
+수정 저장 
+
+git add .
+
+git commit -m 'root commit'
+
+git remote add origin '주소'
+
+git push origin master
+
+git log --oneline
+
+       허그에서 아는 시점 : push 했을 때
+
+       로컬에서 아는 시점 : pull  했을 때
+
+git commit -m 'local'
+
+git log --oneline       
+
+
+git push origin master -> [rejected]
+
+git pull origin master -> 
+
+
+지우기
+
+
+수정 저장 commit
+
+git push origin master
+
+
+
+
+
+4교시 : Branch
+
+Master와 Branch
+
+교차점에서는 같다. 하지만 이후 갈라지는 길에서는 독립적으로 실행된다.
+
+bash 실행
+
+$ mkdir branch-test
+$ cd branch-test
+$ touch a.txt
+$ git init
+---------> 환경 설정
+
+수정 저장 commit 후
+
+$ git branch
+
+$ git branch 브랜치명 : 생성하기
+
+$ git switch 브랜치명 : 브랜치로 이동 = ($ git checkout 브랜치명)
+
+$ git switch branch
+
+수정 저장 commit 후
+
+$ git branch switch master
+
+--------> 브랜치에서 커밋한 내용은 마스터에 영향을 주지 않는다.
+
+1) 합친다
+
+$ git merge water (없는 곳에서 합체할 브랜치를 입력)
+
+2) 브랜치를 삭제한다.
+
+$ git branch -d water (없는 곳에서 삭제할 브랜치를 입력)
+
+---------------------------
+
+$ git switch -c water (water 만들면서 이동하기)
+
+
+
+5교시 : 충돌 / 
+
+환경 설정
+
+브랜치에서 커밋
+
+마스터에서 커밋
+
+마스터에서 머지 브랜치
+
+TIL 작성
+
+220414
