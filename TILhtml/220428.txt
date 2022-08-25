@@ -1,0 +1,509 @@
+5교시
+
+HTML
+
+
+
+(1) Tag & Element
+
+<p> My cat is very grumpy </p>
+
+- Tag : <p></p> 
+- Content : My cat is very grumpy
+- Element(요소, 노드) :  <p> My cat is very grumpy </p>
+
+(2) Attribute(속성)
+
+<p class='editor-note'> My cat is very grumpy</p>
+
+- tag 내 class, id 등 추가적인 내용을 정의하여 style를 적용하거나 js로 요소를 찾을때 등에서 
+  사용된다.
+
+1. HTML Headings
+
+
+- Headings are defined with the <h1> to <h6> tags.
+- <h1> 제일 중요한 헤드 <h6> 덜 중요한 헤드
+
+2. HTML Paragraphs
+
+
+- The HTML <p> element defines a paragraph.
+- 브라우저는 문단 앞,뒤에 자동으로  빈줄을 추가한다.
+
+
+
+
+
+
+
+
+
+
+6교시
+
+3. HTML a tag(앵커요소)
+
+
+ - href 특성을 통해 다른 페이지나 같은 페이지의 어느 위치, 파일, 이메일 주소와
+   그 외 다른 URL로 연결할 수 있는 하이퍼링크를 만든다.
+ - <a> 안의 콘텐츠는 링크 목적지의 설명을 나타내야 합니다.
+ul은 순서가 정해지지 않은 리스트 -> 점으로 표기
+ol은 순서가 정해진 리스트 ->  숫자로 표기
+4. HTML Styling
+
+
+
+
+- 배경-흰색, 글씨-검정색 인 것은 디폴트 값.
+
+- 전체 스타일을 주기 위한 <style>
+
+
+
+1.  HTML  elements 에 Style을 적용하기 위한  3 ways
+
+
+
+
+Inline(인라인) :  HTML <body>에 그때그때 <style>을 적용하는 것
+
+
+
+
+Internal(인터널) : HTML <head> 구역에 <style> 적용하는 것
+
+
+html파일
+
+css파일
+
+브라우저를 켰을 때
+External(익스터널) : CSS files CSS파일을 따로 만들어 적용하는 것
+
+
+
+2. id Attribute
+
+
+문단에 아이디를 만들어 빨간색을 적용한 것
+
+
+
+
+
+
+
+7교시
+
+3. class Attribute
+
+
+
+
+문단에 class를 적용하는데 이름을 point로 적용
+
+그 다음 <head> <style> 에서 point 를 yellow로 적용한 모습
+
+
+
+
+
+
+<img src="pic_mountain.jpg" alt="Mountain View" style="width:304px;height:228px">
+
+라는 html을 만들고
+
+pic_mountain 이라는 사진 파일을 저장하였다.
+
+그 후 html을 켜서 브라우저를 확인하면 저장한 사진을 볼 수 있다.
+
+
+
+
+
+
+1. <table> 의 border 속성 적용
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <table  border='1' style= "width:100%">
+    <tr>
+      <td>Jill</td>
+      <td>Smith</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <td>Eve</td>
+      <td>Jackson</td>
+      <td>94</td>
+    </tr>
+      <td>John</td>
+      <td>Doe</td>
+      <td>80</td>
+    
+  
+</body>
+</html>
+
+
+
+
+
+8교시
+
+
+
+
+
+1. <table> 의 border 속성 적용
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    table, th, td{
+      border: 1px solid green;
+    }
+  
+  </style>
+</head>
+<body>
+  
+  <table style="width:100%">
+    <tr>
+      <td>Jill</td>
+      <td>Smith</td>
+      <<td>50</td>
+    </tr>
+    <tr>
+      <td>Eve</td>
+      <td>Jackson</td>
+      <td>94</td>
+    </tr>
+    <tr>
+      <td>John</td>
+      <td>Doe</td>
+      <td>80</td>    
+    </tr>
+  
+</body>
+</html>
+
+2. border-collapse: collapse;
+
+
+표 한 줄로 바꾸기
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    table, th, td{
+      border: 1px solid green;
+      border-collapse: collapse;
+    }
+  
+  </style>
+</head>
+<body>
+  
+  <table style="width:100%">
+    <tr>
+      <td>Jill</td>
+      <td>Smith</td>
+      <<td>50</td>
+    </tr>
+    <tr>
+      <td>Eve</td>
+      <td>Jackson</td>
+      <td>94</td>
+    </tr>
+    <tr>
+      <td>John</td>
+      <td>Doe</td>
+      <td>80</td>    
+    </tr>
+  
+</body>
+</html>
+
+<TH> tag
+
+
+- <th>로 테이블 헤더를 만들고 <style>에서 <th td> padding으로 표의 간격을 조절한 것
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    table, th, td{
+      border: 1px solid green;
+      border-collapse: collapse;
+    }
+    th, td {
+    padding: 5px;
+   }
+  </style>
+</head>
+<body>
+  
+  <table style="width:100%">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Score</th>
+    </tr>
+    <tr>
+      <td>Jill</td>
+      <td>Smith</td>
+      <<td>50</td>
+    </tr>
+    <tr>
+      <td>Eve</td>
+      <td>Jackson</td>
+      <td>94</td>
+    </tr>
+    <tr>
+      <td>John</td>
+      <td>Doe</td>
+      <td>80</td>    
+    </tr>
+  
+</body>
+</html>
+
+4. colgroup, col
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  
+</head>
+<body>
+  
+  <table>
+    <colgroup>
+    <col span="2" style="background-color:green">
+    <col style="background-color:yellow">
+    </colgroup>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Score</th>
+    </tr>
+    <tr>
+      <td>Jill</td>
+      <td>Smith</td>
+      <<td>50</td>
+    </tr>
+    <tr>
+      <td>Eve</td>
+      <td>Jackson</td>
+      <td>94</td>
+    </tr>
+    <tr>
+      <td>John</td>
+      <td>Doe</td>
+      <td>80</td>    
+    </tr>
+  </table>
+  
+</body>
+</html>
+
+
+
+5. border-spacing
+
+
+- 표에 간격을 넣은 모습
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+  table {
+    border-spacing: 15px;
+    }
+  </style>
+</head>
+<body>
+  
+  <table>
+    <colgroup>
+    <col span="2" style="background-color:green">
+    <col style="background-color:yellow">
+    </colgroup>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Score</th>
+    </tr>
+    <tr>
+      <td>Jill</td>
+      <td>Smith</td>
+      <<td>50</td>
+    </tr>
+    <tr>
+      <td>Eve</td>
+      <td>Jackson</td>
+      <td>94</td>
+    </tr>
+    <tr>
+      <td>John</td>
+      <td>Doe</td>
+      <td>80</td>    
+    </tr>
+  </table>
+  
+</body>
+</html>
+
+6.  colspan, rowspan
+
+
+- <th> 에서 <th colspan="2"> 라고 선언을 해 2개의 블럭을 합친 모습.
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+</style>
+</head>
+<body>
+
+  <h2>Cell that spans two columns</h2>
+  <table style="width:100%"
+  <tr>
+    <th>Name</th>
+    <th colspan="2">"Telephone"</th>
+  </tr>
+    <tr>
+      <td>Bill Gates</td>
+      <td>555 77 854</td>
+      <td>555 77 855</td>
+    </tr>
+  
+  </table>
+  
+</body>
+</html>
+
+
+
+
+
+
+- (1,2) 행에 있던 Telephone이 (1,3) 행으로 내려가므로 (1,3)에 있던 555 77 855가 (2,3)으로 밀리는 모습
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    table, th, td{
+      border : 1px solid black;
+      border-collapse:collapse;
+    }
+    th,td{
+      padding:5px;
+      test-algin:left;      
+    }
+  </style>
+</head>
+<body>
+
+  
+  <h2>Cell that spans two rows:</h2>
+  <table style="width100%"
+         <tr>
+           <th>Name:</th>
+           <th>Bill Gates</th>
+         </tr>
+          <tr>
+            <th rowspan="2">Telephone</th>
+            <td>555 77 854</td>
+          </tr>
+          <tr>
+          <td>555 77 855</td>
+          </tr>
+  </table>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

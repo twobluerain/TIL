@@ -1,0 +1,829 @@
+1교시
+
+CSS를 적용한 Table 
+
+
+<!DOCTYPE html>
+<html>
+ 
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+table#t01 {
+    width: 100%;    
+    background-color: #f1f1c1;
+}
+</style>
+</head>
+ 
+<body>
+ 
+<table style="width:100%">
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th> 
+    <th>Points</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td> 
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td> 
+    <td>94</td>
+  </tr>
+  <tr>
+    <td>John</td>
+    <td>Doe</td> 
+    <td>80</td>
+  </tr>
+</table>
+ 
+<br>
+ 
+<table id="t01">
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th> 
+    <th>Points</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td> 
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td> 
+    <td>94</td>
+  </tr>
+  <tr>
+    <td>John</td>
+    <td>Doe</td> 
+    <td>80</td>
+  </tr>
+</table>
+ 
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  
+  <style>
+    table{
+      width:100%;
+    }
+    table,th,td{
+      border: 1px solid black;
+      border-collapse:collapse;
+    }
+    th,td{
+      padding: 5px;
+      text-align:left;
+    }
+    table#t01 tr:nth-child(even){
+      background-color:#eee;
+    }
+    table#t01 tr:nth-child(odd)  {
+      background=color:#fff;
+    }
+    table#t01 th{
+      background-color:green;
+      color:white;
+    }
+  </style>
+  
+</head>
+<body>
+  
+  <table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>points</th>
+  </tr>  
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td>
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td>
+    <td>94</td>
+  <tr>
+    <td>Johb</td>
+    <td>Doe</td>
+    <td>80</td>
+  </tr>
+  </tr>
+  </table>
+  <br>
+<table id="t01">
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th> 
+    <th>Points</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td> 
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td> 
+    <td>94</td>
+  </tr>
+  <tr>
+    <td>John</td>
+    <td>Doe</td> 
+    <td>80</td>
+  </tr>
+</table>
+  
+</body>
+</html>
+
+ 
+
+HTML Lists
+
+
+ 
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  
+  <ul stytle="list-style-type:disc">
+  <li>Coffee</li>
+  <li>Tea</li>
+  <li>Milk</li>
+  </ul>
+  
+  <ul style="list-style-type:circle">
+    <li>Style</li>
+    <li>Tea</li>
+    <li>Milk</li>
+  </ul>
+  
+    <ul style="list-style-type:square">
+    <li>Style</li>
+    <li>Tea</li>
+    <li>Milk</li>
+  </ul>
+  
+  <ul style="list-style:none">
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+  </ul>
+    
+</body>
+</html>
+
+2교시
+
+HTML Forms
+1. <form>요소의 중요속성
+ - action 속성 : 사용자가 입력한 값을  server-side script로  보내서 받을 수 있는 webpage 요청
+ - method 속성 : 사용자가 입력한 값을 Server-Side Script로 보낼때 HTTP Method를 설명한다
+              (GET or POST)
+   GET  - 민감한 정보를 보내지 않고 페이지 요청시 사용함, 주소에 서브밋되는 정보가
+            노출됨, 검색할 때 사용
+   POST- 민감한 정보를 보내면서 페이지 요청시 사용함, 주소에 서브밋되는 정보가
+            노출되지 않음. 서버에 자원 생성을 위해 사용
+
+  <form action="action_page.jsp" method="GET">   이 경우 말고도 GET 방식의 페이지
+                                                                      요청은 많음
+
+  <form action="action_page.jsp" method="POST"> 이 경우만 POST 방식의 페이지를 요청함
+
+
+
+ -  사용자의 입력값을 모집할 수 있다.
+ - <form> 요소로 선언한다.
+ - 다른 type의 <input> 요소를 가진다. checkboxes, radio buttons, submit buttons 등
+ - https://developer.mozilla.org/ko/docs/Web/HTML/Element
+
+ 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <form action='action_page.jsp' method='post'>
+    <fieldset>
+      <legend>personal information</legend>
+      First name :
+      <br>
+      <input type='test' name='firstname' value='hi'>
+      <br>
+      Last name :
+      <br>
+      <input type='text' name='lastname' value='bye'>
+      <br>
+      <br>
+      <button>submit</button>
+    </fieldset>
+  
+  </form>
+  
+</body>
+</html>
+
+ 
+
+ 
+
+2. Grouping Form Data with <fieldset>
+
+
+- <fieldset> 폼안에서 관련있는 data를 분류
+
+- <legend> <fieldset>의  타이틀
+
+ 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  
+  <form>
+  <label for="i_name">name:</label>
+  <input id="i_name" type="text">
+  
+  <br><br>
+  
+  <label>성별:</label>
+  <input name='gender' type="radio" id='a'><label for ='a'>남자</label>
+  <input name='gender' type="radio" id='b'><label for ='b'>여자</label>
+  <br>
+  <br>
+  
+  <label for="a_check">사용가능언어:</label>
+  <input name='a_check' type="checkbox">java
+    <input name='a_check' type="checkbox">html
+      <input name='a_check' type="checkbox">mysql
+  <br><br>
+  
+  <label for="a_color">색상:</label>
+  <input type="color" id='a_color'>  
+  
+  <br><br>
+   <label for="a_file">파일 선택:</label>
+  <input type="file" id='a_file'>
+   <br><br>
+  <select>
+  <option >학생</option>
+  <option >학생</option>
+  <option >학생</option>
+  </select>    
+  <label for="a_pwd">비밀번호:</label>
+  <input type="password" id='a_pwd'>
+  <br><br>
+  <input type="number" id='a_pwd'>
+  <input type="date" id='a_pwd'>
+  <br><br>
+  <button type="button" id="i_name">확인</button>
+  <button type="reset">취소</button>
+  </form>
+  
+</body>
+</html>
+
+ 
+
+ 
+
+ 
+
+3교시
+
+Semantic tags 
+
+
+- tag에 의미가 부여된 것을 말한다.
+- https://developer.mozilla.org/ko/docs/Glossary/Semantics
+ 
+1. Semantic Elements
+  - 시멘틱 태그가 중요한 이유:
+    SEO (Search Engine Optimization), Accessibility, 유지보수성
+ 
+  - non-semantic elements: <div> and <span> = 불분명한 내용 정의
+ 
+  - semantic elements: <form>, <table>, and <img> = 분명한 내용 정의
+ 
+  - <div id="nav">, <div class="header">, or <div id="footer"> 를대신 하는 Semantic 요소
+
+ 
+
+<header>
+
+ - 소개 및 탐색에 도움을 주는 콘텐츠를 나타낸다.
+ - 제목, 로고, 검색 폼, 작성자 이름 등의 요소도 포함할 수 있다.
+
+ 
+
+ 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  
+  <style>
+    header.page-header{
+      background: no repeat left/cover url(/html/beagles.jpeg);
+      display: flex;
+      height: 120px;
+      min-width: 120px;
+      align-items: center;
+      color:#fff;
+      text-shadow: #112 0 0 .5em;
+    }
+    
+    header.page-header > h1 {
+    font: bold calc(1em + 5 * (100vw - 120px) / 100) 'Dancing Script', cursive,
+        fantasy;
+    margin: 2%;
+    }
+    main{
+      font : 1rem 'Fira Sans',sans-serif;
+    }
+  </style>
+  
+</head>
+<body>
+
+  <header class="page-header">
+    <h1>Cute Puppies Express!</h1>
+  </header>
+  
+  <main>
+    <p>I love beagles <em>so</em> much! Like, really, a lot. They’re adorable and their ears are so, so snuggly soft! </p>
+  </main>
+  
+  
+  
+</body>
+</html>
+
+ 
+
+4교시
+
+<nav>
+
+- 문서의 부분 중 현재 페이지 내, 또는 다른 페이지로의 링크를 보여주는 구획을 나타낸다.
+- 자주 쓰이는 예제는 메뉴, 목차, 색인이다.
+- <header>안에서 사용될 수 있다.
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  
+  <style>
+    nav{
+      border-bottom: 1px solid black;
+    }
+    .crumbs ol{
+       list-style-type:none;
+      padding-left: 0;
+    }
+    .crumb{
+      display:inline-block;
+    }  
+    
+  .crumb a::after {
+      display: inline-block;
+      color: #000;
+      content: '>';
+      font-size: 80%;
+      font-weight: bold;
+      padding: 0 3px;
+  }
+  </style>
+  
+  </head>
+<body>
+  <nav class="crumbs">
+    <ol>
+      <li class="crumb"><a href='#'>Bikes</a></li>
+      <li class="crumb"><a href='#'>BMX</a></li>
+      <li class="crumb">Jump Bike</li>
+    </ol>
+  </nav>
+
+    <h1>Jump Bike 3000</h1>
+    <p>This BMX bike is a solid step into the pro world. It looks as legit as it rides and is built to polish your skills.</p>
+  </body>
+  </html>
+
+ 
+
+<footer> 
+
+
+- 푸터는 일반적으로 웹페이지의 작성자, 저작권 정보, 관련 문서 등의 내용을 담는다.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  
+  <style>
+    article{
+        min-height: 100%;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+      }    
+    footer {
+      display: flex;
+      justify-content: center;
+      padding: 5px;
+      background-color: #45a1ff;
+      color: #fff;
+      }
+   
+  </style>
+  
+  </head>
+  <body>
+
+  <article>
+    <h1>How to be a wizard</h1>
+     <ol>
+       <li>Grow a long, majestic beard.</li>
+       <li>Wear a tall, pointed hat.</li>
+       <li>Have I mentioned the beard?</li>
+     </ol>
+    <footer>
+      <p>&copy; 2022 Gandalf</p>
+    </footer>
+    </article>
+  
+</body>
+</html>
+
+ 
+
+ 
+
+5교시
+
+(4) <main>
+ - 문서 <body>의 주요 콘텐츠를 나타낸다.
+
+
+ - 주요 콘텐츠 영역은 문서의 핵심 주제나 앱의 핵심 기능에 직접적으로 연결됐거나 확장하는
+   콘텐츠로 이루어진다.
+- <main>안에 <article>, <section>, <aside>등 이 사용된다.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    header{ 
+    font:bold calc(.025 * (100vw))'Arial',sans-serif;
+    }
+  </style>
+</head>
+<body>
+  
+  <header>Gecko Facts</header>
+  <main>
+    <p>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
+    <p>Many species of gecko have adhesive toe pads which enable them to climb walls and even windows.</p>
+  </main>
+  
+</body>
+</html>
+
+<article>
+
+ - 문서, 페이지, 애플리케이션, 또는 사이트 안에서 독립적으로  다른 내용과 구분해서 보여줄 때 사용한다. 
+ - 블로그 포스터에서 포스터 하나, 매거진이나 뉴스의 기사 하나 등을 나타낼때 사용한다.
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  
+    <style>
+    .forecast {
+    margin: 0;
+    padding: .6rem;
+    background-color: #eef;
+    font: 1rem 'Fira Sans', sans-serif;
+  }
+ 
+  .forecast > h1,
+  .day-forecast {
+    margin: .5rem;
+    padding: .3rem;
+    font-size: 1.4rem;
+  }
+ 
+  .day-forecast {
+    background: right/contain content-box border-box no-repeat
+    url('/media/examples/rain.svg') white;
+  }
+ 
+  .day-forecast > h2,
+  .day-forecast > p {
+    margin: .2rem;
+    font-size: 1rem;
+  }
+  </style>
+  
+</head>
+<body>
+  
+  <article class='forecast'>
+    <h1>Weather forecast for Seattle</h1>
+    <article class='day-forecast'>
+      <h2>29 April 2022</h2>
+      <p>Rain.</p>
+    </article>
+    <article class="day-forecast">
+      <h2>30 April 2022</h2>
+      <p>Sunny</p>
+    </article>
+      <article class="day-forecast">
+      <h2>1 May 2022</h2>
+      <p>Sunny</p>
+      </article>
+     </article>
+</body>
+</html>
+
+ 
+
+6교시
+
+  <section>
+
+
+- <main>,<article>안에서 연관있는 내용을 하나로 묶어줄때 사용한다.
+- 보통 <section>은 제목을 포함하지만, 항상 그런 것은 아니다.
+ 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+
+  
+  </head>
+<body>
+
+  <main>
+    <h1>Choosing an Apple</h1>
+    <section>
+      <h2>Introductuion</h2>
+      <p>This This document provides a guide to help with the important task of choosing the correct Apple. </p>
+    </section>
+    
+    <section><h2>Criteria</h2>
+    <p>There are many different criteria to be considered when choosing an Apple — size, color, firmness, sweetness, tartness...</p>
+    </section>
+  </main>
+  
+</body>
+</html>
+
+<aside>
+
+ 
+
+
+- 문서의 주요 내용외에 부가적인 내용을 주영역 주변에 배치.
+- 문서의 주요 내용과 간접적으로만 연관된 부분을 나타낸다.
+- 주로 사이드바 혹은 콜아웃 박스로 표현한다.
+
+- https://developer.mozilla.org/ko/docs/Web/CSS/box-shadow
+
+ 
+
+ 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  
+  <style>
+    aside{
+      width:40%;
+      margin-left:.5rem;
+      float:right;
+      box-shadow:inset 5px 0 5px -5px #29e;
+      font-style: italic;
+      color:#92e;
+  }
+  
+  </style>
+  </head>
+<body>
+  
+  <main>
+    <p>Salamanders are a group of amphibians with a lizard-like appearance, including short legs and a tail in both larval and adult forms </p>
+    <aside>
+      <p>Salamanders are a group of amphibians with a lizard-like appearance, including short legs and a tail in both larval and adult forms. </p>
+    </aside>
+      <p>Several species of salamander inhabit the temperate rainforest of the Pacific Northwest, including the Ensatina, the Northwestern Salamander and the Rough-skinned Newt. Most salamanders are nocturnal, and hunt for insects, worms and other small creatures.  </p>
+  </main>
+  
+</body>
+</html>
+
+ 
+
+ 
+
+7교시
+
+<figure> <figcaption>
+
+
+ - 독립적인 콘텐츠를 표현한다.
+ -  <figcaption> 요소를 사용해 설명을 붙일 수 있다. 
+ - 피규어, 설명, 콘텐츠는 하나의 단위로 참조된다.
+ 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    figure {
+    border: thin #c0c0c0 solid;
+    display: flex;
+    flex-flow: column;
+    padding: 5px;
+    max-width: 220px;
+    margin: auto;
+  }
+ 
+  img {
+      max-width: 220px;
+      max-height: 150px;
+  }
+ 
+  figcaption {
+      background-color: #222;
+      color: #fff;
+      font: italic smaller sans-serif;
+      padding: 3px;
+      text-align: center;
+  }
+ 
+  </style>
+</head>
+<body>
+<figure>
+    <img src="./mountain.jpg"
+         alt="winter mountain">
+    <figcaption>An elephant at sunset</figcaption>
+</figure>
+</body>
+</html>
+
+ 
+
+ 
+<details> <summary>
+
+ 
+
+
+ - details : 사용자가 보거나 숨길 수있는 추가 세부 사항을 정의
+ - summary : <details> 요소에 대한 눈에 보이는 제목을 정의
+ - <details>가 처음부터 열려있는 상태로 나타나게 하려면 open 특성을 지정한다.
+ - 클릭 했을 때 아래 내용이 나오도록 함
+<mark>
+
+ - mark: CSS를 이용해 강조할 부분의 배경색이나 글자색 지정.
+ 
+
+<time>
+
+
+ 
+ - <time> 요소는 시간의 특정 지점 또는 구간을 나타낸다.
+ - datetime 특성의 값을 지정해 보다 적절한 검색 결과나, 알림 같은 특정 기능을 구현할 때 사용할 수 있다.
+ <em> vs <i>
+- 이탤릭체로 표기된다.
+- <em> : 스크린 리더에서 의미가 강조 된다.
+- <i> :  스크린 리더에서 아무런 의미가 없다.
+
+<b> vs <strong>
+- 볼드체로 나타낸다.
+- <strong> :  강조의 의미가 있다.
+- <b> :  의미 없다.
+
+ <button> vs <a>
+- <button> : 사용자의 특정한 액션을 위해서 사용, 클릭했을때 행동이 발생한다.
+- <a> : 어디론가 이동할때 (링크) 사용한다.
+ 
+
+8교시
+
+HTML tag의 분류
+(1) Box vs Item
+- Box : 사용자에게 보이지 않고 item을 담을 수 있다.
+  구조표현 : header, footer, nav, aside, main
+  main 표현 : section, article, div, span, form
+- Item : 사용자에게 보여지고 Box안에 담겨진다.
+  a, button, input, label, img
+  video, audio, map, canvas, table
+
+
+(2) Block vs Inline
+ 
+
+- Block : 두개의 요소가 한줄에 하나씩 두줄에 배치된다.
+  <div> ...
+- Inline : 두개의 요소가 한줄에 배치된다.
+  <p>, <span>, <b> ....
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+   <p>This is a sentence1.  <b>That</b> is ... </p> 
+   <p>This is a sentence2.  <span>That</span> is ... </p>
+   <p>This is a sentence3.  <div>That</div> is ... </p>
+  
+</body>
+</html>
+ 
+ HTML 구조
+
+
+
+ 
+
+- https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure
+- body tag를  header, nav, main, aside, footer 등으로 나누어 보여지게 한다.t
